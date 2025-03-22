@@ -62,27 +62,27 @@ namespace GameZone.Data
                 new IdentityUserRole<string> { RoleId = ownerRoleId, UserId = ownerUserId }
             );
             // Game Categories
-            //builder.Entity<Category>().HasData(
-            //new Category { Id = 1, Name = "Action" },
-            //new Category { Id = 2, Name = "Adventure" },
-            //new Category { Id = 3, Name = "RPG" },
-            //new Category { Id = 4, Name = "Sports" },
-            //new Category { Id = 5, Name = "Strategy" },
-            //new Category { Id = 6, Name = "Shooter" },
-            //new Category { Id = 7, Name = "Racing" });
+            builder.Entity<Category>().HasData(
+            new Category { Id = 1, Name = "Action" },
+            new Category { Id = 2, Name = "Adventure" },
+            new Category { Id = 3, Name = "RPG" },
+            new Category { Id = 4, Name = "Sports" },
+            new Category { Id = 5, Name = "Strategy" },
+            new Category { Id = 6, Name = "Shooter" },
+            new Category { Id = 7, Name = "Racing" });
         }
 
-        //public DbSet<Game> Games { get; set; }
-        //public DbSet<Category> Categories { get; set; }
-        //public DbSet<GameStation> GameStations { get; set; }
-        //public DbSet<Rating> Ratings { get; set; }
-        //public DbSet<Room> Rooms { get; set; }
-        //public DbSet<Device> Devices { get; set; }
-        //public DbSet<GameStationGame> GameStationGames { get; set; }
-        //public DbSet<PaymentMethod> PaymentMethods { get; set; }
-        //public DbSet<Reservation> Reservations { get; set; }
-        //public DbSet<RoomsPicture> RoomsPictures { get; set; }
-        //public DbSet<RoomType> RoomTypes { get; set; }
+        public DbSet<Game> Games { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<GameStation> GameStations { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Device> Devices { get; set; }
+        public DbSet<GameStationGame> GameStationGames { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<RoomsPicture> RoomsPictures { get; set; }
+        public DbSet<RoomType> RoomTypes { get; set; }
     }
 
 }
