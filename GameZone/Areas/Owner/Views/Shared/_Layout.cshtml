@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - GameZone</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="shortcut icon" href="~/Assets/Images/title icon.png" type="image/x-icon">
+    <link href="~/dashboard/css/sb-admin-2.css" rel="stylesheet" />
+</head>
+
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <div class="sidebar-brand d-flex justify-content-center flex-column mt-3">
+                <h3 style="font-weight: bold;">Game Zone</h3>
+                <h4>Owner</h4>
+            </div>
+
+            <hr class="sidebar-divider my-0 mt-4">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link">
+                    <span>Pages</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Owner" asp-controller="OwnersStations" asp-action="OwnerStation">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Owner Stations</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Owner" asp-controller="Games" asp-action="GetAll">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Games</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Owner" asp-controller="Rooms" asp-action="GetAll">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Rooms</span>
+                </a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Owner" asp-controller="OwnersStations" asp-action="ReservationLog">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Reservation Log</span>
+                </a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+        </ul>
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" style="background-color: #010434;">
+
+            <!-- Main Content -->
+            <div id="content" style="background-color: #010327;">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light topbar static-top shadow d-flex justify-content-end">
+
+                    <!-- Usre Info -->
+                    <div class="">
+                        <span style="margin-right: 1vw;font-weight: bold; color: white;">Owner Name</span>
+                        <a style="margin-right: 0.5vw;" href="/Accounts/Login"><img width="35vw" src="~/Assets/Images/logout-white.png"></a>
+                    </div>
+                </nav>
+                <!-- End of Topbar -->
+                <!-- End of Content Wrapper -->
+
+                <div class="container-fluid pt-5" style="background-color: #010434;">
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

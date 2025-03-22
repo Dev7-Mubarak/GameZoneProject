@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - GameZone</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="shortcut icon" href="~/Assets/Images/title icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="~/main/css/style.css" asp-append-version="true" />
+</head>
+<body>
+
+    <!-- navigation -->
+    <header class="navigation bg-tertiary">
+        <nav class="navbar navbar-expand-xl navbar-light text-center py-3 fixed-top">
+            <div class="container bg-primary rounded-pill">
+
+                <a class="navbar-brand text-center ml-1" href="index.html">
+                    <h1 style="margin-top: 0.3vw;" class="text-white">Game Zone</h1>
+                </a>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/Home/Index">Home</a>
+                        </li>
+
+                        <li class="nav-item ">
+                            <a class="nav-link text-white" href="/Home/UserIndex/#services">Services</a>
+                        </li>
+
+                        <li class="nav-item ">
+                            <a class="nav-link text-white" href="/GameStations/GetAll">Game Station</a>
+                        </li>
+
+                        <li class="nav-item ">
+                        <li class="nav-item ">
+                            <a class="nav-link text-white" href="/Games/GetAll">Games</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true">About</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item " href="/Home/Team">Our Team</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item " href="/Home/Vision">Our Vision</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item " href="/Home/TermsAndConditions">Terms &amp; Condition</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item " href="/Home/PrivacyAndPolicy">Privacy &amp; Policy</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item " href="#contact">Contact Us</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <a style="margin-right: 1vw;" class="fw-bold text-white" asp-action="UserReservationLog">Reservation Log</a>
+                    <a style="margin-right:1vw ;" asp-action="AccountDetails"><img width="40vw" src="~/Assets/Images/user.png"></a>
+                    <span style="margin-right: 1vw;" class="text-white fw-bold fs-6">USERNAME</span>
+                    <a style="margin-right: 0.5vw;" href="/Home/Index"><img width="40vw" src="~/Assets/Images/logout.png"></a>
+                </div>
+
+            </div>
+
+        </nav>
+    </header>
+
+
+    <!-- /navigation -->
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="section-sm">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-2 col-md-4 col-6 mb-4">
+                    <div class="footer-widget">
+                        <h5 class="mb-4 text-primary font-secondary">Service</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <a href="games-stations.html">Games Station</a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="Games.html">Games</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-4">
+                    <div class="footer-widget">
+                        <h5 class="mb-4 text-primary font-secondary">About</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <a href="vision.html">Our Vision</a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="team.html">Our Team</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-4">
+                    <div class="footer-widget">
+                        <h5 class="mb-4 text-primary font-secondary">Help</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <a href="#contact">Contact Us</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row align-items-center mt-5 text-center text-md-start">
+                <div class="col-lg-4">
+                    <a href="index.html">
+                        <h5>Game Zone</h5>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 mt-4 mt-lg-0">
+                    <ul class="list-unstyled list-inline mb-0 text-lg-center">
+                        <li class="list-inline-item me-4">
+                            <a class="text-white" href="Privacy.html">Privacy Policy</a>
+                        </li>
+                        <li class="list-inline-item me-4">
+                            <a class="text-white" href="terms.html">Terms &amp; Conditions</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6 text-md-end mt-4 mt-md-0">
+                    <ul class="list-unstyled list-inline mb-0 social-icons">
+                        <li class="list-inline-item me-3">
+                            <a title="Explorer Facebook Profile" class="social" href="https://facebook.com/"><img src="~/Assets/Images/facebook.svg"></a>
+                        </li>
+                        <li class="list-inline-item me-3">
+                            <a title="Explorer Twitter Profile" class="social" href="https://twitter.com/"><img src="~/Assets/Images/twitter.svg"></a>
+                        </li>
+                        <li class="list-inline-item me-3">
+                            <a title="Explorer Instagram Profile" class="social" href="https://instagram.com/"><img src="~/Assets/Images/instagram.svg"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

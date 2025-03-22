@@ -1,0 +1,262 @@
+﻿@{
+    ViewData["Title"] = "Station Review Page";
+}
+
+<!-- reservation pop up -->
+<div class="modal applyLoanModal fade" id="review" tabindex="-1" aria-labelledby="applyLoanLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h4 class="modal-title" id="exampleModalLabel">Review Form</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="#!" method="post">
+                    <div class="row">
+                        <div class="col-lg-12 mb-4 pb-2">
+                            <div class="form-group">
+                                <label for="ReviewerFullName" class="form-label">Full Name</label>
+                                <input type="text" class="form-control shadow-none" id="loan_full_name" placeholder="Ahmed Ali">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 mb-4 pb-2">
+                            <div class="form-group">
+                                <label for="ReviewDate" class="form-label">Data</label>
+                                <input type="Date" class="form-control shadow-none" id="name" value="@DateTime.Now.ToString("yyyy-MM-dd")" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-8 mb-4 pb-2">
+                            <div class="form-group">
+                                <label class="form-label">Rating</label>
+                                <select class="form-control">
+                                    <option>⭐️⭐️⭐️⭐️⭐ (5 stars)</option>
+                                    <option>⭐️⭐️⭐️⭐️✩ (4.5 stars)</option>
+                                    <option>⭐️⭐️⭐️⭐️ (4 stars)</option>
+                                    <option>⭐️⭐️⭐️✩ (3.5 stars)</option>
+                                    <option>⭐️⭐️⭐️ (3 stars)</option>
+                                    <option>⭐️⭐️✩ (2.5 stars)</option>
+                                    <option>⭐️⭐️ (2 stars)</option>
+                                    <option>⭐️ (1.5 stars)</option>
+                                    <option>⭐️ (1 star)</option>
+                                    <option>✩ (0.5 star)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mb-4 pb-2">
+                            <div class="form-group">
+                                <label for="Start" class="form-label">Start Hour</label>
+                                <textarea class="form-control shadow-none" id="Start"
+                                       placeholder="Enter your comment here..." rows="4" cols="50"></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12">
+                            <button type="submit" class="btn btn-primary w-100">Confirm Your Review</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="col-lg-10 mx-auto text-center title-row">
+                    <h2 class="section-title mb-0">Station Review</h2>
+                    <div class="section-border mt-4"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-7">
+                <div class="section-title">
+                    <p class="text-primary text-uppercase fw-bold mb-3">Overview</p>
+                    <h2 class="h1 mb-4">Lucille Game Station</h2>
+                    <div class="content ">
+                        <p class="lead">
+                            Lucille Game Station is an immersive gaming experience that offers a unique
+                            blend of cutting-edge technology and captivating gameplay.
+                        </p>
+                        <p class="lead">
+                            Designed for gamers of all ages and skill levels, Lucille provides a wide
+                            range of entertainment options to satisfy even the most discerning gaming enthusiasts.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mt-5 mt-lg-0 text-center">
+                <img src="~/Assets/Images/station1.jpg" class="rounded w-100">
+                <a style="width:15vw;" class="btn btn-primary mt-4 " asp-controller="GameStations" asp-action="StationDetails">Station Details</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-6"><h2 class="section-title text-center text-uppercase mb-5">reviews</h2></div>
+        </div>
+        <div class="row justify-content-center">
+            <a type="button" class="btn btn-primary col-2" href="#" data-bs-toggle="modal" data-bs-target="#review">
+                Add a Review
+            </a>
+        </div>
+        <div class="row justify-content-start align-items-center mt-5 mb-5">
+            <div class="col-4 " style="padding-bottom:4vw;">
+                <span><img width="40vw" height="40vw" class="img-circle" src="~/Assets/Images/Account pic.png" alt=""></span>
+                <span class="m-3"><h6 class="d-inline-block">Ahmed Fakhory</h6></span>
+                <div class="mt-2">
+                    <img width="100vw" src="~/Assets/Ratings/star5.png">
+                    <h6 class=" d-inline-block m-2">A Gamer's Paradise</h6>
+                </div>
+                <div class="mt-2">
+                    <p>
+                        Lucille is a game station unlike any other. The graphics are stunning, the gameplay is smooth,
+                        and the features are endless. I've spent countless hours lost in virtual worlds, and I can't imagine going back to anything else.
+                    </p>
+                </div>
+            </div>
+            <div class="col-4 " style="padding-bottom:4vw;">
+                <span><img width="40vw" height="40vw" class="img-circle" src="~/Assets/Images/Account pic.png" alt=""></span>
+                <span class="m-3"><h6 class="d-inline-block">Mohammed Salem</h6></span>
+                <div class="mt-2">
+                    <img width="100vw" src="~/Assets/Ratings/star5.png">
+                    <h6 class=" d-inline-block m-2">Innovation at its Finest</h6>
+                </div>
+                <div class="mt-2">
+                    <p>
+                        Lucille's innovative design and cutting-edge technology set it apart from the competition. The haptic feedback is incredible,
+                        and the voice control features are truly revolutionary. This is the future of gaming, and I'm excited to be a part of it.
+                    </p>
+                </div>
+            </div>
+            <div class="col-4 " style="padding-bottom:4vw;">
+                <span><img width="40vw" height="40vw" class="img-circle" src="~/Assets/Images/Account pic.png" alt=""></span>
+                <span class="m-3"><h6 class="d-inline-block">Omer Ali</h6></span>
+                <div class="mt-2">
+                    <img width="100vw" src="~/Assets/Ratings/star4,5.png">
+                    <h6 class=" d-inline-block m-2">A Community of Gamers</h6>
+                </div>
+                <div class="mt-2">
+                    <p>
+                        What I love most about Lucille is the vibrant community of gamers. I've met so many amazing people online, and we've shared countless
+                        hours of laughter and competition. It's more than just a game station. its a live style
+                    </p>
+                </div>
+            </div>
+            <div class="col-4 " style="padding-bottom:4vw;">
+                <span><img width="40vw" height="40vw" class="img-circle" src="~/Assets/Images/Account pic.png" alt=""></span>
+                <span class="m-3"><h6 class="d-inline-block">Anas Saleh</h6></span>
+                <div class="mt-2">
+                    <img width="100vw" src="~/Assets/Ratings/star4,5.png">
+                    <h6 class=" d-inline-block m-2">Endless Entertainment</h6>
+                </div>
+                <div class="mt-2">
+                    <p>
+                        With a vast library of games and endless customization options, Lucille offers something for everyone. I've never been bored since I got it,
+                        and I'm always discovering new things to do.
+                    </p>
+                </div>
+            </div>
+            <div class="col-4 " style="padding-bottom:4vw;">
+                <span><img width="40vw" height="40vw" class="img-circle" src="~/Assets/Images/Account pic.png" alt=""></span>
+                <span class="m-3"><h6 class="d-inline-block">Ammar Zain</h6></span>
+                <div class="mt-2">
+                    <img width="100vw" src="~/Assets/Ratings/star2,5.png">
+                    <h6 class=" d-inline-block m-2">Disappointing Experience</h6>
+                </div>
+                <div class="mt-2">
+                    <p>
+                        Lucille fell short of my expectations. The graphics are underwhelming, the gameplay is repetitive, and the features are limited. I'm not impressed.
+                        so I would say it's pretty average
+                    </p>
+                </div>
+            </div>
+            <div class="col-4 " style="padding-bottom:4vw;">
+                <span><img width="40vw" height="40vw" class="img-circle" src="~/Assets/Images/Account pic.png" alt=""></span>
+                <span class="m-3"><h6 class="d-inline-block">Ahmed Omer</h6></span>
+                <div class="mt-2">
+                    <img width="100vw" src="~/Assets/Ratings/star3.5.png">
+                    <h6 class=" d-inline-block m-2">A Work in Progress</h6>
+                </div>
+                <div class="mt-2">
+                    <p>Lucille is a work in progress. It has some amazing features, but it also has some flaws. I'm excited to see how it evolves in the future, but I'm not sure if it's worth the price tag right now.</p>
+                </div>
+            </div>
+            <div class="col-4 " style="padding-bottom:4vw;">
+                <span><img width="40vw" height="40vw" class="img-circle" src="~/Assets/Images/Account pic.png" alt=""></span>
+                <span class="m-3"><h6 class="d-inline-block">Gamal Ali</h6></span>
+                <div class="mt-2">
+                    <img width="100vw" src="~/Assets/Ratings/star3.5.png">
+                    <h6 class=" d-inline-block m-2">neaad improvments</h6>
+                </div>
+                <div class="mt-2">
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nulla vero, nobis dicta perspiciatis repellendus sapiente unde, beatae at accusantium ratione molestias necessitatibus ut quod quaerat amet error, atque rem autem.</p>
+                </div>
+            </div>
+            <div class="col-4 " style="padding-bottom:4vw;">
+                <span><img width="40vw" height="40vw" class="img-circle" src="~/Assets/Images/Account pic.png" alt=""></span>
+                <span class="m-3"><h6 class="d-inline-block">Mohammed Saeed</h6></span>
+                <div class="mt-2">
+                    <img width="100vw" src="~/Assets/Ratings/star1.png">
+                    <h6 class=" d-inline-block m-2">Overhyped and Overpriced</h6>
+                </div>
+                <div class="mt-2">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem fugiat unde voluptatem in aliquid, commodi asperiores quae repudiandae. Modi accusantium dolorum reiciendis officiis ratione assumenda possimus id a mollitia aspernatur.</p>
+                </div>
+            </div>
+            <div class="col-4 " style="padding-bottom:4vw;">
+                <span><img width="40vw" height="40vw" class="img-circle" src="~/Assets/Images/Account pic.png" alt=""></span>
+                <span class="m-3"><h6 class="d-inline-block">Osama Omer</h6></span>
+                <div class="mt-2">
+                    <img width="100vw" src="~/Assets/Ratings/star3.5.png">
+                    <h6 class=" d-inline-block m-2">Above Average</h6>
+                </div>
+                <div class="mt-2">
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nulla vero, nobis dicta perspiciatis repellendus sapiente unde, beatae at accusantium ratione molestias necessitatibus ut quod quaerat amet error, atque rem autem.</p>
+                </div>
+            </div>
+            <div class="col-4 " style="padding-bottom:4vw;">
+                <span><img width="40vw" height="40vw" class="img-circle" src="~/Assets/Images/Account pic.png" alt=""></span>
+                <span class="m-3"><h6 class="d-inline-block">Rasheed Ali</h6></span>
+                <div class="mt-2">
+                    <img width="100vw" src="~/Assets/Ratings/star4,5.png">
+                    <h6 class=" d-inline-block m-2">Best Station Ever</h6>
+                </div>
+                <div class="mt-2">
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nulla vero, nobis dicta perspiciatis repellendus sapiente unde, beatae at accusantium ratione molestias necessitatibus ut quod quaerat amet error, atque rem autem.</p>
+                </div>
+            </div>
+            <div class="col-4 " style="padding-bottom:4vw;">
+                <span><img width="40vw" height="40vw" class="img-circle" src="~/Assets/Images/Account pic.png" alt=""></span>
+                <span class="m-3"><h6 class="d-inline-block">Faisel Ali</h6></span>
+                <div class="mt-2">
+                    <img width="100vw" src="~/Assets/Ratings/star2,5.png">
+                    <h6 class=" d-inline-block m-2">Below Average</h6>
+                </div>
+                <div class="mt-2">
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nulla vero, nobis dicta perspiciatis repellendus sapiente unde, beatae at accusantium ratione molestias necessitatibus ut quod quaerat amet error, atque rem autem.</p>
+                </div>
+            </div>
+            <div class="col-4 " style="padding-bottom:4vw;">
+                <span><img width="40vw" height="40vw" class="img-circle" src="~/Assets/Images/Account pic.png" alt=""></span>
+                <span class="m-3"><h6 class="d-inline-block">Muzahem Omer</h6></span>
+                <div class="mt-2">
+                    <img width="100vw" src="~/Assets/Ratings/star1.png">
+                    <h6 class=" d-inline-block m-2">A Waste Of Money </h6>
+                </div>
+                <div class="mt-2">
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nulla vero, nobis dicta perspiciatis repellendus sapiente unde, beatae at accusantium ratione molestias necessitatibus ut quod quaerat amet error, atque rem autem.</p>
+                </div>
+            </div>           
+        </div>
+    </div>
+</section>

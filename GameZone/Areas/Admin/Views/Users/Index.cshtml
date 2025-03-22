@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "All Users Page";
+}
+
+<div class="container-fluid">
+
+    <!-- Content Row -->
+    <!-- Content -->
+
+    <h1 class="text-center text-success mb-5">All Users</h1>
+    <section>
+        <a class="btn btn-success my-3" href="/Admin/Users/Create">Create New User</a>
+
+        <table class="table table-striped text-white text-center">
+            <thead class="custom-thead">
+                <tr>
+                    <th>User Name</th>
+                    <th>Emile</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr >
+                    <td>ALi</td>
+                    <td>hgs@gamil.com</td>
+                    <td>User</td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Users" asp-action="Edit" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
+                        <a asp-area="Admin" asp-controller="Users" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
+                    </td>
+                </tr>
+                <tr >
+                    <td>ALi</td>
+                    <td>skjd@gamil.com</td>
+                    <td>Admin</td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Users" asp-action="Edit" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
+                        <a asp-area="Admin" asp-controller="Users" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Omer</td>
+                    <td>hgs@gamil.com</td>
+                    <td>Owner</td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Users" asp-action="Edit" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
+                        <a asp-area="Admin" asp-controller="Users" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
+                    </td>
+                </tr>
+                <tr >
+                    <td>Hasson</td>
+                    <td>ksj;s@gamil.com</td>
+                    <td>Owner</td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Users" asp-action="Edit" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
+                        <a asp-area="Admin" asp-controller="Users" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>ALi</td>
+                    <td>hgs@gamil.com</td>
+                    <td>User</td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Users" asp-action="Edit" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
+                        <a asp-area="Admin" asp-controller="Users" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</div>

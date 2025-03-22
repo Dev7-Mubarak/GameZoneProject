@@ -1,0 +1,108 @@
+﻿@{
+    ViewData["Title"] = "Games in Station Page";
+}
+
+<div class="container-fluid">
+
+    <h1 class="text-center text-success mb-5">Station Games</h1>
+
+
+    <!-- Content Row -->
+
+    <div class="mt-5">
+        <p>
+            <a href="/Owner/Games/Add" class="btn btn-success">Add New</a>
+        </p>
+
+        <table class="table table-striped text-white">
+            <tbody>
+                <tr >
+                    <td>
+                        <div class="d-flex">
+                            <div class="pr-4">
+                                <img src="~/Assets/Images/overcooked.jpg" alt="Name" style="max-width: 70px" />
+                            </div>
+                            <div class="d-flex flex-column justify-content-center">
+                                <h4 class="text-white">
+                                    <strong>Overcooked</strong>
+                                </h4>
+                                <h5>CO-OP</h5>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td class="align-middle">
+                        <div class="d-flex justify-content-center">
+                            <a asp-area="Owner" asp-controller="Games" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr >
+                    <td>
+                        <div class="d-flex">
+                            <div class="pr-4">
+                                <img src="~/Assets/Images/Battlefield 2042.jpg" alt="Name" style="max-width: 70px" />
+                            </div>
+                            <div class="d-flex flex-column justify-content-center">
+                                <h4 class="text-white">
+                                    <strong>Battlefield 2042</strong>
+                                </h4>
+                                <h5>Action</h5>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td class="align-middle">
+                        <div class="d-flex justify-content-center">
+                            <a asp-area="Owner" asp-controller="Games" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr >
+                    <td>
+                        <div class="d-flex">
+                            <div class="pr-4">
+                                <img src="~/Assets/Images/Final Fantasy.jpg" alt="Name" style="max-width: 70px" />
+                            </div>
+                            <div class="d-flex flex-column justify-content-center">
+                                <h4 class="text-white">
+                                    <strong>Madden NFL 24</strong>
+                                </h4>
+                                <h5>Sports</h5>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td class="align-middle">
+                        <div class="d-flex justify-content-center">
+                            <a asp-area="Owner" asp-controller="Games" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr >
+                    <td>
+                        <div class="d-flex">
+                            <div class="pr-4">
+                                <img src="~/Assets/Images/Kina.jpg" alt="Name" style="max-width: 70px" />
+                            </div>
+                            <div class="d-flex flex-column justify-content-center">
+                                <h4 class="text-white">
+                                    <strong>Kina Bridge Of Spirits</strong>
+                                </h4>
+                                <h5>Arcade</h5>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td class="align-middle">
+                        <div class="d-flex justify-content-center">
+                            <a asp-area="Owner" asp-controller="Games" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <!-- End of Main Content -->
+</div>

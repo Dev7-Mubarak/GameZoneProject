@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["Title"] = "Edit Station Page";
+}
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Content Row -->
+
+    <form method="get">
+        <div class="row">
+
+            <div class="col-lg-6 col-12">
+
+                <div class="text-success">
+                    <h2 class="mb-0">Edit Station</h2>
+                </div>
+                <hr />
+
+                <div class="form-group mt-3">
+                    <label for="loan_full_name" class="form-label">Name</label>
+                    <input type="text" class="form-control shadow-none" id="loan_full_name">
+                </div>
+
+
+                <div class="form-group">
+                    <label for="loan_full_name" class="form-label">Address</label>
+                    <input type="text" class="form-control shadow-none" id="loan_full_name">
+                </div>
+
+                <div class="form-group">
+                    <label for="loan_full_name" class="form-label">Descraption</label>
+                    <input type="text" class="form-control shadow-none" id="loan_full_name">
+                </div>
+
+                <div class="form-group">
+                    <label for="loan_full_name" class="form-label">Image</label>
+                    <input type="file" class="form-control shadow-none" id="loan_full_name">
+                    <small class="form-text text-muted">
+                        Only jpg jpeg png files are allowd with max size
+                        1MB
+                    </small>
+
+                </div>
+
+                <div class="form-group mt-3">
+                    <label for="loan_full_name" class="form-label">Owner</label>
+                    <select class="form-control">
+                        <option>Select Owner</option>
+                        <option>Owner1</option>
+                        <option>Owner2</option>
+                        <option>Owner3</option>
+                        <option>Owner4</option>
+                        <option>Owner5</option>
+                    </select>
+                </div>
+
+                <label for="loan_full_name" class="form-label">Available Consoles :</label>
+
+                <div class="form-check d-flex">
+
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Playstation
+                    </label>
+
+                    <div style="margin-left: 60px;">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            XBox
+                        </label>
+                    </div>
+
+                    <div style="margin-left: 60px;margin-bottom: 30px;">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            VR
+                        </label>
+                    </div>
+                </div>
+
+                <a onclick="alert('Saved Successfully')" class="text-white btn btn-success" style="margin-left: 1vm; margin-top: 1vw; width: 70px;"
+                href="#">save</a>
+
+            </div>
+
+            <div class="col-lg-6  col-12 justify-content-center pt-5 overflow-hidden">
+                <div style="border: 2px solid white;width: 300px;height: 400px; border-radius: 10px;position: relative;margin-left: 17%;">
+                    <img class="cover-previewrounded"
+                         style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+                         src="~/Assets/image-white.png" alt="Cover" width="60px" height="60px"/>
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+<!-- End of Main Content -->

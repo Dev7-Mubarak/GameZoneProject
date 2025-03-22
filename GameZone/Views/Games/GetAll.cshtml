@@ -1,0 +1,416 @@
+﻿@{
+    ViewData["Title"] = "Games Page";
+}
+
+<section class="section teams pb-5">
+	<div class="container">
+
+		<div class="row justify-content-center">
+			<div class="col-12">
+				<div class="col-lg-10 mx-auto text-center">
+
+					<h2 class="section-title mb-0">Games</h2>
+
+					<div class="section-border mt-4"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row mb-n-1">
+				<div class="col-8 pl-0">
+					<h3 class="pt-x-1">
+                        Action<span>
+							<img src="~/Assets/images/chevron-right.svg" alt="">
+						</span>
+					</h3>
+
+				</div>
+
+				<div class="col-4 text-right pr-0">
+					<a class="btn btn-primary" asp-controller="Games" asp-action="GetGamesBasedOnCategory">More</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="row position-relative">
+
+			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+
+				<div class="card bg-transparent border-0 text-center">
+
+					<div class="card-img">
+						<img src="~/Assets/Images/COD MW III.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
+						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+					</div>
+
+					<div class="card-body">
+						<h3>COD MW III</h3>
+					</div>
+				</div>
+
+			</div>
+			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+				<div class="card bg-transparent border-0 text-center">
+
+					<div class="card-img">
+						<img src="~/Assets/Images/Battlefield 2042.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
+						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+					</div>
+
+
+					<div class="card-body">
+						<h3>Battlefield 2042</h3>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+				<div class="card bg-transparent border-0 text-center">
+
+                    <div class="card-img">
+						<img src="~/Assets/images/resident evil.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
+						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+					</div>
+
+					<div class="card-body">
+						<h3>Resident Evil 4</h3>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+				<div class="card bg-transparent border-0 text-center">
+
+                    <div class="card-img">
+						<img src="~/Assets/images/sniper elite 5.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
+						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+					</div>
+
+					<div class="card-body">
+						<h3>Sniper Elite 5</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="section teams pt-5">
+	<div class="container">
+
+		<div class="container">
+			<div class="row mb-n-1">
+				<div class="col-8 pl-0">
+					<h3 class="pt-x-1">
+						Sports<span>
+							<img src="~/Assets/Images/chevron-right.svg" alt="">
+						</span>
+					</h3>
+
+				</div>
+
+				<div class="col-4 text-right pr-0">
+					<a class="btn btn-primary" asp-controller="Games" asp-action="GetGamesBasedOnCategory">More</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="row position-relative">
+
+			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+
+				<div class="card bg-transparent border-0 text-center">
+
+                    <div class="card-img">
+						<img src="~/Assets/images/eafc 24.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
+						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+					</div>
+
+					<div class="card-body">
+						<h3>EAFC 24</h3>
+					</div>
+				</div>
+
+			</div>
+			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+				<div class="card bg-transparent border-0 text-center">
+
+                    <div class="card-img">
+						<img src="~/Assets/images/nba 2k.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
+						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+					</div>
+
+					<div class="card-body">
+						<h3>NBA 2k 24</h3>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+				<div class="card bg-transparent border-0 text-center">
+
+                    <div class="card-img">
+						<img src="~/Assets/images/nfl24.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
+						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+					</div>
+
+					<div class="card-body">
+						<h3>Madden NFL 24</h3>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+				<div class="card bg-transparent border-0 text-center">
+
+                    <div class="card-img">
+						<img src="~/Assets/images/wwe2k.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
+						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+					</div>
+
+					<div class="card-body">
+						<h3>WWE 2K 24</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="section teams pt-0">
+	<div class="container">
+		<div class="container">
+			<div class="row mb-n-1">
+				<div class="col-8 pl-0">
+					<h3 class="pt-x-1">
+						Adventures<span>
+							<img src="~/Assets/Images/chevron-right.svg" alt="">
+						</span>
+					</h3>
+
+				</div>
+
+				<div class="col-4 text-right pr-0">
+					<a class="btn btn-primary" asp-controller="Games" asp-action="GetGamesBasedOnCategory">More</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="row position-relative">
+
+			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+
+				<div class="card bg-transparent border-0 text-center">
+
+					<div class="card-img">
+						<img src="~/Assets/Images/Atom Heart.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
+						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+					</div>
+
+					<div class="card-body">
+						<h3>Atomic Heart</h3>
+					</div>
+				</div>
+
+			</div>
+			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+				<div class="card bg-transparent border-0 text-center">
+
+					<div class="card-img">
+						<img src="~/Assets/Images/Hogwarts Legacy.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
+						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+					</div>
+
+
+					<div class="card-body">
+						<h3>Hogwarts Legacy</h3>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+				<div class="card bg-transparent border-0 text-center">
+
+                    <div class="card-img">
+						<img src="~/Assets/Images/spider man 2.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
+						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+					</div>
+
+					<div class="card-body">
+						<h3>Spider Man 2</h3>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+				<div class="card bg-transparent border-0 text-center">
+
+					<div class="card-img">
+						<img src="~/Assets/Images/Horizon.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
+						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+					</div>
+
+					<div class="card-body">
+						<h3>Horizon Forbidden West</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="section teams pt-2">
+	<div class="container">
+
+		<div class="container">
+			<div class="row mb-n-1">
+				<div class="col-8 pl-0">
+					<h3 class="pt-x-1">
+						Arcade<span>
+							<img src="~/Assets/Images/chevron-right.svg" alt="">
+						</span>
+					</h3>
+
+				</div>
+
+				<div class="col-4 text-right pr-0">
+					<a class="btn btn-primary" asp-controller="Games" asp-action="GetGamesBasedOnCategory">More</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="row position-relative">
+
+			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+
+				<div class="card bg-transparent border-0 text-center">
+
+					<div class="card-img">
+						<img src="~/Assets/Images/Kina.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
+						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+					</div>
+
+					<div class="card-body">
+						<h3>Kina Bridge Of Spirits</h3>
+					</div>
+				</div>
+
+			</div>
+			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+				<div class="card bg-transparent border-0 text-center">
+
+					<div class="card-img">
+						<img src="~/Assets/Images/Ratchat.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
+						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+					</div>
+
+
+					<div class="card-body">
+						<h3>Ratchet & Clank</h3>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+				<div class="card bg-transparent border-0 text-center">
+
+					<div class="card-img">
+						<img src="~/Assets/Images/Sackboy.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
+						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+					</div>
+
+					<div class="card-body">
+						<h3>Sackboy</h3>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+				<div class="card bg-transparent border-0 text-center">
+
+					<div class="card-img">
+						<img src="~/Assets/Images/Strey.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
+						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+					</div>
+
+					<div class="card-body">
+						<h3>Stray</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="section teams pt-3">
+	<div class="container">
+
+		<div class="container">
+			<div class="row mb-n-1">
+				<div class="col-8 pl-0">
+					<h3 class="pt-x-1">
+						CO-OP<span>
+							<img src="~/Assets/Images/chevron-right.svg" alt="">
+						</span>
+					</h3>
+
+				</div>
+
+				<div class="col-4 text-right pr-0">
+					<a class="btn btn-primary" asp-controller="Games" asp-action="GetGamesBasedOnCategory">More</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="row position-relative">
+
+			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+
+				<div class="card bg-transparent border-0 text-center">
+
+					<div class="card-img">
+						<img src="~/Assets/Images/it takes two.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
+						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+					</div>
+
+					<div class="card-body">
+						<h3>It Takes Two</h3>
+					</div>
+				</div>
+
+			</div>
+			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+				<div class="card bg-transparent border-0 text-center">
+
+					<div class="card-img">
+						<img src="~/Assets/Images/a way out.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
+						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+					</div>
+
+
+					<div class="card-body">
+						<h3>A Way Out</h3>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+				<div class="card bg-transparent border-0 text-center">
+
+					<div class="card-img">
+						<img src="~/Assets/Images/cuphead.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
+						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+					</div>
+
+					<div class="card-body">
+						<h3>Cuphead</h3>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+				<div class="card bg-transparent border-0 text-center">
+
+					<div class="card-img">
+						<img src="~/Assets/Images/overcooked.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
+						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+					</div>
+
+					<div class="card-body">
+						<h3>Overcooked</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

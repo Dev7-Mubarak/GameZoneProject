@@ -1,0 +1,131 @@
+﻿@{
+    ViewData["Title"] = "Reservation Log Page";
+}
+
+<div class="container-fluid">
+
+    <!-- Page Title -->
+    <h1 class="text-center text-success mb-5">Reservation Log</h1>
+
+
+    <div class="pt-5">
+
+        <!-- Reservation Table -->
+        <table class="table table-striped text-center text-white">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Type Of Rooms</th>
+                    <th>Date Of Reservation</th>
+                    <th>Time Of Reservation</th>
+                    <th>Number Of Hours</th>
+                    <th>Total Cost</th>
+                    <th>Payment Method</th>
+                    <th>Status Of Reservation</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="height: 4vw">
+                    <th>1</th>
+                    <td>BIG</td>
+                    <td>2024-05-02</td>
+                    <td>10:00 AM</td>
+                    <td>2 Hours</td>
+                    <td>8000 RY</td>
+                    <td>Cash</td>
+                    <td>Confirmed</td>
+                    <td>
+                        <a href="/Owner/OwnersStations/AcceptedReservation" class="btn btn-success btn-sm" style="padding: 5px 10px; margin: 2px; border-radius: 10px;">Accept</a>
+                        <a href="/Owner/OwnersStations/RejectedReservation" class="btn btn-danger btn-sm" style="padding: 5px 10px; margin: 2px; border-radius: 10px;">Reject</a>
+                    </td>
+                </tr>
+                <tr style="height: 4vw">
+                    <th>2</th>
+                    <td>VIP</td>
+                    <td>2024-05-03</td>
+                    <td>11:30 AM</td>
+                    <td>1 Hour</td>
+                    <td>4000 RY</td>
+                    <td>Cash</td>
+                    <td>Pending</td>
+                    <td>
+                        <a href="/Owner/OwnersStations/AcceptedReservation" class="btn btn-success btn-sm" style="padding: 5px 10px; margin: 2px; border-radius: 10px;">Accept</a>
+                        <a href="/Owner/OwnersStations/RejectedReservation" class="btn btn-danger btn-sm" style="padding: 5px 10px; margin: 2px; border-radius: 10px;">Reject</a>
+                    </td>
+                </tr>
+                <tr style="height: 4vw">
+                    <th>3</th>
+                    <td>BIG</td>
+                    <td>2024-04-04</td>
+                    <td>2:00 PM</td>
+                    <td>4 Hours</td>
+                    <td>8000 RY</td>
+                    <td>Omgy</td>
+                    <td>Confirmed</td>
+                    <td>
+                        <a href="/Owner/OwnersStations/AcceptedReservation" class="btn btn-success btn-sm" style="padding: 5px 10px; margin: 2px; border-radius: 10px;">Accept</a>
+                        <a href="/Owner/OwnersStations/RejectedReservation" class="btn btn-danger btn-sm" style="padding: 5px 10px; margin: 2px; border-radius: 10px;">Reject</a>
+                    </td>
+                </tr>
+                <tr style="height: 4vw">
+                    <th>4</th>
+                    <td>Regular</td>
+                    <td>2024-03-05</td>
+                    <td>4:30 PM</td>
+                    <td>3 Hours</td>
+                    <td>5000 RY</td>
+                    <td>Kuraimi</td>
+                    <td>Cancelled</td>
+                    <td>
+                        <a href="/Owner/OwnersStations/AcceptedReservation" class="btn btn-success btn-sm" style="padding: 5px 10px; margin: 2px; border-radius: 10px;">Accept</a>
+                        <a href="/Owner/OwnersStations/RejectedReservation" class="btn btn-danger btn-sm" style="padding: 5px 10px; margin: 2px; border-radius: 10px;">Reject</a>
+                    </td>
+                </tr>
+                <tr style="height: 4vw">
+                    <th>5</th>
+                    <td>Regular</td>
+                    <td>2024-04-06</td>
+                    <td>9:00 AM</td>
+                    <td>6 Hours</td>
+                    <td>5000 RY</td>
+                    <td>Omgy</td>
+                    <td>Confirmed</td>
+                    <td>
+                        <a href="/Owner/OwnersStations/AcceptedReservation" class="btn btn-success btn-sm" style="padding: 5px 10px; margin: 2px; border-radius: 10px;">Accept</a>
+                        <a href="/Owner/OwnersStations/RejectedReservation" class="btn btn-danger btn-sm" style="padding: 5px 10px; margin: 2px; border-radius: 10px;">Reject</a>
+                    </td>
+                </tr>
+                <tr style="height: 4vw">
+                    <th>6</th>
+                    <td>BIG</td>
+                    <td>2024-02-07</td>
+                    <td>1:30 PM</td>
+                    <td>1:30 Hour</td>
+                    <td>8000 RY</td>
+                    <td>Kuraimi</td>
+                    <td>Pending</td>
+                    <td>
+                        <a href="/Owner/OwnersStations/AcceptedReservation" class="btn btn-success btn-sm" style="padding: 5px 10px; margin: 2px; border-radius: 10px;">Accept</a>
+                        <a href="/Owner/OwnersStations/RejectedReservation" class="btn btn-danger btn-sm" style="padding: 5px 10px; margin: 2px; border-radius: 10px;">Reject</a>
+                    </td>
+                </tr>
+                <tr style="height: 4vw">
+                    <th>7</th>
+                    <td>SMALL</td>
+                    <td>2024-02-08</td>
+                    <td>3:00 PM</td>
+                    <td>3:30 Hours</td>
+                    <td>3000 RY</td>
+                    <td>Cash</td>
+                    <td>Confirmed</td>
+                    <td>
+                        <a href="/Owner/OwnersStations/AcceptedReservation" class="btn btn-success btn-sm" style="padding: 5px 10px; margin: 2px; border-radius: 10px;">Accept</a>
+                        <a href="/Owner/OwnersStations/RejectedReservation" class="btn btn-danger btn-sm" style="padding: 5px 10px; margin: 2px; border-radius: 10px;">Reject</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- /Reservation Table -->
+    </div>
+</div>

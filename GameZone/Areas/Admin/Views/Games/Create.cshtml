@@ -1,0 +1,97 @@
+﻿@{
+    ViewData["Title"] = "Create Game Page";
+}
+
+<div class="container-fluid">
+
+    <!-- Content Row -->
+
+    <div>
+        <!-- Content -->
+        <form asp-action="Create" method="post">
+            <div class="row">
+
+                <div class="col-lg-6 col-12">
+
+                    <div class="text-success">
+                        <h2 class="mb-0">Creating New Game</h2>
+                    </div>
+                    <hr />
+
+                    <div class="form-group mt-3">
+                        <label for="loan_full_name" class="form-label">Name</label>
+                        <input type="text" class="form-control shadow-none" id="loan_full_name">
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="loan_full_name" class="form-label">Category</label>
+
+                        <select class="form-control">
+                            <option>Action</option>
+                            <option>Sport</option>
+                            <option>Adventures</option>
+                            <option>Arcade</option>
+                            <option>CO-OP</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loan_full_name" class="form-label">Descraption</label>
+                        <input type="text" class="form-control shadow-none" id="loan_full_name">
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="loan_full_name" class="form-label">Image</label>
+                        <input type="file" class="form-control shadow-none" id="loan_full_name">
+                        <small class="form-text text-muted">Only jpg jpeg png files are allowd with max size 1MB</small>
+
+                    </div>
+
+                    <label for="loan_full_name" class="form-label">Supported Consoles :</label>
+
+                    <div class="form-check d-flex">
+
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Playstation 5
+                        </label>
+
+                        <div style="margin-left: 60px;">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                XBox
+                            </label>
+                        </div>
+
+                        <div style="margin-left: 60px;margin-bottom: 30px;">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                VR
+                            </label>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-lg-6  col-12 justify-content-center pt-5 overflow-hidden">
+                    <div style="border: 2px solid white;width: 300px;height: 400px; border-radius: 10px;position: relative;margin-left: 17%;">
+                        <img class="cover-previewrounded"
+                             style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+                             src="~/Assets/image-white.png" alt="Cover" width="60px" height="60px"/>
+                    </div>
+                </div>
+
+
+                <a onclick="alert('Saved Successfully')" class="text-white btn btn-success" style="margin-left: 1vw; margin-top: 1vw; width: 70px;"
+                   href="#">save</a>
+            </div>
+
+        </form>
+
+    </div>
+    <!-- End of Main Content -->
+</div>

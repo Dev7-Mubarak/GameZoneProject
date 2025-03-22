@@ -1,0 +1,174 @@
+﻿@{
+    ViewData["Title"] = "Event Details Page";
+}
+
+<!-- Join Us pop-up -->
+<div class="modal fade" id="join-us" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header border-bottom-0">
+				<h4 class="modal-title" id="exampleModalLabel">Join Us</h4>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form method="get">
+					<div class="row">
+						<div class="col-lg-6 mb-4 pb-2">
+							<div class="form-group">
+								<label for="join_full_name" class="form-label">Full Name</label>
+								<input type="text" class="form-control shadow-none" id="join_full_name" name="Name" placeholder="Ex: Ammar Bawazeer">
+							</div>
+						</div>
+						<div class="col-lg-6 mb-4 pb-2">
+							<div class="form-group">
+								<label for="join_age" class="form-label">Age</label>
+								<input type="number" class="form-control shadow-none" id="join_age" min="18" max="50" name="Age" placeholder="18-50">
+							</div>
+						</div>
+						<div class="col-lg-6 mb-4 pb-2">
+							<div class="form-group">
+								<label for="join_phone_number" class="form-label">Phone Number</label>
+								<input type="tel" class="form-control shadow-none" id="join_phone_number" name="Phone" placeholder="Ex: 739449259">
+							</div>
+						</div>
+						<div class="col-lg-6 mb-4 pb-2">
+							<div class="form-group">
+								<label for="join_location" class="form-label">Address</label>
+								<input type="text" class="form-control shadow-none" id="join_location" name="Address" placeholder="Ex: Aldis / Mukalla">
+							</div>
+						</div>
+						<div class="col-lg-12 mb-4 pb-2">
+							<div class="form-group">
+								<label for="join_email_address" class="form-label">Email Address</label>
+								<input type="email" class="form-control shadow-none" id="join_email_address" name="Email" placeholder="Ex: epic@gmail.com">
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<button type="submit" class="btn btn-primary w-100" onclick="alert('Joined Successfully')">Reserve Your Seat Now</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /Join Us pop-up -->
+
+<!-- Event Details -->
+<section class="section">
+	<div class="container">
+
+		<!-- Event Name -->
+		<div class="row justify-content-center">
+			<div class="col-12">
+				<div class="col-lg-10 mx-auto text-center title-row">
+					<h2 class="section-title mb-0">Game Day X</h2>
+					<div class="section-border mt-4"></div>
+				</div>
+			</div>
+			<!-- /Event Name -->
+			<!-- Who Are We section -->
+			<div class="row justify-content-between align-items-center">
+				<div class="col-lg-5">
+					<div class="section-title">
+						<p class="text-primary text-uppercase fw-bold mb-3">Who Are We</p>
+						<h1>Game Day X - A Celebration of Gaming.</h1>
+						<p>Game Day X is an exciting gaming event that is set to take place in the beautiful city of Hadramout Al-Mukalla, Yemen. This event aims to bring together gaming enthusiasts, professionals, and casual gamers from all across the region for a day filled with thrilling competitions, interactive exhibits, and a celebration of the gaming culture.</p>
+						<p>Date: 24 April</p>
+						<p>Time: 6:00 PM - 10:00 PM</p>
+						<p>Location: AL-Dis / Al-Mukalla / Hadramout</p>
+					</div>
+				</div>
+				<div class="col-lg-6 mt-5 mt-lg-0">
+					<div class="has-video-popup position-relative">
+						<img src="~/Assets/Images/game-event(1).jpg" alt="Game Day X" class="rounded-lg w-100">
+					</div>
+				</div>
+				<div style="margin-left: 25%;;" class="col-12 text-center mt-3">
+					<a style="width: 10vw;" class="btn btn-primary align-self-center" data-bs-toggle="modal" data-bs-target="#join-us">Join Us</a>
+				</div>
+			</div>
+			<!-- /Who Are We section -->
+
+		</div>
+</section>
+
+<!-- Event Experince section -->
+<section class="section loan-steps bg-tertiary">
+	<div class="container">
+		<div class="row justify-content-center align-items-center">
+			<div class="col-lg-7">
+				<div class="section-title text-center">
+					<p class="text-primary text-uppercase fw-bold mb-3">Enjoy With Us</p>
+					<h1>Immerse Yourself in the Ultimate Gaming Experience at Game Day X!</h1>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-lg-10">
+				<div class="row justify-content-center">
+					<div class="step-item col-lg-4 col-md-6">
+						<div class="text-center">
+							<p class="count">01</p>
+							<h3 class="mb-3">Level Up Your Game!</h3>
+							<p class="mb-0">Compete against the best players in Hadramout Al-Mukalla, showcase your skills, and win exciting prizes. Level up your gaming experience and be part of this thrilling event!</p>
+						</div>
+					</div>
+					<div class="step-item col-lg-4 col-md-6">
+						<div class="text-center">
+							<p class="count">02</p>
+							<h3 class="mb-3">Virtual Reality Adventure!</h3>
+							<p class="mb-0">Experience immersive VR and AR gaming, try out the latest technologies, and explore captivating virtual worlds. Don't miss this chance to elevate your gaming experience!</p>
+						</div>
+					</div>
+					<div class="step-item col-lg-4 col-md-6">
+						<div class="text-center">
+							<p class="count">03</p>
+							<h3 class="mb-3">Embrace Your Hero!</h3>
+							<p class="mb-0">Dress up as your favorite gaming characters, show off your creativity, and join the vibrant cosplay community. Be part of this incredible celebration of gaming culture at Game Day X!</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- /Event Experince section -->
+<!-- Main Events section -->
+<section class="section">
+	<div class="container">
+		<div class="row justify-content-center align-items-center">
+			<div class="col-lg-6">
+				<div class="section-title text-center">
+					<p class="text-primary text-uppercase fw-bold mb-3">What To Expect</p>
+					<h1>Exciting Events at Game Day X!</h1>
+					<p>"Experience thrilling competitions, immersive VR adventures, and epic cosplay clashes!"</p>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<div class="icon-box-item col-lg-4 col-md-6 text-center">
+				<div class="block">
+					<div class="icon w-25"> <img src="~/Assets/details/game.png" alt="Battle Royale"></div>
+					<h3 class="mb-3">Battle Royale Bonanza</h3>
+					<p class="mb-0 text-start">Engage in intense battles and fight for survival in the Battle Royale Bonanza at Game Day X. Be the last one standing in this adrenaline-fueled event!</p>
+				</div>
+			</div>
+			<div class="icon-box-item col-lg-4 col-md-6 text-center">
+				<div class="block">
+					<div class="icon w-25"><img src="~/Assets/details/virtual-reality (1).png" alt="VR World"></div>
+					<h3 class="mb-3">VR World Expedition</h3>
+					<p class="mb-0 text-start">Immerse yourself in breathtaking virtual reality landscapes and embark on thrilling adventures at the VR World Expedition during Game Day X.</p>
+				</div>
+			</div>
+			<div class="icon-box-item col-lg-4 col-md-6 text-center">
+				<div class="block">
+					<div class="icon w-25"><img src="~/Assets/details/frankenstein (1).png" alt="Cosplay Clash"></div>
+					<h3 class="mb-3">Cosplay Clash</h3>
+					<p class="mb-0 text-start">Unleash your creativity and join the vibrant world of cosplay at the Cosplay Clash event during Game Day X. Be part of the celebration!</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- /Main Events section -->

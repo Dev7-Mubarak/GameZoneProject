@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "User Reservation Log";
+    Layout = "_layout2";
+}
+
+
+<section class="container text-center" style="margin-top: 15vw; margin-bottom: 15vw;">
+
+    <div>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="col-lg-10 mx-auto text-center">
+
+                    <h2 class="section-title mb-0">Account Details</h2>
+
+                    <div class="section-border mt-4 w-25"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <form action="#!" method="get">
+                <div class="row justify-content-around">
+
+                    <div class="col-lg-7 mb-4 pb-2">
+                        <div class="form-group">
+                            <label for="loan_full_name" class="form-label">FirstName</label>
+                            <input type="text" class="form-control shadow-none" id="loan_full_name">
+                        </div>
+                    </div>
+                    <div class="col-lg-7 mb-4 pb-2">
+                        <div class="form-group">
+                            <label for="loan_full_name" class="form-label">LastName</label>
+                            <input type="text" class="form-control shadow-none" id="loan_full_name">
+                        </div>
+                    </div>
+                    <div class="col-lg-7 mb-4 pb-2">
+                        <div class="form-group">
+                            <label for="loan_email_address" class="form-label">Email address</label>
+                            <input type="email" class="form-control shadow-none" id="loan_email_address" placeholder="hsgfkjfs@gamil.com">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7 mb-4 pb-2">
+                        <div class="form-group">
+                            <label for="loan_full_name" class="form-label">Password</label>
+                            <input type="password" class="form-control shadow-none" id="loan_full_name">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <button asp-action="UserIndex" class="btn btn-primary col-4">Back to Home</button>
+                        <button asp-action="EditAccountDetails" class="btn btn-warning col-4 text-white">Edit Details</button>
+
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+</section>
+

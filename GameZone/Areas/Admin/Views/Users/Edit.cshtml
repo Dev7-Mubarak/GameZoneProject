@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Edit User Page";
+}
+
+<div class="container mt-5 d-flex justify-content-center">
+    <!-- Create User Form -->
+
+    <div class="col-md-6">
+
+        <div class="text-success">
+            <h2 class="mb-0">Editing User</h2>
+        </div>
+        <hr />
+        <form>
+            <!-- Username Field -->
+            <div class="mb-4">
+                <label class="form-label">First Name</label>
+                <input type="text" class="form-control" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Last Name</label>
+                <input type="text" class="form-control" required>
+            </div>
+
+            <!-- Email Field -->
+            <div class="mb-4">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Phone Number</label>
+                <input type="text" class="form-control" required>
+            </div>
+
+            <!-- Role Selection -->
+            <div class="mb-4">
+                <label class="form-label">Role</label>
+                <select class="form-select" required>
+                    <option value="">Select Role</option>
+                    <option value="User">User</option>
+                    <option value="Owner">Owner</option>
+                </select>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex gap-2">
+                <a href="#" class="btn btn-success px-4">
+                    Edit
+                </a>
+                <a href="/Admin/Users/Index" class="btn btn-outline-secondary px-4">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

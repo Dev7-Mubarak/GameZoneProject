@@ -1,0 +1,121 @@
+﻿@{
+    ViewData["Title"] = "Events Page";
+}
+
+<!-- Events -->
+<section class="section">
+    <div class="container">
+        <!-- Events Title -->
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="col-lg-10 mx-auto text-center title-row">
+                    <h2 class="section-title mb-0">Events</h2>
+                    <div class="section-border mt-4"></div>
+                </div>
+            </div>
+        </div>
+        <!-- /Events Title -->
+
+        <div class="row align-items-center justify-content-between">
+            <!-- Event 1 -->
+            <div class="col-12 col-md-6 event-col">
+                <div class="card mb-3 border-4 border-success event-card">
+                    <img src="~/Assets/Images/game-event(1).jpg"
+                         class="card-img-top"
+                         alt="Game Day X" />
+                    <div class="card-body">
+                        <h5 class="card-title text-center text-uppercase">
+                            game day x
+                        </h5>
+                        <p class="card-text text-black">
+                            Come and play games - mingle with people from the games
+                            industry, and lovers of games all around.
+                        </p>
+                        <p class="card-text text-black">
+                            Date: <span class="date-available">24 April 2024</span>
+                        </p>
+                        <div class="row justify-content-center">
+                            <a asp-controller="Events" asp-action="EventDetails" class="btn col-6 bg-success">Find Out More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Event 1 -->
+            <!-- Event 2 -->
+            <div class="col-12 col-md-6 event-col">
+                <div class="card mb-3 border-4 border-success event-card">
+                    <img src="~/Assets/Images/game-event(2).jpg"
+                         class="card-img-top"
+                         alt="Game Access Reborn Event" />
+                    <div class="card-body">
+                        <h5 class="card-title text-center text-uppercase">
+                            game access reborn
+                        </h5>
+                        <p class="card-text text-black">
+                            Gaming for everyone. Discover how Game Access Reborn is making
+                            the world of gaming more inclusive and accessible.
+                        </p>
+                        <p class="card-text text-black">
+                            Date: <span class="date-available">7 October 2024</span>
+                        </p>
+                        <div class="row justify-content-center">
+                            <a a asp-controller="Events" asp-action="EventDetails" class="btn col-6 bg-success">Find Out More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Event 2 -->
+        </div>
+        <div class="row align-items-start justify-content-between mb-5">
+            <!-- Event 3 -->
+            <div class="col-12 col-md-6 event-col">
+                <div class="card mb-3 border-4 border-success event-card">
+                    <img src="~/Assets/Images/game-event(3).jpg"
+                         class="card-img-top"
+                         alt="Gamers Unite Event" />
+                    <div class="card-body">
+                        <h5 class="card-title text-center text-uppercase">
+                            gamers unite
+                        </h5>
+                        <p class="card-text text-black">
+                            Level up your social life. Gamers Unite is the perfect place
+                            to expand your gaming network and share your love of games.
+                        </p>
+                        <p class="card-text text-black">
+                            Date: <span class="date-available">5 September 2024</span>
+                        </p>
+                        <div class="row justify-content-center">
+                            <a a asp-controller="Events" asp-action="EventDetails" class="btn col-6 bg-success">Find Out More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Event 3 -->
+            <!-- Event 4 -->
+            <div class="col-12 col-md-6 event-col">
+                <div class="card mb-3 border-4 border-success event-card">
+                    <img src="~/Assets/Images/game-event(4).jpg"
+                         class="card-img-top"
+                         alt="Xamk Game Track Event" />
+                    <div class="card-body">
+                        <h5 class="card-title text-center text-uppercase">
+                            xamk game track
+                        </h5>
+                        <p class="card-text text-black">
+                            Discover the next generation of game developers. Explore
+                            potential collaborations at the Xamk Game Track event.
+                        </p>
+                        <p class="card-text text-black">
+                            Date: <span class="date-end">Finished</span>
+                        </p>
+                        <div class="row justify-content-center">
+                            <a a asp-controller="Events" asp-action="EventDetails" class="btn col-6 bg-success">Find Out More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Event 4 -->
+        </div>
+    </div>
+</section>
+<!-- /Events -->
