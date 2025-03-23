@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Games Categories Page";
+}
+
+<div class="container-fluid d-flex justify-content-center">
+
+    <!-- Content Row -->
+    <!-- Content -->
+
+    <div class="col-8">
+        <h1 class="text-center text-success mb-5">All Games Categories</h1>
+
+        <a class="btn btn-success my-3" href="/Admin/Games/CreateCategory">Create New Category</a>
+
+        <table class="table table-striped text-center text-white">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Sport</td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Games" asp-action="EditCategory" class="btn btn-warning rounded rounded-3 mr-2 font-weight-bold" style="width: 70px;">Edit</a>
+                        <a asp-area="Admin" asp-controller="Games" asp-action="DeleteCategory" class="btn btn-danger rounded rounded-3 mr-2 font-weight-bold" style="width: 70px;" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Action</td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Games" asp-action="EditCategory" class="btn btn-warning rounded rounded-3 mr-2 font-weight-bold" style="width: 70px;">Edit</a>
+                        <a asp-area="Admin" asp-controller="Games" asp-action="DeleteCategory" class="btn btn-danger rounded rounded-3 mr-2 font-weight-bold" style="width: 70px;" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Adventure</td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Games" asp-action="EditCategory" class="btn btn-warning rounded rounded-3 mr-2 font-weight-bold" style="width: 70px;">Edit</a>
+                        <a asp-area="Admin" asp-controller="Games" asp-action="DeleteCategory" class="btn btn-danger rounded rounded-3 mr-2 font-weight-bold" style="width: 70px;" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Co-OP</td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Games" asp-action="EditCategory" class="btn btn-warning rounded rounded-3 mr-2 font-weight-bold" style="width: 70px;">Edit</a>
+                        <a asp-area="Admin" asp-controller="Games" asp-action="DeleteCategory" class="btn btn-danger rounded rounded-3 mr-2 font-weight-bold" style="width: 70px;" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

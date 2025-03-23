@@ -19,27 +19,27 @@ namespace GameZone.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult AllRoomsCategories()
-        {
-            return View();
-        }
+        //public IActionResult AllRoomsCategories()
+        //{
+        //    return View();
+        //}
 
-        // For Create Category
-        public IActionResult Create()
-        {
-            return View();
-        }
+        //// For Create Category
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        // For Edit Category
-        public IActionResult Edit()
-        {
-            return View();
-        }
+        //// For Edit Category
+        //public IActionResult Edit()
+        //{
+        //    return View();
+        //}
 
-        // For Delete Category
-        public IActionResult Delete()
-        {
-            return View();
-        }
+        //// For Delete Category
+        //public IActionResult Delete()
+        //{
+        //    return View();
+        //}
     }
 }
