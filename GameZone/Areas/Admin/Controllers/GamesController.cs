@@ -33,5 +33,25 @@ namespace GameZone.Areas.Admin.Controllers
         {
             return View();
         }
+
+        public IActionResult AllGameCategories()
+        {
+            return View();
+        }
+
+        public IActionResult CreateCategory()
+        {
+            return View();
+        }
+
+        public IActionResult EditCategory()
+        {
+            return View();
+        }
+
+        public IActionResult DeleteCategory()
+        {
+            return View();
+        }
     }
 }

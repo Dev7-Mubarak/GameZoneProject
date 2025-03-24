@@ -20,6 +20,11 @@ namespace GameZone.Areas.Owner.Controllers
             return View();
         }
 
+        public IActionResult AddMoreImages()
+        {
+            return View();
+        }
+
         public IActionResult Edit()
         {
             return View();
