@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - GameZone</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="shortcut icon" href="~/Assets/Images/title icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="~/lib/sweetalert2/sweetalert2.min.css" />
     <link href="~/dashboard/css/sb-admin-2.css" rel="stylesheet" />
 </head>
 
@@ -113,8 +114,11 @@
         </div>
     </div>
 
+    <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootbox.js/bootbox.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
