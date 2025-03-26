@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace GameZone.Models
+﻿namespace GameZone.Models
 {
     public partial class AccountsInformation
     {
         public int Id { get; set; }
-        public int ProviderId { get; set; }
+        public string ProviderName { get; set; }
         public int GameStationId { get; set; }
         public string AccountNumber { get; set; } = null!;
 

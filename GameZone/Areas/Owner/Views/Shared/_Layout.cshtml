@@ -35,7 +35,7 @@
             <hr class="sidebar-divider">
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" asp-area="Owner" asp-controller="OwnersStations" asp-action="OwnerStation">
+                <a class="nav-link" asp-area="Owner" asp-controller="Home" asp-action="Index">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Owner Stations</span>
                 </a>
@@ -61,7 +61,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" asp-area="Owner" asp-controller="OwnersStations" asp-action="ReservationLog">
+                <a class="nav-link" asp-area="Owner" asp-controller="Home" asp-action="ReservationLog">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Reservation Log</span>
                 </a>
@@ -80,10 +80,13 @@
                 <nav class="navbar navbar-expand navbar-light topbar static-top shadow d-flex justify-content-end">
 
                     <!-- Usre Info -->
-                    <div class="">
+                    <partial name="_LoginPartial" />
+                    @*            <div class="">
                         <span style="margin-right: 1vw;font-weight: bold; color: white;">Owner Name</span>
-                        <a style="margin-right: 0.5vw;" href="/Accounts/Login"><img width="35vw" src="~/Assets/Images/logout-white.png"></a>
-                    </div>
+                        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            <a style="margin-right: 0.5vw;"><img width="35vw" src="~/Assets/Images/logout-white.png"></a>
+                        </form>
+                    </div> *@
                 </nav>
                 <!-- End of Topbar -->
                 <!-- End of Content Wrapper -->

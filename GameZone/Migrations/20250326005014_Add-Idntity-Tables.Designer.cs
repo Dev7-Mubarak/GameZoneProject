@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameZone.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20250321213023_Add-Identity-Tables")]
-    partial class AddIdentityTables
+    [Migration("20250326005014_Add-Idntity-Tables")]
+    partial class AddIdntityTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -102,9 +102,9 @@ namespace GameZone.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d560dbc1-92c6-4477-8d29-d448e4dd14f9",
+                            Id = "af1a3f57-bab8-41e1-b8e4-950cf38a8f2d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3764a2a5-a979-4364-9d20-7fd2727d8031",
+                            ConcurrencyStamp = "10b2dbc3-7e9b-44c0-a20e-7383d6b4cc17",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             FisrtName = "Mubarak",
@@ -112,17 +112,17 @@ namespace GameZone.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEN81ZBR8Dheh5S/CZdFIfBg776gnaUVQFo4AylV3HaW8MnOULaZ1JzsQbGkChShP4A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKaHZ9Ge13SNybIFyOokmkMuI65HsF7btZMd3WW041DCUBHsoDC1QstacHRn+MkD1g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6655b276-0cd4-41f2-8581-305557483ef2",
+                            SecurityStamp = "ab4fcacf-4811-49b1-9e8d-ebaf71b288bd",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com"
                         },
                         new
                         {
-                            Id = "8693d7ce-431a-448c-a3fd-e398b1decdb6",
+                            Id = "8b178fa1-99b6-4d93-abdb-3c834c1c853a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "74416f7a-847f-4348-931c-b493f4241838",
+                            ConcurrencyStamp = "e377616e-c9d8-4da9-a74e-b85c87062e34",
                             Email = "owner@example.com",
                             EmailConfirmed = true,
                             FisrtName = "Mubarak",
@@ -130,11 +130,29 @@ namespace GameZone.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "OWNER@EXAMPLE.COM",
                             NormalizedUserName = "OWNER@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDLCWTYGFqcZecn3itFqtvzq+2EaJBN8RyzlMJFZ1ZpjnFV0EnOy98WgSJGKYvRaZA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEc9CccGkpv91WAzQrTwOrxcdTrjThfhCae24zPveKAAWa/+jF0XozdE2s7DrqMYNw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ac3ddd4d-0ca1-4a6d-bd16-206c362d8e4f",
+                            SecurityStamp = "2f88b25a-cb16-49c3-9e36-2e0cc816ab39",
                             TwoFactorEnabled = false,
                             UserName = "owner@example.com"
+                        },
+                        new
+                        {
+                            Id = "4a1e51b4-d214-471b-b8d8-2ded79626452",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "01217929-b95e-4996-bdb9-199942e9decc",
+                            Email = "User@example.com",
+                            EmailConfirmed = true,
+                            FisrtName = "Mubarak",
+                            LastName = "Bamazhem",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "USER@EXAMPLE.COM",
+                            NormalizedUserName = "USER@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAECkbECEwj0HiL2uI2nm/t4sWR2LqETHI/OwXyJhZuWYF/xJQOqkDE8FiOMXCHTAxdw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "33b392d1-a6b2-480b-a967-59e62495fbe6",
+                            TwoFactorEnabled = false,
+                            UserName = "User@example.com"
                         });
                 });
 
@@ -167,22 +185,22 @@ namespace GameZone.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "49104c7b-000c-47d3-80a3-6bec7bfe7e78",
-                            ConcurrencyStamp = "aee07a8b-b5b5-4f0b-842d-04d0e2e3ff29",
+                            Id = "646fd35b-2047-4b9e-8ef3-3928ae6217fb",
+                            ConcurrencyStamp = "5c5eddc4-0782-42a3-aaf3-b959174303d1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "f588e602-dda1-404b-80bf-88fc39d1da7c",
-                            ConcurrencyStamp = "ab965dbd-5f15-4cee-9a3b-5276943b8cc4",
+                            Id = "76328451-76a8-4a67-883d-46b0606707b6",
+                            ConcurrencyStamp = "7c5891ab-4466-4b91-ac14-b8619c9669c1",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "4e03b89f-8fff-4d22-9a74-72579fbc1c04",
-                            ConcurrencyStamp = "6344912e-a0f1-4d72-bbbb-c7f86a0957b1",
+                            Id = "2063ee63-4511-4241-a6d2-88dfadda0d7c",
+                            ConcurrencyStamp = "542e1419-64b5-4c0f-b888-a023d2005465",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -277,13 +295,18 @@ namespace GameZone.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "d560dbc1-92c6-4477-8d29-d448e4dd14f9",
-                            RoleId = "49104c7b-000c-47d3-80a3-6bec7bfe7e78"
+                            UserId = "af1a3f57-bab8-41e1-b8e4-950cf38a8f2d",
+                            RoleId = "646fd35b-2047-4b9e-8ef3-3928ae6217fb"
                         },
                         new
                         {
-                            UserId = "8693d7ce-431a-448c-a3fd-e398b1decdb6",
-                            RoleId = "f588e602-dda1-404b-80bf-88fc39d1da7c"
+                            UserId = "8b178fa1-99b6-4d93-abdb-3c834c1c853a",
+                            RoleId = "76328451-76a8-4a67-883d-46b0606707b6"
+                        },
+                        new
+                        {
+                            UserId = "4a1e51b4-d214-471b-b8d8-2ded79626452",
+                            RoleId = "2063ee63-4511-4241-a6d2-88dfadda0d7c"
                         });
                 });
 

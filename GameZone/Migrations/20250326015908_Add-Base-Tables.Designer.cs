@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameZone.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20250322163855_Add-Base-Tables")]
+    [Migration("20250326015908_Add-Base-Tables")]
     partial class AddBaseTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,8 +69,9 @@ namespace GameZone.Migrations
                     b.Property<int>("GameStationId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProviderId")
-                        .HasColumnType("int");
+                    b.Property<string>("ProviderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -157,9 +158,9 @@ namespace GameZone.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f0ef7f5b-e986-41b2-a10b-fd1644fbdb84",
+                            Id = "4e9cdf8c-a3e1-4eca-b127-6115a4fd328c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3eea1ad5-82c4-4c82-b156-9d4a0af9c7bd",
+                            ConcurrencyStamp = "0a544817-64b7-43f4-993d-62cf310ce12d",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             FisrtName = "Mubarak",
@@ -167,17 +168,17 @@ namespace GameZone.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMndfdV3ZjEI3uTLdmtqIHTj9lIaltGyHfNBrakYcC7HufdSoW/LLZ5G1wtfdfLxLQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOsutijivt9wjlMacww6h9GMm4y7yKvl5rV16T+T8o9EkPoizC+apbf+xsU+WwCHuA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "37f4803b-1da1-4654-95db-d5b3e4e75f04",
+                            SecurityStamp = "1bd815c8-683e-4f7b-8756-c699e3ab9c0d",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com"
                         },
                         new
                         {
-                            Id = "5226c55e-aefc-44f1-acc6-ae3b586b6a5e",
+                            Id = "5f3f3bfd-a33d-4d7e-8e78-e884015a37e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6076871b-f3f7-4899-b7b0-d53379e13a47",
+                            ConcurrencyStamp = "77cbc196-770b-4673-b409-6cfa28b69e9d",
                             Email = "owner@example.com",
                             EmailConfirmed = true,
                             FisrtName = "Mubarak",
@@ -185,11 +186,29 @@ namespace GameZone.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "OWNER@EXAMPLE.COM",
                             NormalizedUserName = "OWNER@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAELjBMm/0vaTVqWfy6sspnMHw8M9jzpoyYslKZp4frdcs5QoGUNGRvxv5REiDjehOTA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJRZqNIrdpEBEuqF84bq9sozC6hXZNdn7nNNPAhM2E+PVbKXAyElZ1rAhSXU9dqxtg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f7062579-f4bd-4b34-8e3b-806111e6021e",
+                            SecurityStamp = "d782d002-e244-4a9b-a5a2-fb7e80145835",
                             TwoFactorEnabled = false,
                             UserName = "owner@example.com"
+                        },
+                        new
+                        {
+                            Id = "9f3e7492-1a1c-4272-b700-a1c236554a92",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "1e1e595f-bc33-4736-ab9d-a3050d0a342e",
+                            Email = "User@example.com",
+                            EmailConfirmed = true,
+                            FisrtName = "Mubarak",
+                            LastName = "Bamazhem",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "USER@EXAMPLE.COM",
+                            NormalizedUserName = "USER@EXAMPLE.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAECIRYN9qQ5LXeNEYxt6FeP7mpF7SCTxsMjSNZFVcLKHuru+fREfPZTMa0+ZsU6O80w==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "ee8fe0e3-48b2-4400-bc5c-badbde3c8c76",
+                            TwoFactorEnabled = false,
+                            UserName = "User@example.com"
                         });
                 });
 
@@ -208,43 +227,6 @@ namespace GameZone.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Action"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Adventure"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "RPG"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Sports"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Strategy"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Shooter"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Racing"
-                        });
                 });
 
             modelBuilder.Entity("GameZone.Models.Device", b =>
@@ -339,6 +321,14 @@ namespace GameZone.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PhoneNumber1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber2")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<float?>("Rating")
                         .HasColumnType("real");
 
@@ -401,21 +391,21 @@ namespace GameZone.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("GameStationId")
                         .HasColumnType("int");
-
-                    b.Property<double>("Rating1")
-                        .HasColumnType("float");
 
                     b.Property<DateTime>("RatingDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserComment")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("UserRating")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -443,6 +433,9 @@ namespace GameZone.Migrations
                     b.Property<DateTime>("EndHour")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("GameStationId")
+                        .HasColumnType("int");
+
                     b.Property<short>("NumberOfHours")
                         .HasColumnType("smallint");
 
@@ -452,8 +445,8 @@ namespace GameZone.Migrations
                     b.Property<int>("RoomId")
                         .HasColumnType("int");
 
-                    b.Property<byte>("Satuts")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("Satuts")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("StartHour")
                         .HasColumnType("datetime2");
@@ -466,6 +459,8 @@ namespace GameZone.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GameStationId");
 
                     b.HasIndex("PaymentMethodId");
 
@@ -487,6 +482,10 @@ namespace GameZone.Migrations
                     b.Property<int>("GameStationId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<short>("NumberOfAllowedPeople")
                         .HasColumnType("smallint");
 
@@ -496,14 +495,12 @@ namespace GameZone.Migrations
                     b.Property<string>("PrimaryImage")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte>("RoomTypeId")
+                    b.Property<byte>("Unit")
                         .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("GameStationId");
-
-                    b.HasIndex("RoomTypeId");
 
                     b.ToTable("Rooms");
                 });
@@ -528,20 +525,6 @@ namespace GameZone.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("RoomsPictures");
-                });
-
-            modelBuilder.Entity("GameZone.Models.RoomType", b =>
-                {
-                    b.Property<byte>("Id")
-                        .HasColumnType("tinyint");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RoomTypes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -573,22 +556,22 @@ namespace GameZone.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9b094a88-ac1b-4469-a3d2-66945b9f2275",
-                            ConcurrencyStamp = "e8ae4289-3125-4ce0-b317-77ebcbee7ee1",
+                            Id = "5f1ccc00-9c59-4bc4-bcff-968efdb235f6",
+                            ConcurrencyStamp = "06665cfd-b528-4a44-bfee-d1d3e3888fd8",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "9adf4341-ad5b-4c5c-a42a-469c5453d170",
-                            ConcurrencyStamp = "307dfbf3-e579-4537-8507-62c3a5cf9b00",
+                            Id = "ff29813d-4ac2-4cf2-963a-ff3381f69f52",
+                            ConcurrencyStamp = "27fc930a-3bcd-46b9-89fa-e236cea9d262",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "2bed3555-7f91-4c97-a7ef-8fe8c72279c8",
-                            ConcurrencyStamp = "72124b4d-8d45-4506-994c-74cc1868865f",
+                            Id = "7027613e-86af-4c9b-9efb-6700f15bc3af",
+                            ConcurrencyStamp = "4867d057-353f-4c58-be2e-14867df8844e",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -683,13 +666,18 @@ namespace GameZone.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "f0ef7f5b-e986-41b2-a10b-fd1644fbdb84",
-                            RoleId = "9b094a88-ac1b-4469-a3d2-66945b9f2275"
+                            UserId = "4e9cdf8c-a3e1-4eca-b127-6115a4fd328c",
+                            RoleId = "5f1ccc00-9c59-4bc4-bcff-968efdb235f6"
                         },
                         new
                         {
-                            UserId = "5226c55e-aefc-44f1-acc6-ae3b586b6a5e",
-                            RoleId = "9adf4341-ad5b-4c5c-a42a-469c5453d170"
+                            UserId = "5f3f3bfd-a33d-4d7e-8e78-e884015a37e4",
+                            RoleId = "ff29813d-4ac2-4cf2-963a-ff3381f69f52"
+                        },
+                        new
+                        {
+                            UserId = "9f3e7492-1a1c-4272-b700-a1c236554a92",
+                            RoleId = "7027613e-86af-4c9b-9efb-6700f15bc3af"
                         });
                 });
 
@@ -815,6 +803,12 @@ namespace GameZone.Migrations
 
             modelBuilder.Entity("GameZone.Models.Reservation", b =>
                 {
+                    b.HasOne("GameZone.Models.GameStation", "GameStation")
+                        .WithMany("Reservations")
+                        .HasForeignKey("GameStationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("GameZone.Models.PaymentMethod", "PaymentMethod")
                         .WithMany("Reservations")
                         .HasForeignKey("PaymentMethodId")
@@ -828,10 +822,12 @@ namespace GameZone.Migrations
                         .IsRequired();
 
                     b.HasOne("GameZone.Models.AppUser", "User")
-                        .WithMany()
+                        .WithMany("Reservations")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("GameStation");
 
                     b.Navigation("PaymentMethod");
 
@@ -848,15 +844,7 @@ namespace GameZone.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GameZone.Models.RoomType", "RoomType")
-                        .WithMany("Rooms")
-                        .HasForeignKey("RoomTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("GameStation");
-
-                    b.Navigation("RoomType");
                 });
 
             modelBuilder.Entity("GameZone.Models.RoomsPicture", b =>
@@ -921,6 +909,11 @@ namespace GameZone.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("GameZone.Models.AppUser", b =>
+                {
+                    b.Navigation("Reservations");
+                });
+
             modelBuilder.Entity("GameZone.Models.Category", b =>
                 {
                     b.Navigation("Games");
@@ -939,6 +932,8 @@ namespace GameZone.Migrations
 
                     b.Navigation("Ratings");
 
+                    b.Navigation("Reservations");
+
                     b.Navigation("Rooms");
                 });
 
@@ -952,11 +947,6 @@ namespace GameZone.Migrations
                     b.Navigation("Reservations");
 
                     b.Navigation("RoomsPictures");
-                });
-
-            modelBuilder.Entity("GameZone.Models.RoomType", b =>
-                {
-                    b.Navigation("Rooms");
                 });
 #pragma warning restore 612, 618
         }

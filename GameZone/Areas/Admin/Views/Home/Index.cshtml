@@ -1,7 +1,41 @@
-﻿@{
-    ViewData["Title"] = "Admin Dashboard";
+﻿@using GameZone.Models
+@model IEnumerable<GameStation>
+
+@{
+    ViewData["Title"] = "Game Stations";
 }
 
-<div>
-    <h1>Welcome to Admin Dashboard Page</h1>
-</div>
+<h2>Game Stations</h2>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Location</th>
+            <th>Rating</th>
+            <th>Opening Hours</th>
+            <th>Contact</th>
+            <th>Image</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var station in Model)
+        {
+            <tr>
+                <td>@station.Name</td>
+                <td>@station.Descraption</td>
+                <td>@station.Location</td>
+                <td>@station.Rating</td>
+                <td>
+                    @station.MorningOpenTime - @station.MorningCloseTime <br>
+                    @station.EveningOpenTime - @station.EveningCloseTime
+                </td>
+                <td>@station.PhoneNumber1, @station.PhoneNumber2</td>
+                <td>
+                    <img src="~/images/@station.Image" alt="Game Station Image" width="100">
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

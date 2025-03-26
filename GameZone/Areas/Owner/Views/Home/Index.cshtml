@@ -1,7 +1,46 @@
-﻿@{
-    ViewData["Title"] = "Owner Dashboard";
-}
+﻿@model GameZone.Models.GameStation
 
-<div>
-    <h1>Welcome to Owner Dashboard Page</h1>
+<div class="container-fluid px-4">
+    <h1 class="text-center text-success mb-5">Station Details</h1>
+
+    <div>
+        <a asp-area="Owner" asp-controller="OwnersStations" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">
+            Edit Station
+        </a>
+    </div>
+
+    <div class="card shadow-sm mt-4 text-white" style="background-color:#01053c;">
+        <div class="card-body">
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <div class="mb-4">
+                        <h5 class="fw-bold text-success">Name</h5>
+                        <p class="m-0">@Model.Name</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5 class="fw-bold text-success">Location</h5>
+                        <p class="m-0">@Model.Location</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5 class="fw-bold text-success">Phone Numbers</h5>
+                        <p class="m-0">@Model.PhoneNumber1 &emsp;&emsp; @Model.PhoneNumber2</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5 class="fw-bold text-success">Description</h5>
+                        <p class="m-0">@Model.Descraption</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 text-center">
+                    <img src="~/Assets/Images/@(Model.Image ?? "default.jpg")"
+                         class="img-fluid rounded"
+                         alt="Station Cover"
+                         style="max-height: 450px">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
