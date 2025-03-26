@@ -1,4 +1,6 @@
-﻿@{
+﻿@model StationsRoomsVM
+
+@{
     ViewData["Title"] = "All Rooms Page";
 }
 
@@ -34,135 +36,29 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>
-                        Louse
-                    </td>
-                    <td>
-                        VIP
-                    </td>
-                    <td>
-                        <img src="~/Assets/Images/vip room.jpg" alt="Name" class="imgroom"
-                             style="max-width: 60px; max-height: 80px" />
-                    </td>
-                    <td>
-
-                        <p>9000RY</p>
-
-                    </td>
-                    <td>
-                        8
-                    </td>
-
-                    <td>
-                        4
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>
-                        Louse
-                    </td>
-                    <td>
-                        Big Room
-                    </td>
-                    <td>
-                        <img src="~/Assets/Images/big room.jpeg" alt="Name" class="imgroom"
-                             style="max-width: 60px; max-height: 80px" />
-                    </td>
-                    <td>
-
-                        <p>7000RY</p>
-
-                    </td>
-                    <td>
-                        8
-                    </td>
-
-                    <td>
-                        4 X 4
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>
-                        Game Over
-                    </td>
-                    <td>
-                        VIP
-                    </td>
-                    <td>
-                        <img src="~/Assets/Images/vip room.jpg" alt="Name" class="imgroom"
-                             style="max-width: 60px; max-height: 80px" />
-                    </td>
-                    <td>
-
-                        <p>9000RY</p>
-
-                    </td>
-                    <td>
-                        8
-                    </td>
-
-                    <td>
-                        4 X 4
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>
-                        Game Over
-                    </td>
-                    <td>
-                        VIP
-                    </td>
-                    <td>
-                        <img src="~/Assets/Images/big room.jpeg" alt="Name" class="imgroom"
-                             style="max-width: 60px; max-height: 80px" />
-                    </td>
-                    <td>
-
-                        <p>9000RY</p>
-
-                    </td>
-                    <td>
-                        8
-                    </td>
-
-                    <td>
-                        4 X 4
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>
-                        Louse
-                    </td>
-                    <td>
-                        VIP
-                    </td>
-                    <td>
-                        <img src="~/Assets/Images/small room.jpg" alt="Name" class="imgroom"
-                             style="max-width: 60px; max-height: 80px" />
-                    </td>
-                    <td>
-
-                        <p>9000RY</p>
-
-                    </td>
-                    <td>
-                        8
-                    </td>
-
-                    <td>
-                        4 X 4
-                    </td>
-
-                </tr>
-
+                @foreach (var room in Model.AllStationsRooms)
+                {
+                    <tr>
+                        <td>@room.GameStation.Name</td>
+                        <td>@room.Name</td>
+                        <td>
+                            <img src="~/Assets/Images/@room.PrimaryImage" alt="Name" class="imgroom"
+                                 style="max-width: 60px; max-height: 80px" />
+                        </td>
+                        <td><p>@room.Price RY</p></td>
+                        <td>@room.NumberOfAllowedPeople</td>
+                        <td>@room.Unit</td>
+                    </tr>
+                }
             </tbody>
         </table>
 
     </div>
     <!-- End of Main Content -->
 </div>
+
+@section Scripts {
+    <script>
+        $('table').DataTable();
+    </script>
+}

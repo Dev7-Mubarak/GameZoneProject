@@ -1,45 +1,35 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GameZone.Areas.Admin.ViewModels;
+using GameZone.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameZone.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class RoomsController : Controller
     {
-        public RoomsController()
+        private readonly AppDBContext _context;
+
+        public RoomsController(AppDBContext context)
         {
-            
+            _context = context;
         }
+
         public IActionResult AllRooms()
         {
-            return View();
+            var allRooms = new StationsRoomsVM()
+            {
+                AllStationsRooms = _context.Rooms
+                                   .Include(r => r.GameStation)
+                                   .ToList(),
+            };
+
+            return View(allRooms);
         }
 
         public IActionResult RoomsInStation()
         {
             return View();
         }
-
-        //public IActionResult AllRoomsCategories()
-        //{
-        //    return View();
-        //}
-
-        //// For Create Category
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        //// For Edit Category
-        //public IActionResult Edit()
-        //{
-        //    return View();
-        //}
-
-        //// For Delete Category
-        //public IActionResult Delete()
-        //{
-        //    return View();
-        //}
     }
 }
