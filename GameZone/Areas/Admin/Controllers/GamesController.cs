@@ -110,5 +110,13 @@ namespace GameZone.Areas.Admin.Controllers
 
             return Ok();
         }
+
+        public IActionResult CheckIfNameExists(GamesCategoriesVM model)
+        {
+            var category = _context.Categories.SingleOrDefault(c => c.Name == model.Name);
+            var isAllowed = category is null || category.Id.Equals(model.Id);
+
+            return Json(isAllowed);
+        }
     }
 }
