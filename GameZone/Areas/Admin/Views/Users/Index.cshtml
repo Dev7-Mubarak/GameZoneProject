@@ -1,20 +1,24 @@
-﻿@{
+﻿@model IEnumerable<UserVM>
+
+@{
     ViewData["Title"] = "All Users Page";
 }
 
 <div class="container-fluid">
 
-    <!-- Content Row -->
-    <!-- Content -->
-
     <h1 class="text-center text-success mb-5">All Users</h1>
     <section>
         <a class="btn btn-success my-3" href="/Admin/Users/Create">Create New User</a>
 
+        <div id="alert" class="alert alert-success alert-dismissible fade show d-none" role="alert">
+            User Deleted Successfully
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
         <table class="table table-striped text-white text-center">
             <thead class="custom-thead">
                 <tr>
-                    <th>User Name</th>
+                    <th>FullName</th>
                     <th>Emile</th>
                     <th>Role</th>
                     <th>Actions</th>
@@ -22,52 +26,74 @@
             </thead>
 
             <tbody>
-                <tr >
-                    <td>ALi</td>
-                    <td>hgs@gamil.com</td>
-                    <td>User</td>
-                    <td>
-                        <a asp-area="Admin" asp-controller="Users" asp-action="Edit" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
-                        <a asp-area="Admin" asp-controller="Users" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                    </td>
-                </tr>
-                <tr >
-                    <td>ALi</td>
-                    <td>skjd@gamil.com</td>
-                    <td>Admin</td>
-                    <td>
-                        <a asp-area="Admin" asp-controller="Users" asp-action="Edit" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
-                        <a asp-area="Admin" asp-controller="Users" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Omer</td>
-                    <td>hgs@gamil.com</td>
-                    <td>Owner</td>
-                    <td>
-                        <a asp-area="Admin" asp-controller="Users" asp-action="Edit" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
-                        <a asp-area="Admin" asp-controller="Users" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                    </td>
-                </tr>
-                <tr >
-                    <td>Hasson</td>
-                    <td>ksj;s@gamil.com</td>
-                    <td>Owner</td>
-                    <td>
-                        <a asp-area="Admin" asp-controller="Users" asp-action="Edit" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
-                        <a asp-area="Admin" asp-controller="Users" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>ALi</td>
-                    <td>hgs@gamil.com</td>
-                    <td>User</td>
-                    <td>
-                        <a asp-area="Admin" asp-controller="Users" asp-action="Edit" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
-                        <a asp-area="Admin" asp-controller="Users" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                    </td>
-                </tr>
+                 @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.FullName</td>
+                        <td>@user.Emile</td>
+                        <td>@user.Role</td>
+                        <td>
+                            <a asp-area="Admin" asp-controller="Users" asp-action="Edit" asp-route-id="@user.Id" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
+                            <a href="javascript:;" data-id="@user.Id" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold js-delete">Delete</a>
+                        </td>
+                    </tr>
+
+                }
             </tbody>
         </table>
     </section>
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('table').DataTable();
+
+            $('.js-delete').on('click', function () {
+                var btn = $(this);
+
+                bootbox.confirm({
+                    message: "Are you sure that you need to delete this User?",
+                    buttons: {
+                        confirm: {
+                            label: 'Yes',
+                            className: 'btn-danger'
+                        },
+                        cancel: {
+                            label: 'No',
+                            className: 'btn-success'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: '/Admin/Users/Delete/' + btn.data('id'),
+                                type: 'POST',
+                                data: {
+                                    '__RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                                },
+                                success: function () {
+                                    btn.closest('tr').fadeOut(500, function () {
+                                        $(this).remove();
+                                    });
+
+                                    var alertBox = $('#alert');
+                                    alertBox.removeClass("d-none").fadeIn(500);
+
+                                    setTimeout(function () {
+                                        alertBox.fadeOut(500, function () {
+                                            $(this).addClass("d-none");
+                                        });
+                                    }, 5000);
+                                },
+                                error: function () {
+                                    alert('An error occurred while deleting the User.');
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}
