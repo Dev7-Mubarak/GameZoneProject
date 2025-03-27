@@ -27,9 +27,24 @@ namespace GameZone.Areas.Admin.Controllers
             return View(allRooms);
         }
 
-        public IActionResult RoomsInStation()
+        public async Task<IActionResult> RoomsInStation(int stationId)
         {
-            return View();
+            var station = await _context.GameStations
+                                                 .Include(s => s.Rooms)
+                                                 .FirstOrDefaultAsync(s => s.Id == stationId);
+
+            if (station is null)
+            {
+                return NotFound();
+            }
+
+            var roomsInStation = new RoomsInStationVM
+            {
+                StationName = station.Name,
+                Rooms = station.Rooms.ToList()
+            };
+
+            return View(roomsInStation);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model RoomsInStationVM
+
+@{
     ViewData["Title"] = "Rooms in Station Page";
 }
 
@@ -6,127 +8,40 @@
 
     <!-- Content Row -->
 
-    <h1 class="text-center text-success"><strong>Lousel</strong></h1>
+    <h1 class="text-center text-success"><strong>@Model.StationName</strong></h1>
     <h2 class="text-center text-success mb-5">Rooms</h2>
     <div>
 
         <table class="table table-striped text-center text-white">
             <thead>
                 <tr>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        Imgae
-                    </th>
-                    <th>
-                        Price In Hour
-                    </th>
-                    <th>
-                        Allowed people
-                    </th>
-                    <th>
-                        No. of Rooms
-                    </th>
-                  
+                    <th>Name</th>
+                    <th>Imgae</th>
+                    <th>Price In Hour</th>
+                    <th>Allowed people</th>
+                    <th>No. of Rooms</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>
-                        VIP
-                    </td>
-                    <td>
-                        <img src="~/Assets/Images/vip room.jpg" alt="Name" class="imgroom"
-                             style="max-width: 60px; max-height: 80px" />
-                    </td>
-                    <td>
+                @foreach (var room in Model.Rooms)
+                {
+                    <tr>
+                        <td>@room.Name</td>
 
-                        <p>7000YR</p>
+                        <td>
+                            <img src="~/Assets/Images/RoomsImages/@room.PrimaryImage" alt="Name" class="imgroom"
+                                 style="max-width: 60px; max-height: 80px" />
+                        </td>
 
-                    </td>
-                    <td>
-                        10
-                    </td>
+                        <td><p>@room.Price YR</p></td>
 
-                    <td>
-                        4
-                    </td>
-                    
-                </tr>
+                        <td>@room.NumberOfAllowedPeople</td>
 
-                <tr>
-                    <td>
-                        Big Room
-                    </td>
-                    <td>
-                        <img src="~/Assets/Images/big room.jpeg" alt="Name" class="imgroom"
-                             style="max-width: 60px; max-height: 80px" />
-                    </td>
-                    <td>
-
-                        <p>5000YR</p>
-
-                    </td>
-                    <td>
-                        8
-                    </td>
-
-                    <td>
-                        1 X 3
-                    </td>
-     
-                </tr>
-
-                <tr>
-                    <td>
-                        Regular Room
-
-                    </td>
-                    <td>
-                        <img src="~/Assets/Images/regular room.jpg" alt="Name" class="imgroom"
-                             style="max-width: 60px; max-height: 80px" />
-                    </td>
-                    <td>
-
-                        <p>3500YR</p>
-
-                    </td>
-                    <td>
-                        5
-                    </td>
-
-                    <td>
-                        3 X 2
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        Small Room
-
-                    </td>
-                    <td>
-                        <img src="~/Assets/Images/small room.jpg" alt="Name" class="imgroom"
-                             style="max-width: 60px; max-height: 80px" />
-                    </td>
-                    <td>
-
-                        <p>2000YR</p>
-
-                    </td>
-                    <td>
-                        2
-                    </td>
-
-                    <td>
-                        4 X 4
-                    </td>
-                </tr>
-
+                        <td>@room.Unit</td>
+                    </tr>
+                }
             </tbody>
         </table>
-
     </div>
     <!-- End of Main Content -->
 </div>

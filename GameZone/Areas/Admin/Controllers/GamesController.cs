@@ -2,6 +2,7 @@
 using GameZone.Data;
 using GameZone.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameZone.Areas.Admin.Controllers
 {
@@ -20,9 +21,28 @@ namespace GameZone.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult GamesInStation()
+        public async Task<IActionResult> GamesInStation(int stationId)
         {
-            return View();
+            var station = await _context.GameStations
+                                           .Include(gs => gs.GameStationGames)
+                                           .ThenInclude(gsg => gsg.Game)
+                                           .ThenInclude(g => g.Category)
+                                           .FirstOrDefaultAsync(gs => gs.Id == stationId);
+
+            if (station is null)
+            {
+                return NotFound();
+            }
+
+            var gamesInStation = new GamesInStationVM
+            {
+                StationName = station.Name,
+                Games = station.GameStationGames
+                               .Select(gsg => gsg.Game)
+                               .ToList()
+            };
+
+            return View(gamesInStation);
         }
 
         public IActionResult Create()
