@@ -11293,3 +11293,27 @@ table thead {
     background-color: #1cc88a;
     color: #01053c;
 }
+
+
+/* Customizing Bootbox Modal */
+
+.bootbox .modal-content {
+    background-color: #010434 !important; 
+    color: white !important;
+    border-radius: 10px; 
+}
+
+.bootbox .modal-body {
+    font-size: 25px; 
+    text-align: center;
+}
+
+.bootbox .modal-header .btn-close {
+    color: red !important;
+    filter: invert(34%) sepia(96%) saturate(1843%) hue-rotate(344deg) brightness(96%) contrast(101%);
+}
+
+.bootbox .modal-footer {
+    border-top: none !important;
+}
+
