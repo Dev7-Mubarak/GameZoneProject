@@ -12,7 +12,7 @@
 
     <div>
         <!-- Content -->
-        <form asp-controller="Games" asp-action="Create" enctype="multipart/form-data">
+        <form asp-controller="Games" asp-action="Create" enctype="multipart/form-data" id="gameForm">
             <div class="row">
 
                 <div class="col-lg-6 col-12">
@@ -66,7 +66,7 @@
                     <div class="form-group">
                         <label asp-for="SelectedDevices" class="form-label"></label>
 
-                        <div class="form-check d-flex pl-0">
+                        <div class="form-check d-flex pl-0" id="deviceCheckboxes">
 
                             @foreach (var device in Model.Devices)
                             {
@@ -79,6 +79,8 @@
                                 </div>
                             }
                         </div>
+
+                        <span id="selectedDevices-error" class="text-danger"></span>
                         <span asp-validation-for="SelectedDevices" class="text-danger"></span>
 
                     </div>
@@ -95,7 +97,8 @@
                 </div>
 
 
-                <button type="submit" class="text-white btn btn-success" style="margin-left: 1vw; margin-top: 1vw; width: 70px;">Save</button>
+                <button type="submit" class="text-white btn btn-success" style="margin-left: 1vw; margin-top: 1vw; width: 70px;">Create</button>
+                <a asp-action="Index" class="text-white btn btn-secondary" style="margin-left: 1vw; margin-top: 1vw; width: 70px;">Cancel</a>
             </div>
 
         </form>
@@ -116,6 +119,18 @@
         $(document).ready(function () {
             $('#Cover').on('change', function () {
                 $('.cover-preview').attr('src' , window.URL.createObjectURL(this.files[0])).removeClass('d-none');
+            });
+        });
+
+        $(document).ready(function () {
+            $("#gameForm").submit(function (event) {
+                var checkedDevices = $('input[name="SelectedDevices"]:checked');
+                if (checkedDevices.length === 0) {
+                    event.preventDefault(); // Prevent form submission
+                    $("#selectedDevices-error").text("Please select at least one device.");
+                } else {
+                    $("#selectedDevices-error").text(""); // Clear any previous error message
+                }
             });
         });
     </script>

@@ -1,5 +1,6 @@
 ﻿using GameZone.Areas.Admin.ViewModels;
 using GameZone.Data;
+using GameZone.Helpers;
 using GameZone.Models;
 using GameZone.Settings;
 using Microsoft.EntityFrameworkCore;
@@ -43,7 +44,7 @@ namespace GameZone.Areas.Admin.Services
 
         public async Task CreateGame(CreateGameFormVM model)
         {
-            var coverName = await SaveCover(model.Cover);
+            var cover = await Utilities.SaveFileAsync(model.Cover, _gameImagesPath);
 
             var devices = _context.Devices.Where(d => model.SelectedDevices.Contains(d.Id)).ToList();
 
@@ -54,7 +55,7 @@ namespace GameZone.Areas.Admin.Services
                 Developer = model.Developer,
                 Release = model.Release,
                 CategoryId = model.CategoryId,
-                Cover = coverName,
+                Cover = cover.FileName,
                 Devices = devices
             };
 
@@ -87,7 +88,8 @@ namespace GameZone.Areas.Admin.Services
 
             if (HasNewCover)
             {
-                game.Cover = await SaveCover(model.Cover!);
+                var gameCover = await Utilities.SaveFileAsync(model.Cover!, _gameImagesPath!);
+                game.Cover = gameCover.FileName;
             }
 
             var effectedRows = _context.SaveChanges();
@@ -95,18 +97,14 @@ namespace GameZone.Areas.Admin.Services
             {
                 if (HasNewCover)
                 {
-                    var oldCover = Path.Combine(_gameImagesPath, currentCover);
-                    File.Delete(oldCover);
+                    Utilities.DeleteFile(currentCover, _gameImagesPath);
                 }
 
                 return game;
             }
             else
             {
-
-                var NewCover = Path.Combine(_gameImagesPath, game.Cover);
-                File.Delete(NewCover);
-
+                Utilities.DeleteFile(game.Cover, _gameImagesPath);
                 return null;
             }
         }
@@ -127,22 +125,10 @@ namespace GameZone.Areas.Admin.Services
             {
                 IsDeleted = true;
 
-                var cover = Path.Combine(_gameImagesPath, game.Cover);
-                File.Delete(cover);
+                Utilities.DeleteFile(game.Cover, _gameImagesPath);
             }
 
             return IsDeleted;
-        }
-
-        private async Task<string> SaveCover(IFormFile cover)
-        {
-            var coverName = $"{Guid.NewGuid()}{Path.GetExtension(cover.FileName)}";
-            var path = Path.Combine(_gameImagesPath, coverName);
-
-            using var stream = File.Create(path);
-            await cover.CopyToAsync(stream);
-
-            return coverName;
-        }        
+        }      
     } 
 }
