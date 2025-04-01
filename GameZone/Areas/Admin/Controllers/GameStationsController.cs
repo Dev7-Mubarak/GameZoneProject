@@ -25,7 +25,7 @@ namespace GameZone.Areas.Admin.Controllers
             _context = context;
             _userManager = userManager;
             _webHostEnvironment = webHostEnvironment;
-            _imagePath = $"{_webHostEnvironment.WebRootPath}{StationCoverSettings.stationFilePath}";
+            _imagePath = $"{_webHostEnvironment.WebRootPath}{CoverSettings.stationFilePath}";
         }
 
         public IActionResult Index()

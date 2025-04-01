@@ -14,7 +14,7 @@ namespace GameZone.Controllers
 			return View();
 		}
 
-		public IActionResult StationDetails()
+		public IActionResult StationDetails(int stationId)
 		{
 			return View();
 		}

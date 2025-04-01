@@ -76,10 +76,10 @@
                 <div class="form-group">
                     <label for="loan_full_name" class="form-label" asp-for="Cover"></label>
                     <input type="file" asp-for="Cover" name="Cover" class="form-control shadow-none" id="Cover"
-                           data-rule-extension="@StationCoverSettings.allowedExtensions.Replace(".", string.Empty)"
+                           data-rule-extension="@CoverSettings.allowedExtensions.Replace(".", string.Empty)"
                            data-msg-extension="Not Allowed Extension"
-                           data-rule-fileSize="@StationCoverSettings.maxFileSizeInBytes"
-                           data-msg-fileSize="Maximum Allowed Size is (@(StationCoverSettings.maxFileSizeInMB))MB.">
+                           data-rule-fileSize="@CoverSettings.maxFileSizeInBytes"
+                           data-msg-fileSize="Maximum Allowed Size is (@(CoverSettings.maxFileSizeInMB))MB.">
 
                     <span asp-validation-for="Cover" class="text-danger"></span>
                 </div>

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model GameDetailsVM
+
+@{
     ViewData["Title"] = "Game Details Page";
 }
 
@@ -9,50 +11,87 @@
             <div class="section-border mt-4"></div>
         </div>
     </div>
-<div class="card border-success rounded-4 mt-5 overflow-hidden">
-    
-    <div class="card-body bg-card p-0">
-        <div class="row align-items-center">
-            <div class="col-md-8 px-5 py-4 d-flex flex-column justify-content-between">
-                
-                <div>
-                    <h1 class="text-success fw-bold">COD MW III</h1>
-                    <span class="badge bg-danger text-light fs-5 mb-4">Action</span>
-                    <p class="fs-5">
-                        <p class="fw-bold fs-5">General Information</p>
-                        <p><span class="fw-bold">Developer:</span> Activision</p>
-                        <p><span class="fw-bold">Release:</span> 2023 </p>
-                        <p><span class="fw-bold">Platforms:</span>
-                            <img class="m-1" src="~/Assets/Images/playstation.svg" title="Playstation">
-                            <img class="m-1" src="~/Assets/Images/xbox.svg" title="XBOX">
-                            <img class="m-1" src="~/Assets/Images/pc-display.svg" title="PC">
-                            <img class="m-1" src="~/Assets/Images/nintendo-switch.svg" title="Switch">
-                        </p>
-                        <p><span class="fw-bold">Available in:</span>
-                            <select class="styled-select mx-5">
-                                <option><a asp-controller="GameStations" asp-action="StationDetails">Lucille Game Station</a></option>
-                                <option>Black Spider Game Station</option>
-                                <option>Village Game Station</option>
-                                <option>Game Over Game Station</option>
-                            </select>
-                        </p>
+    <div class="card border-success rounded-4 mt-5 overflow-hidden">
+        <div class="card-body bg-card p-0">
+            <div class="row align-items-center">
+                <div class="col-md-8 px-5 py-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <h1 class="text-success fw-bold">@Model.Game.Name</h1>
+                        <span class="badge bg-danger text-light fs-5 mb-4">@Model.Game.Category.Name</span>
+                        <div class="fs-5">
+                            <p class="fw-bold fs-5">General Information</p>
+                            <p><span class="fw-bold">Developer:</span> @Model.Game.Developer</p>
+                            <p><span class="fw-bold">Release:</span> @Model.Game.Release</p>
+                            <p class="d-flex align-items-center gap-2 mb-0">
+                                <span class="fw-bold">Platforms:</span>
+                                @foreach (var device in Model.SupportedDevices)
+                                {
+                                    <i class="@device.Icon fs-4 text-info"></i>
+                                }
+                            </p>
 
-                    </p>
-@*                    
-*@                    <p class="fw-bold fs-5">Description</p>
-                    <p>
-                        Call of Duty: Modern Warfare 2 (COD MW2) is a first-person shooter game developed by Infinity Ward and published by Activision.
-                        It is a sequel to Call of Duty 4: Modern Warfare. Released in 2009, it features a gripping single-player campaign
-                        and a popular multiplayer mode. The game is set in a near-future fictional world, with intense combat, modern weapons,
-                        and a storyline revolving around conflicts between the United States and Russia. Modern Warfare 2 received critical acclaim
-                        and is known for its action-packed gameplay and addictive multiplayer experience.
-                    </p>
+                            <p class="d-flex align-items-center gap-2 pt-3 mb-0">
+                                <span class="fw-bold">Available in:</span>
+                                @if (Model.IsAvailableInStations)
+                                {
+                                    <div class="d-flex align-items-center gap-2 flex-nowrap">
+                                        <select id="stationSelect"
+                                                class="form-control form-control h-100 w-50"
+                                                style="height: 34px;">
+                                            <option value="" selected disabled>Choose Station</option>
+                                            @foreach (var station in Model.AvailableStations)
+                                            {
+                                                <option value="@station.Id">@station.Name</option>
+                                            }
+                                        </select>
+                                        <button id="goToStationBtn"
+                                                class="btn btn-primary btn-sm h-100"
+                                                style="height: 30px;">
+                                            Go
+                                        </button>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="text-danger ms-2">Not available in any station.</span>
+                                }
+                            </p>
+                        </div>
+                        <p class="pt-3"><span class="fw-bold">Description:</span></p>
+                        <p>@Model.Game.Descraption</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4 ">
-                <img style="height: 31vw;" src="~/Assets/Images/COD MW III.jpg"/>
+                <div class="col-md-4">
+                    <img style="height: 31vw; object-fit: cover;" src="@CoverSettings.gamesImagePath/@Model.Game.Cover" alt="Cover Image" />
+                </div>
             </div>
         </div>
     </div>
-</div>
 </section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#goToStationBtn").click(function () {
+                const selectedStationId = $("#stationSelect").val();
+
+                if (!selectedStationId) {
+                    alert("⚠️ Please select a station first!");
+                    return;
+                }
+
+                $.ajax({
+                    url: "/GameStations/StationDetails",
+                    type: "GET",
+                    data: { stationId: selectedStationId },
+                    success: function (response) {
+                        $("#stationDetails").html(response);
+                    },
+                    error: function () {
+                        alert("❌ Error occurred!.");
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -76,10 +76,10 @@
                 <div class="form-group">
                     <label for="loan_full_name" class="form-label" asp-for="Cover"></label>
                     <input type="file" asp-for="Cover" name="Cover" class="form-control shadow-none" id="Cover"
-                           data-rule-extension="@StationCoverSettings.allowedExtensions.Replace(".", string.Empty)"
+                           data-rule-extension="@CoverSettings.allowedExtensions.Replace(".", string.Empty)"
                            data-msg-extension="Not Allowed Extension"
-                           data-rule-fileSize="@StationCoverSettings.maxFileSizeInBytes"
-                           data-msg-fileSize="Maximum Allowed Size is (@(StationCoverSettings.maxFileSizeInMB))MB.">
+                           data-rule-fileSize="@CoverSettings.maxFileSizeInBytes"
+                           data-msg-fileSize="Maximum Allowed Size is (@(CoverSettings.maxFileSizeInMB))MB.">
 
                     <span asp-validation-for="Cover" class="text-danger"></span>
                 </div>
@@ -99,7 +99,7 @@
 
             <div class="col-lg-6  col-12 justify-content-center" style="margin-top: 160px;">
                 <div class="overflow-hidden" style="border: 2px solid white;width: 350px;height: 450px; border-radius: 10px;position: relative;margin-left: 17%;">
-                    <img src="@($"{StationCoverSettings.stationFilePath}/{Model.CurrentCover}")"
+                    <img src="@($"{CoverSettings.stationFilePath}/{Model.CurrentCover}")"
                          class="cover-previewrounded station-cover"
                          style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"
                          alt="Cover" width="100%" height="100%" />
