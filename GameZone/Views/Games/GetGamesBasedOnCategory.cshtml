@@ -1,225 +1,139 @@
-﻿@{
+﻿@model GamesInCategoryVM
+
+@{
     ViewData["Title"] = "Category Games Page";
 }
 
 <section class="section teams pb-5">
-	<div class="container">
+    <div class="container">
 
-		<div class="row justify-content-center">
-			<div class="col-12">
-				<div class="col-lg-10 mx-auto text-center">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="col-lg-10 mx-auto text-center">
 
-					<h2 class="section-title mb-0">Action Games</h2>
+                    <h2 class="section-title mb-0">@Model.Category.Name Games</h2>
 
-					<div class="section-border mt-4"></div>
-				</div>
-			</div>
-		</div>
+                    <div class="section-border mt-4"></div>
+                </div>
+            </div>
+        </div>
 
+        <!-- Search Bar -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex align-items-center" style="gap: 10px; width: fit-content;">
+                    <input type="text" id="searchInput"
+                           class="form-control"
+                           placeholder="Search by game name..."
+                           value="@Model.SearchTerm"
+                           style="width: 300px;" />
 
-		<div class="container">
-			<div class="row mb-n-1">
-				<div class="col-8 pl-0">
-					<h3 class="pt-x-1">
-						Action<span>
-							<img src="~/Assets/Images/chevron-right.svg" alt="">
-						</span>
-					</h3>
+                    <button id="searchButton" class="btn btn-primary">
+                        Search
+                    </button>
 
-				</div>
+                    <a asp-controller="Games" asp-action="GetGamesBasedOnCategory" asp-route-categoryId="@Model.Category.Id" class="btn btn-secondary">
+                        Reset
+                    </a>
 
-				<div class="col-4 text-right pr-0">
-					<a class="btn btn-primary" href="/Games/GetAll">All Games</a>
-				</div>
-			</div>
-		</div>
+                </div>
+            </div>
+        </div>
 
-		<div class="row position-relative">
+        <div class="container">
+            <div class="row mb-n-1">
+                <div class="col-8 pl-0">
+                    <h3 class="pt-x-1">
+                        @Model.Category.Name
+                        <span>
+                            <img src="~/Assets/Images/chevron-right.svg" alt="">
+                        </span>
+                    </h3>
 
-			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+                </div>
 
-				<div class="card bg-transparent border-0 text-center">
-
-					<div class="card-img">
-						<img src="~/Assets/Images/COD MW III.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
-						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
-					</div>
-
-					<div class="card-body">
-						<h3>COD MW III</h3>
-					</div>
-				</div>
-
-			</div>
-			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
-				<div class="card bg-transparent border-0 text-center">
-
-					<div class="card-img">
-						<img src="~/Assets/Images/Battlefield 2042.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
-						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
-					</div>
-
-
-					<div class="card-body">
-						<h3>Battlefield 2042</h3>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
-				<div class="card bg-transparent border-0 text-center">
-
-					<div class="card-img">
-						<img src="~/Assets/Images/resident evil.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
-						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
-					</div>
-
-					<div class="card-body">
-						<h3>Resident Evil 4</h3>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
-				<div class="card bg-transparent border-0 text-center">
-
-					<div class="card-img">
-						<img src="~/Assets/Images/sniper elite 5.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
-						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
-					</div>
-
-					<div class="card-body">
-						<h3>Sniper Elite 5</h3>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                <div class="col-4 text-right pr-0">
+                    <a class="btn btn-primary" href="/Games/GetAll">Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
-<section class="section teams pt-5">
-	<div class="container">
 
-		<div class="row position-relative">
+<section class="section teams pt-1">
+    <div class="container">
+        <div id="gamesContainer">
+            @if (Model.Games.Any())
+            {
+                <div class="row position-relative">
+                    @foreach (var game in Model.Games.OrderBy(g => g.Name))
+                    {
+                        <div class="col-xl-3 col-lg-4 col-md-6 mt-4">
 
-			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+                            <div class="card bg-transparent border-0 text-center">
 
-				<div class="card bg-transparent border-0 text-center">
+                                <div class="card-img">
+                                    <img src="@CoverSettings.gamesImagePath/@game.Cover" alt="Cover Image" class="rounded w-100 gray-image" width="300" height="332">
+                                    <a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails" asp-route-gameId="@game.Id">
+                                        Learn More
+                                    </a>
+                                </div>
 
-					<div class="card-img">
-						<img src="~/Assets/Images/far cry 6.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
-						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
-					</div>
-
-					<div class="card-body">
-						<h3>Far Cry 6</h3>
-					</div>
-				</div>
-
-			</div>
-			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
-				<div class="card bg-transparent border-0 text-center">
-
-					<div class="card-img">
-						<img src="~/Assets/Images/Eldren Ring.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
-						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
-					</div>
-
-
-					<div class="card-body">
-						<h3>Eldren Ring</h3>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
-				<div class="card bg-transparent border-0 text-center">
-
-					<div class="card-img">
-						<img src="~/Assets/Images/back 4 blood.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
-						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
-					</div>
-
-					<div class="card-body">
-						<h3>Back 4 Blood</h3>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
-				<div class="card bg-transparent border-0 text-center">
-
-					<div class="card-img">
-						<img src="~/Assets/Images/Hell Let Loose.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
-						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
-					</div>
-
-					<div class="card-body">
-						<h3>Hell Let Loose</h3>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                <div class="card-body">
+                                    <h3>@game.Name</h3>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="col-12 text-center py-5 my-3">
+                    <div class="alert alert-info d-inline-block p-4 shadow">
+                        <div class="d-flex align-items-center" style="gap: 15px;">
+                            <h4 class="m-0 text-dark fw-bold">No games found matching your search!</h4>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 </section>
 
-<section class="section teams pt-0">
-	<div class="container">
+@section Scripts {
+    <script>
+        $(document).ready(function () {
 
-		<div class="row position-relative">
+            // Ajax Search
+            $("#searchButton").click(function () {
+                const searchTerm = $("#searchInput").val();
+                const categoryId = @Model.Category.Id;
 
-			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+                if (searchTerm === "")
+                {
+                    alert("⚠️  Please, Enter Game Name!.");
+                    return;
+                }
 
-				<div class="card bg-transparent border-0 text-center">
-
-					<div class="card-img">
-						<img src="~/Assets/Images/BorderLands.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
-						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
-					</div>
-
-					<div class="card-body">
-						<h3>BorderLands</h3>
-					</div>
-				</div>
-
-			</div>
-			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
-				<div class="card bg-transparent border-0 text-center">
-
-					<div class="card-img">
-						<img src="~/Assets/Images/Terminator.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
-						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
-					</div>
-
-
-					<div class="card-body">
-						<h3>Terminator Resistance</h3>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
-				<div class="card bg-transparent border-0 text-center">
-
-					<div class="card-img">
-						<img src="~/Assets/Images/assassins creed.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
-						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
-					</div>
-
-					<div class="card-body">
-						<h3>Assasins Creed Valhala</h3>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-3 col-lg-4 col-md-6 mt-4">
-				<div class="card bg-transparent border-0 text-center">
-
-					<div class="card-img">
-						<img src="~/Assets/Images/Cyberpunk.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
-						<a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
-					</div>
-
-					<div class="card-body">
-						<h3>Cyberpunk</h3>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+                $.ajax({
+                    url: "@Url.Action("GetGamesBasedOnCategory", "Games")",
+                    type: "GET",
+                    data: {
+                        categoryId: categoryId,
+                        searchTerm: searchTerm
+                    },
+                    success: function (response) {
+                        const gamesHtml = $(response).find("#gamesContainer").html();
+                        $("#gamesContainer").html(gamesHtml);
+                    },
+                    error: function () {
+                        alert("❌ Error occurred!.");
+                    }
+                });
+            });
+        });
+    </script>
+}
 

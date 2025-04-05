@@ -14,8 +14,8 @@ namespace GameZone.Areas.Admin.ViewModels
 
         [Display(Name = "Image")]
         //validate extensions and cover
-        [AllowedExtensions(StationCoverSettings.allowedExtensions)]
-        [MaxFileSize(StationCoverSettings.maxFileSizeInBytes)]
+        [AllowedExtensions(CoverSettings.allowedExtensions)]
+        [MaxFileSize(CoverSettings.maxFileSizeInBytes)]
         public IFormFile? Cover { get; set; } = default!;
     }
 }
