@@ -10,8 +10,6 @@ namespace GameZone.Areas.Owner.Controllers
     public class HomeController : Controller
     {
         private readonly AppDBContext _context;
-        private static GameStation? _ownerStation;
-        private string? _ownerId;
 
         public HomeController(AppDBContext context)
         {
@@ -20,21 +18,24 @@ namespace GameZone.Areas.Owner.Controllers
 
         public IActionResult Index()
         {
-            _ownerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            _ownerStation = _context.GameStations.FirstOrDefault(x => x.UserId == _ownerId);
-
-            return View(_ownerStation);
+            return View(_GetOwnerStation());
         }
 
         public IActionResult ReservationLog()
         {
+            var ownerStation = _GetOwnerStation();
+
+            if (ownerStation == null)
+            {
+                return NotFound("Owner station not found.");
+            }
+
             var reservations = _context.Reservations
                 .Include(r => r.Room)
                 .Include(r => r.PaymentMethod)
                 .Include(r => r.User)
-                .Where(r => r.GameStationId == _ownerStation.Id)
+                .Where(r => r.GameStationId == ownerStation.Id)
                 .ToList();
-
 
             return View(reservations);
         }
@@ -54,6 +55,15 @@ namespace GameZone.Areas.Owner.Controllers
         public IActionResult RejectedReservation()
         {
             return View();
+        }
+        private GameStation? _GetOwnerStation()
+        {
+            var ownerId = _GetOwnerId();
+            return _context.GameStations.FirstOrDefault(x => x.UserId == ownerId);
+        }
+        private string? _GetOwnerId()
+        {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
     }

@@ -1,4 +1,4 @@
-﻿namespace GameZone.Helpers
+namespace GameZone.Helpers
 {
     public class Utilities
     {
@@ -90,4 +90,4 @@
             }
         }
     }
-}
+  }

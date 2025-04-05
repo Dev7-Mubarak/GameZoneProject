@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<GetAllStationsVM>
+
+@{
     ViewData["Title"] = "All Stations Page";
 }
 
@@ -18,261 +20,96 @@
         <table class="table table-striped text-white text-center" >
             <thead>
                 <tr>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        Image
-                    </th>
-                    <th>
-                        Devices
-                    </th>
-                    <th>
-                        Full Address
-                    </th>
-                    <th>
-                        Rooms Types
-                    </th>
-                    <th>
-                        Owner Name
-                    </th>
-                    <th>
-                        Actions
-                    </th>
+                    <th>Name</th>
+                    <th>Image</th>
+                    <th>Games</th>
+                    <th>Full Address</th>
+                    <th>Rooms Types</th>
+                    <th>Owner Name</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>
-                        Lucille
-                    </td>
-                    <td>
-                        <img src="~/Assets/Images/station1.jpg" alt="Name" class="rounded-circle"
-                             style="max-width: 60px; max-height: 80px" />
-                    </td>
-                    <td>
-                        <img title="playstation" style="margin-right: 5px;" src="~/Assets/Images/playstation.svg">
-                        <img title="XBOX" style="margin-right: 5px;" src="~/Assets/Images/xbox.svg">
-                        <img title="Switch" style="margin-right: 5px;" src="~/Assets/Images/nintendo-switch.svg">
-                        <img title="PC" style="margin-right: 5px;" src="~/Assets/Images/pc-display.svg">
-                        @* <a asp-area="Admin" asp-controller="Games" asp-action="Create">Add Games</a> *@
-                        <br>
-                        <a asp-area="Admin" asp-controller="Games" asp-action="GamesInStation">Available Games</a>
+                @foreach (var station in Model)
+                {
+                    <tr>
+                        <td>@station.Name</td>
+                        <td>
+                            <img src="~/Assets/Images/StationsImages/@station.Image" alt="Name" class="rounded-circle"
+                                 style="max-width: 60px; max-height: 80px" />
+                        </td>
+                        <td>
+                            <a asp-area="Admin" asp-controller="Games" asp-action="GamesInStation" asp-route-stationId="@station.Id">Available Games</a>
+                        </td>
+                        <td>
+                            @station.Location
+                            <br />
+                            @station.PhoneNumber1&emsp;@station.PhoneNumber2
+                        </td>
+                        <td>
+                            @station.RoomsCount
+                            <br>
+                            <a asp-area="Admin" asp-controller="Rooms" asp-action="RoomsInStation" asp-route-stationId="@station.Id">Details</a>
+                        </td>
 
-                    </td>
-                    <td>
-                        Hadramout/Al-Mukalla/Al-Dis<br />
-                        fisrtnumber&emsp;secondnumber
-                    </td>
-                    <td>
-                        4
-                        <br>
-                        @* <a asp-area="Admin" asp-controller="Rooms" asp-action="Create">Add Room</a> *@
-                        <a asp-area="Admin" asp-controller="Rooms" asp-action="RoomsInStation">Details</a>
-                    </td>
-                    <td>
-                        Salim Ali
-                    </td>
-                    <td>
-                        <a asp-area="Admin" asp-controller="GameStations" asp-action="Edit" class="btn btn-warning p-2">Edit</a> |
-                        <a asp-area="Admin" asp-controller="GameStations" asp-action="Delete" class="btn btn-danger p-2" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Game Ya Eiaal
-                    </td>
-                    <td>
-                        <img src="~/Assets/Images/station3.jpg" alt="Name" class="rounded-circle"
-                             style="max-width: 60px; max-height: 80px" />
-                    </td>
-                    <td>
-
-                        <img title="playstation" style="margin-right: 5px;" src="~/Assets/Images/playstation.svg">
-                        <img title="PC" style="margin-right: 5px;" src="~/Assets/Images/pc-display.svg">
-                        <br>
-                        <a asp-area="Admin" asp-controller="Games" asp-action="GamesInStation">Details</a>
-
-                    </td>
-                    <td>
-                        Hadramout/Al-Mukalla/Ibn-Sena
-                    </td>
-                    <td>
-                        3
-                        <br>
-                        <a asp-area="Admin" asp-controller="Rooms" asp-action="RoomsInStation">Details</a>
-                    </td>
-                    <td>
-                        Hamal
-                    </td>
-                    <td>
-                        <a asp-area="Admin" asp-controller="GameStations" asp-action="Edit" class="btn btn-warning p-2">Edit</a> |
-                        <a asp-area="Admin" asp-controller="GameStations" asp-action="Delete" class="btn btn-danger p-2" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Black Spider
-                    </td>
-                    <td>
-                        <img src="~/Assets/Images/station2.jpg" alt="Name" class="rounded-circle"
-                             style="max-width: 60px; max-height: 80px" />
-                    </td>
-                    <td>
-                        <img title="playstation" style="margin-right: 5px;" src="~/Assets/Images/playstation.svg">
-                        <img title="XBOX" style="margin-right: 5px;" src="~/Assets/Images/xbox.svg">
-                        <img title="Switch" style="margin-right: 5px;" src="~/Assets/Images/nintendo-switch.svg">
-                        <img title="PC" style="margin-right: 5px;" src="~/Assets/Images/pc-display.svg">
-                        <br>
-                        <a asp-area="Admin" asp-controller="Games" asp-action="GamesInStation">Details</a>
-
-                    </td>
-                    <td>
-                        Hadramout/Al-Mukalla/Al-Msaken
-                    </td>
-                    <td>
-                        6
-                        <br>
-                        <a asp-area ="Admin" asp-controller="Rooms" asp-action="RoomsInStation">Details</a>
-                    </td>
-                    <td>
-                        Amar
-                    </td>
-                    <td>
-                        <a asp-area="Admin" asp-controller="GameStations" asp-action="Edit" class="btn btn-warning p-2">Edit</a> |
-                        <a asp-area="Admin" asp-controller="GameStations" asp-action="Delete" class="btn btn-danger p-2" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Village
-                    </td>
-                    <td>
-                        <img src="~/Assets/Images/station4.jpg" alt="Name" class="rounded-circle"
-                             style="max-width: 60px; max-height: 80px" />
-                    </td>
-                    <td>
-                        <img src="~/Assets/playstation.svg" alt="">
-                        <img title="playstation" style="margin-right: 5px;" src="~/Assets/Images/playstation.svg">
-                        <img title="XBOX" style="margin-right: 5px;" src="~/Assets/Images/xbox.svg">
-                        <img title="PC" style="margin-right: 5px;" src="~/Assets/Images/pc-display.svg">
-                        <br>
-                        <a asp-area="Admin" asp-controller="Games" asp-action="GamesInStation">Details</a>
-                    </td>
-                    <td>
-                        Sann'a/Old Sanna'a/Village Center
-                    </td>
-                    <td>
-                        5
-                        <br>
-                        <a asp-area="Admin" asp-controller="Rooms" asp-action="RoomsInStation">Details</a>
-                    </td>
-                    <td>
-                        Ahmed
-                    </td>
-                    <td>
-                        <a asp-area="Admin" asp-controller="GameStations" asp-action="Edit" class="btn btn-warning p-2">Edit</a> |
-                        <a asp-area="Admin" asp-controller="GameStations" asp-action="Delete" class="btn btn-danger p-2" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Game Over
-                    </td>
-                    <td>
-                        <img src="~/Assets/Images/station5.jpg" alt="Name" class="rounded-circle"
-                             style="max-width: 60px; max-height: 80px" />
-                    </td>
-                    <td>
-                        <img title="playstation" style="margin-right: 5px;" src="~/Assets/Images/playstation.svg">
-                        <img title="XBOX" style="margin-right: 5px;" src="~/Assets/Images/xbox.svg">
-                        <img title="Switch" style="margin-right: 5px;" src="~/Assets/Images/nintendo-switch.svg">
-                        <img title="PC" style="margin-right: 5px;" src="~/Assets/Images/pc-display.svg">
-                        <br>
-                        <a asp-area="Admin" asp-controller="Games" asp-action="GamesInStation">Details</a>
-
-                    </td>
-                    <td>
-                        Sanna'a/Al-Sabaeen/Hadah Road
-                    </td>
-                    <td>
-                        9
-                        <br>
-                        <a asp-area="Admin" asp-controller="Rooms" asp-action="RoomsInStation">Details</a>
-                    </td>
-                    <td>
-                        Salim Ali
-                    </td>
-                    <td>
-                        <a asp-area="Admin" asp-controller="GameStations" asp-action="Edit" class="btn btn-warning p-2">Edit</a> |
-                        <a asp-area="Admin" asp-controller="GameStations" asp-action="Delete" class="btn btn-danger p-2" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Rank One
-                    </td>
-                    <td>
-                        <img src="~/Assets/Images/station6.jpg" alt="Name" class="rounded-circle"
-                             style="max-width: 60px; max-height: 80px" />
-                    </td>
-                    <td>
-                        <img title="playstation" style="margin-right: 5px;" src="~/Assets/Images/playstation.svg">
-                        <img title="XBOX" style="margin-right: 5px;" src="~/Assets/Images/xbox.svg">
-                        <br>
-                        <a asp-area="Admin" asp-controller="Games" asp-action="GamesInStation">Details</a>
-
-                    </td>
-                    <td>
-                        Aden/Al-Mansoora/Al-Tesaen Road
-                    </td>
-                    <td>
-                        11
-                        <br>
-                        <a asp-area="Admin" asp-controller="Rooms" asp-action="RoomsInStation">Details</a>
-                    </td>
-                    <td>
-                        Hasson
-                    </td>
-                    <td>
-                        <a asp-area="Admin" asp-controller="GameStations" asp-action="Edit" class="btn btn-warning p-2">Edit</a> |
-                        <a asp-area="Admin" asp-controller="GameStations" asp-action="Delete" class="btn btn-danger p-2" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Premier league
-                    </td>
-                    <td>
-                        <img src="~/Assets/Images/station7.jpg" alt="Name" class="rounded-circle"
-                             style="max-width: 60px; max-height: 80px" />
-                    </td>
-                    <td>
-                        <img title="playstation" style="margin-right: 5px;" src="~/Assets/Images/playstation.svg">
-                        <br>
-                        <a asp-area="Admin" asp-controller="Games" asp-action="GamesInStation">Details</a>
-
-                    </td>
-                    <td>
-                        Aden/Khor-Maksar/Al-Corneesh Road
-                    </td>
-                    <td>
-                        3
-                        <br>
-                        <a asp-area="Admin" asp-controller="Rooms" asp-action="RoomsInStation">Details</a>
-                    </td>
-                    <td>
-                        Ansa
-                    </td>
-                    <td>
-                        <a asp-area="Admin" asp-controller="GameStations" asp-action="Edit" class="btn btn-warning p-2">Edit</a> |
-                        <a asp-area="Admin" asp-controller="GameStations" asp-action="Delete" class="btn btn-danger p-2" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                    </td>
-                </tr>
-
+                        <td>@station.OwnerName</td>
+                        <td>
+                            <a asp-area="Admin" asp-controller="GameStations" asp-action="Edit" asp-route-stationId="@station.Id" class="btn btn-warning p-2">Edit</a> |
+                            <a href="javascript:;" data-id="@station.Id" class="btn btn-danger js-delete p-2">Delete</a>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
 
     </div>
     <!-- End of Main Content -->
 </div>
+
+@section Scripts {
+    <script>
+
+        // Using Jquery DataTable in Station Table
+        $('table').DataTable();
+
+        // Using BootBox For Deleting Station
+        $(document).ready(function () {
+            $('.js-delete').on('click', function () {
+                var Btn = $(this);
+
+                bootbox.confirm({
+                    message: "Are you sure that you need to delete this Station?",
+                    buttons: {
+                        confirm: {
+                            label: 'Yes',
+                            className: 'btn-danger'
+                        },
+                        cancel: {
+                            label: 'No',
+                            className: 'btn-success'
+                        }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: '/Admin/GameStations/Delete/' + Btn.data('id'),
+                                type: 'POST',
+                                data: {
+                                    '__RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                                },
+                                success: function () {
+                                    Btn.closest('tr').fadeOut(500, function () {
+                                        $(this).remove();
+                                    });
+                                },
+                                error: function () {
+                                    alert('An error occurred while deleting the station.');
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

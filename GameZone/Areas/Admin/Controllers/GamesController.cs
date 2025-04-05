@@ -1,9 +1,10 @@
-﻿using GameZone.Areas.Admin.Services;
+using GameZone.Areas.Admin.Services;
 using GameZone.Areas.Admin.ViewModels;
 using GameZone.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
+
 
 namespace GameZone.Areas.Admin.Controllers
 {
@@ -20,7 +21,6 @@ namespace GameZone.Areas.Admin.Controllers
             _categoriesService = categoriesService;
             _devicesService = devicesService;
             _gamesService = gamesService;
-        }
 
         public IActionResult Index()
         {
@@ -28,9 +28,28 @@ namespace GameZone.Areas.Admin.Controllers
             return View(games);
         }
 
-        public IActionResult GamesInStation()
+        public async Task<IActionResult> GamesInStation(int stationId)
         {
-            return View();
+            var station = await _context.GameStations
+                                           .Include(gs => gs.GameStationGames)
+                                           .ThenInclude(gsg => gsg.Game)
+                                           .ThenInclude(g => g.Category)
+                                           .FirstOrDefaultAsync(gs => gs.Id == stationId);
+
+            if (station is null)
+            {
+                return NotFound();
+            }
+
+            var gamesInStation = new GamesInStationVM
+            {
+                StationName = station.Name,
+                Games = station.GameStationGames
+                               .Select(gsg => gsg.Game)
+                               .ToList()
+            };
+
+            return View(gamesInStation);
         }
         
         [HttpGet]
@@ -130,22 +149,81 @@ namespace GameZone.Areas.Admin.Controllers
 
         public IActionResult AllGameCategories()
         {
-            return View();
+            var categories = _context.Categories.ToList();
+            return View(categories);
         }
 
+        [HttpGet]
         public IActionResult CreateCategory()
         {
             return View();
         }
 
-        public IActionResult EditCategory()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateCategory(GamesCategoriesVM model)
         {
-            return View();
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var category = new Category() { Name = model.Name };
+
+            _context.Categories.Add(category);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(AllGameCategories));
         }
 
-        public IActionResult DeleteCategory()
+        [HttpGet]
+        public IActionResult EditCategory(int categoryId)
         {
-            return View();
+            var category = _context.Categories.Find(categoryId);
+            if (category is null)
+                return NotFound();
+
+            var gamecategory = new GamesCategoriesVM { Id = categoryId, Name = category.Name };
+
+            return View(gamecategory);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditCategory(GamesCategoriesVM model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var category = _context.Categories.Find(model.Id);
+            if (category is null)
+                return NotFound();
+
+            category.Name = model.Name;
+
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(AllGameCategories));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteCategory(int id)
+        {
+            var category = _context.Categories.Find(id);
+            if (category is null)
+                return NotFound();
+
+            _context.Categories.Remove(category);
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
+        public IActionResult CheckIfNameExists(GamesCategoriesVM model)
+        {
+            var category = _context.Categories.SingleOrDefault(c => c.Name == model.Name);
+            var isAllowed = category is null || category.Id.Equals(model.Id);
+
+            return Json(isAllowed);
         }
     }
 }
