@@ -1,4 +1,8 @@
-﻿@{
+﻿@using GameZone.Models
+@using GameZone.Settings
+@model IEnumerable<Game>
+
+@{
     ViewData["Title"] = "All Games Page";
 }
 
@@ -12,228 +16,121 @@
         <p>
             <a href="/Admin/Games/Create" class="btn btn-success">Create New</a>
         </p>
+        
+        @if (!Model.Any())
+        {
+            <div class="alert alert-primary">
+                <h3 class="alert-heading"><strong>No Games!</strong></h3>
+                <p class="mb-0"><strong>There is no games yet.</strong></p>
+            </div>
+        }
+        else
+        {
+            <table class="table table-striped text-white">
+                <tbody>
+                    @foreach(var game in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div class="d-flex">
+                                    <div class="pr-4">
+                                        <img src="@($"{FileSettings.GamesImagesPath}/{game.Cover}")" alt="Name" style="max-width: 70px" />
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <h4 class="text-white"> <strong>@game.Name</strong></h4>
+                                        @switch (game.Category.Name)
+                                        {
+                                            case "Action":
+                                                <h5><span class="badge bg-danger">@game.Category.Name</span></h5>
+                                                break;
+                                            case "Adventure":
+                                                <h5><span class="badge bg-primary">@game.Category.Name</span></h5>
+                                                break;
+                                            case "RPG":
+                                                <h5><span class="badge bg-dark">@game.Category.Name</span></h5>
+                                                break;
+                                            case "Sports":
+                                                <h5><span class="badge bg-success">@game.Category.Name</span></h5>
+                                                break;
+                                            case "Strategy":
+                                                <h5><span class="badge bg-secondary">@game.Category.Name</span></h5>
+                                                break;
+                                            case "Shooter":
+                                                <h5><span class="badge bg-warning">@game.Category.Name</span></h5>
+                                                break;
+                                            case "Racing":
+                                                <h5><span class="badge bg-info">@game.Category.Name</span></h5>
+                                                break;
+                                            
+                                        }
+                                    </div>
+                                </div>
+                            </td>
 
-        <table class="table table-striped text-white">
-            <tbody>
-                <tr>
-                    <td>
-                        <div class="d-flex">
-                            <div class="pr-4">
-                                <img src="~/Assets/Images/COD MW III.jpg" alt="Name" style="max-width: 70px" />
-                            </div>
-                            <div class="d-flex flex-column justify-content-center">
-                                <h4 class="text-white"> <strong>COD MW III</strong></h4>
-                                <h5>Action</h5>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td class="align-middle">
-                        <div class="d-flex justify-content-center">
-                            <a asp-area="Admin" asp-controller="Games" asp-action="Edit" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
-                            <a asp-area="Admin" asp-controller="Games" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex">
-                            <div class="pr-4">
-                                <img src="~/Assets/Images/WWE2K.jpg" alt="Name" style="max-width: 70px" />
-                            </div>
-                            <div class="d-flex flex-column justify-content-center">
-                                <h4 class="text-white"> <strong>WWE 2K 24</strong></h4>
-                                <h5>Soprts</h5>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td class="align-middle">
-                        <div class="d-flex justify-content-center">
-                            <a asp-area="Admin" asp-controller="Games" asp-action="Edit" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
-                            <a asp-area="Admin" asp-controller="Games" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex">
-                            <div class="pr-4">
-                                <img src="~/Assets/Images/Hogwarts Legacy.jpg" alt="Name" style="max-width: 70px" />
-                            </div>
-                            <div class="d-flex flex-column justify-content-center">
-                                <h4 class="text-white">
-                                    <strong>Hogwarts Legacy</strong>
-                                </h4>
-                                <h5>Adventures</h5>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td class="align-middle">
-                        <div class="d-flex justify-content-center">
-                            <a asp-area="Admin" asp-controller="Games" asp-action="Edit" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
-                            <a asp-area="Admin" asp-controller="Games" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex">
-                            <div class="pr-4">
-                                <img src="~/Assets/Images/sniper elite 5.jpg" alt="Name" style="max-width: 70px" />
-                            </div>
-                            <div class="d-flex flex-column justify-content-center">
-                                <h4 class="text-white">
-                                    <strong>Sniper Elite 5</strong>
-                                </h4>
-                                <h5>Action</h5>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td class="align-middle">
-                        <div class="d-flex justify-content-center">
-                            <a asp-area="Admin" asp-controller="Games" asp-action="Edit" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
-                            <a asp-area="Admin" asp-controller="Games" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex">
-                            <div class="pr-4">
-                                <img src="~/Assets/Images/Horizon.jpg" alt="Name" style="max-width: 70px" />
-                            </div>
-                            <div class="d-flex flex-column justify-content-center">
-                                <h4 class="text-white">
-                                    <strong>Horizon Forbidden West</strong>
-                                </h4>
-                                <h5>Adventures</h5>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td class="align-middle">
-                        <div class="d-flex justify-content-center">
-                            <a asp-area="Admin" asp-controller="Games" asp-action="Edit" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
-                            <a asp-area="Admin" asp-controller="Games" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex">
-                            <div class="pr-4">
-                                <img src="~/Assets/Images/Ratchat.jpg" alt="Name" style="max-width: 70px" />
-                            </div>
-                            <div class="d-flex flex-column justify-content-center">
-                                <h4 class="text-white">
-                                    <strong>Ratchet & Clank</strong>
-                                </h4>
-                                <h5>Arcade </h5>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td class="align-middle">
-                        <div class="d-flex justify-content-center">
-                            <a asp-area="Admin" asp-controller="Games" asp-action="Edit" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
-                            <a asp-area="Admin" asp-controller="Games" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex">
-                            <div class="pr-4">
-                                <img src="~/Assets/Images/overcooked.jpg" alt="Name" style="max-width: 70px" />
-                            </div>
-                            <div class="d-flex flex-column justify-content-center">
-                                <h4 class="text-white">
-                                    <strong>Overcooked</strong>
-                                </h4>
-                                <h5>CO-OP</h5>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td class="align-middle">
-                        <div class="d-flex justify-content-center">
-                            <a asp-area="Admin" asp-controller="Games" asp-action="Edit" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
-                            <a asp-area="Admin" asp-controller="Games" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex">
-                            <div class="pr-4">
-                                <img src="~/Assets/Images/Battlefield 2042.jpg" alt="Name" style="max-width: 70px" />
-                            </div>
-                            <div class="d-flex flex-column justify-content-center">
-                                <h4 class="text-white">
-                                    <strong>Battlefield 2042</strong>
-                                </h4>
-                                <h5>Action</h5>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td class="align-middle">
-                        <div class="d-flex justify-content-center">
-                            <a asp-area="Admin" asp-controller="Games" asp-action="Edit" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
-                            <a asp-area="Admin" asp-controller="Games" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex">
-                            <div class="pr-4">
-                                <img src="~/Assets/Images/Final Fantasy.jpg" alt="Name" style="max-width: 70px" />
-                            </div>
-                            <div class="d-flex flex-column justify-content-center">
-                                <h4 class="text-white">
-                                    <strong>Madden NFL 24</strong>
-                                </h4>
-                                <h5>Sports</h5>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td class="align-middle">
-                        <div class="d-flex justify-content-center">
-                            <a asp-area="Admin" asp-controller="Games" asp-action="Edit" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
-                            <a asp-area="Admin" asp-controller="Games" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex">
-                            <div class="pr-4">
-                                <img src="~/Assets/Images/Kina.jpg" alt="Name" style="max-width: 70px" />
-                            </div>
-                            <div class="d-flex flex-column justify-content-center">
-                                <h4 class="text-white">
-                                    <strong>Kina Bridge Of Spirits</strong>
-                                </h4>
-                                <h5>Arcade</h5>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td class="align-middle">
-                        <div class="d-flex justify-content-center">
-                            <a asp-area="Admin" asp-controller="Games" asp-action="Edit" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
-                            <a asp-area="Admin" asp-controller="Games" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                            <td class="align-middle">
+                                <div class="d-flex justify-content-end">
+                                    <a asp-area="Admin" asp-controller="Games" asp-action="Edit" asp-route-id="@game.Id" class="btn btn-warning rounded rounded-3 mr-2 w-25 font-weight-bold">Edit</a>
+                                    <a href="javascript:;" class="btn btn-danger rounded rounded-3 mr-2 w-25 font-weight-bold js-delete" data-id="@game.Id">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        
     </div>
 
     <!-- End of Main Content -->
 </div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('.js-delete').on('click', function () {
+                var btn = $(this);
+
+                bootbox.confirm({
+                     message: "Are you sure that you need to delete this game?",
+                     buttons: {
+                         confirm: {
+                             label: 'Yes',
+                             className: 'btn-danger'
+                         },
+                         cancel: {
+                             label: 'No',
+                             className: 'btn-success'
+                         }
+                     },
+                     centerVertical: true,  
+                     onShown: function(e) { 
+                         e.preventDefault(); 
+                         document.activeElement.blur(); 
+                     },
+                     callback: function (result) {
+                         if (result) {
+                             $.ajax({
+                                 url: '/Admin/Games/Delete/' + btn.data('id'),
+                                 type: 'POST',
+                                 method: 'DELETE',
+                                 data: {
+                                     '__RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                                 },
+                                 success: function () {
+                                     btn.closest('tr').fadeOut(500, function () {
+                                         $(this).remove();
+                                     });
+                                 },
+                                 error: function () {
+                                     alert('An error occurred while deleting the game.');
+                                 }
+                             });
+                         }
+                     }
+                });
+
+            });
+        });
+    </script>
+}

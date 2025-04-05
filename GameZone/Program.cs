@@ -1,3 +1,4 @@
+using GameZone.Areas.Admin.Services;
 using GameZone.Data;
 using GameZone.Helpers;
 using GameZone.Models;
@@ -41,6 +42,12 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddRazorPages();
+
+builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+builder.Services.AddScoped<IDevicesService, DevicesService>();
+builder.Services.AddScoped<IGamesService, GamesService>();
+
+
 
 var app = builder.Build();
 
