@@ -44,7 +44,7 @@ namespace GameZone.Areas.Admin.Controllers
                                        PhoneNumber1 = gs.PhoneNumber1,
                                        PhoneNumber2 = gs.PhoneNumber2,
                                        RoomsCount = gs.Rooms.Count,
-                                       OwnerName = gs.User.FisrtName + " " + gs.User.LastName,
+                                       OwnerName = $"{gs.User.FisrtName} {gs.User.LastName}",
                                    });
 
             return View(stations);
@@ -60,7 +60,7 @@ namespace GameZone.Areas.Admin.Controllers
                 Users = ownersUsers.Select(u => new SelectListItem()
                 {
                     Value = u.Id,
-                    Text = u.FisrtName + " " + u.LastName
+                    Text = $"{u.FisrtName} {u.LastName}"
                 }).ToList()
             };
 
@@ -77,13 +77,14 @@ namespace GameZone.Areas.Admin.Controllers
                 model.Users = ownersUsers.Select(u => new SelectListItem()
                 {
                     Value = u.Id,
-                    Text = u.FisrtName + " " + u.LastName
+                    Text = $"{u.FisrtName} {u.LastName}"
                 }).ToList();
 
                 return View(model);
             }
 
-            var coverName = await SaveCover(model.Cover);
+            var cover = (await Utilities.SaveFileAsync(model.Cover, _imagePath));
+            var coverName = cover.FileName;
 
             var gameStation = new GameStation()
             {
@@ -131,7 +132,7 @@ namespace GameZone.Areas.Admin.Controllers
                 Users = ownerUser.Select(u => new SelectListItem()
                 {
                     Value = u.Id,
-                    Text = u.FisrtName + " " + u.LastName
+                    Text = $"{u.FisrtName} {u.LastName}"
                 }).ToList(),
                 CurrentCover = station.Image,
             };
@@ -149,7 +150,7 @@ namespace GameZone.Areas.Admin.Controllers
                 model.Users = ownersUsers.Select(u => new SelectListItem()
                 {
                     Value = u.Id,
-                    Text = u.FisrtName + " " + u.LastName
+                    Text = $"{u.FisrtName} {u.LastName}"
                 }).ToList();
 
                 return View(model);
@@ -161,6 +162,7 @@ namespace GameZone.Areas.Admin.Controllers
 
             bool hasNewCover = model.Cover is not null;
             var oldCover = station.Image;
+            var NewCoverName = string.Empty;
 
             station.Name = model.Name;
             station.Location = model.Location;
@@ -175,7 +177,9 @@ namespace GameZone.Areas.Admin.Controllers
 
             if (hasNewCover)
             {
-                station.Image = await SaveCover(model.Cover!);
+                var cover = await Utilities.SaveFileAsync(model.Cover!, _imagePath);
+                NewCoverName = cover.FileName;
+                station.Image = NewCoverName;
             }
 
             _context.Update(station);
@@ -185,14 +189,12 @@ namespace GameZone.Areas.Admin.Controllers
             {
                 if (hasNewCover)
                 {
-                    var cover = Path.Combine(_imagePath, oldCover);
-                    System.IO.File.Delete(cover);
+                    Utilities.DeleteFile(oldCover!, _imagePath);
                 }
             }
             else
             {
-                var cover = Path.Combine(_imagePath, station.Image);
-                System.IO.File.Delete(cover);
+                Utilities.DeleteFile(station.Image!, _imagePath);
             }
 
             return RedirectToAction(nameof(Index), "GameStations");
@@ -206,25 +208,13 @@ namespace GameZone.Areas.Admin.Controllers
             if (station is null)
                 return NotFound();
 
+            if (!string.IsNullOrEmpty(station.Image))
+                Utilities.DeleteFile(station.Image, _imagePath);
+
             _context.GameStations.Remove(station);
             _context.SaveChanges();
 
             return Ok();
-        }
-
-        private async Task<string> SaveCover(IFormFile cover)
-        {
-            //(1)
-            var coverName = $"{Guid.NewGuid()}{Path.GetExtension(cover.FileName)}";
-
-            //(2)
-            var filePath = Path.Combine(_imagePath, coverName);
-
-            //(3)
-            using var stream = System.IO.File.Create(filePath);
-            await cover.CopyToAsync(stream);
-
-            return coverName;
         }
     }
 }

@@ -81,6 +81,8 @@
                            data-rule-fileSize="@StationCoverSettings.maxFileSizeInBytes"
                            data-msg-fileSize="Maximum Allowed Size is (@(StationCoverSettings.maxFileSizeInMB))MB.">
 
+                    <small class="form-text text-muted">Only <b>(.jpg, .jpeg, .png)</b> Files are allowed with Max size <b>(1)MB.</b></small>
+
                     <span asp-validation-for="Cover" class="text-danger"></span>
                 </div>
 
@@ -95,6 +97,10 @@
                 <button type="submit" class="text-white btn btn-success" style="margin-left: 1vm; margin-top: 1vw; width: 70px;">
                     save
                 </button>
+
+                <a href="/Admin/GameStations/Index" class="text-white btn btn-outline-secondary" style="margin-left: 1vm; margin-top: 1vw; width: 70px;">
+                    Cancle
+                </a>
             </div>
 
             <div class="col-lg-6  col-12 justify-content-center" style="margin-top: 160px;">
