@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GameZone.Attributes
+namespace GameZone.Helpers.Attributes
 {
     public class AllowedExtensionsAttribute : ValidationAttribute
     {
         private readonly string _allowedExtensions;
 
-        public AllowedExtensionsAttribute( string allowedExtensions )
+        public AllowedExtensionsAttribute(string allowedExtensions)
         {
             _allowedExtensions = allowedExtensions;
         }
@@ -15,13 +15,13 @@ namespace GameZone.Attributes
         {
             var file = value as IFormFile;
 
-            if( file is not null)
+            if (file is not null)
             {
-                var extension = Path.GetExtension( file.FileName );
+                var extension = Path.GetExtension(file.FileName);
 
-                var IsAllowed = _allowedExtensions.Split(',').Contains( extension, StringComparer.OrdinalIgnoreCase );
+                var IsAllowed = _allowedExtensions.Split(',').Contains(extension, StringComparer.OrdinalIgnoreCase);
 
-                if( !IsAllowed )
+                if (!IsAllowed)
                 {
                     return new ValidationResult($"Only {_allowedExtensions} are allowed!");
                 }

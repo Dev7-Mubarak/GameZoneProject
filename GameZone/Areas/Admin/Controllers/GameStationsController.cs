@@ -2,7 +2,6 @@
 using GameZone.Data;
 using GameZone.Helpers;
 using GameZone.Models;
-using GameZone.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;

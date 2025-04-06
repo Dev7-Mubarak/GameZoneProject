@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GameZone.Attributes
+namespace GameZone.Helpers.Attributes
 {
     public class MaxFileSizeAttribute : ValidationAttribute
     {

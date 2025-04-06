@@ -1,5 +1,5 @@
-﻿using GameZone.Custom_Validations;
-using GameZone.Settings;
+﻿using GameZone.Helpers;
+using GameZone.Helpers.Attributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace GameZone.Areas.Admin.ViewModels

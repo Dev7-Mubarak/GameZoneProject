@@ -1,4 +1,4 @@
-﻿namespace GameZone.Settings
+﻿namespace GameZone.Helpers
 {
     public static class FileSettings
     {

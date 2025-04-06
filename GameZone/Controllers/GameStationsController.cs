@@ -1,7 +1,6 @@
 ﻿using GameZone.Data;
 using GameZone.Helpers;
 using GameZone.Models;
-using GameZone.Settings;
 using GameZone.ViewModels.GameStations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

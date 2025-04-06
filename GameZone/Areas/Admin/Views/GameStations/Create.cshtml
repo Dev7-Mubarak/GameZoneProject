@@ -1,4 +1,5 @@
-﻿@model CreateGameStationVM
+﻿@using GameZone.Helpers
+@model CreateGameStationVM
 
 @{
     ViewData["Title"] = "Create Station Page";
@@ -76,10 +77,10 @@
                 <div class="form-group">
                     <label for="loan_full_name" class="form-label" asp-for="Cover"></label>
                     <input type="file" asp-for="Cover" name="Cover" class="form-control shadow-none" id="Cover"
-                           data-rule-extension="@CoverSettings.allowedExtensions.Replace(".", string.Empty)"
+                           data-rule-extension="@FileSettings.AllowedExtensions.Replace(".", string.Empty)"
                            data-msg-extension="Not Allowed Extension"
-                           data-rule-fileSize="@CoverSettings.maxFileSizeInBytes"
-                           data-msg-fileSize="Maximum Allowed Size is (@(CoverSettings.maxFileSizeInMB))MB.">
+                           data-rule-fileSize="@FileSettings.MaxFileSizeInBytes"
+                           data-msg-fileSize="Maximum Allowed Size is (@(FileSettings.MaxFileSizeInMB))MB.">
 
                     <small class="form-text text-muted">Only <b>(.jpg, .jpeg, .png)</b> Files are allowed with Max size <b>(1)MB.</b></small>
 

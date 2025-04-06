@@ -2,7 +2,6 @@
 using GameZone.Data;
 using GameZone.Helpers;
 using GameZone.Models;
-using GameZone.Settings;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 

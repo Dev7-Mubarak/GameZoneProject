@@ -1,13 +1,11 @@
-﻿using GameZone.Constants;
-using GameZone.Custom_Validations;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
 namespace GameZone.Areas.Admin.ViewModels
 {
     public class GameStationVM
     {
-        
+
         [Required(ErrorMessage = "Station Name is required!")]
         [MaxLength(60, ErrorMessage = "Maximum length is 60 characters.")]
         public string Name { get; set; } = null!;

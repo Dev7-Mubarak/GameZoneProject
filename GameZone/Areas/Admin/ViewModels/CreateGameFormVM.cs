@@ -1,5 +1,5 @@
-﻿using GameZone.Attributes;
-using GameZone.Settings;
+﻿using GameZone.Helpers;
+using GameZone.Helpers.Attributes;
 
 namespace GameZone.Areas.Admin.ViewModels
 {

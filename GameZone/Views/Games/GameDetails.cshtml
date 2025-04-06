@@ -1,4 +1,5 @@
-﻿@model GameDetailsVM
+﻿@using GameZone.Helpers
+@model GameDetailsVM
 
 @{
     ViewData["Title"] = "Game Details Page";
@@ -62,7 +63,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <img style="height: 31vw; object-fit: cover;" src="@CoverSettings.gamesImagePath/@Model.Game.Cover" alt="Cover Image" />
+                    <img style="height: 31vw; object-fit: cover;" src="@FileSettings.GamesImagesPath/@Model.Game.Cover" alt="Cover Image" />
                 </div>
             </div>
         </div>
