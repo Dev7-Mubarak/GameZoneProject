@@ -1,7 +1,5 @@
 ﻿using GameZone.Attributes;
 using GameZone.Settings;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.ComponentModel.DataAnnotations;
 
 namespace GameZone.Areas.Admin.ViewModels
 {
@@ -11,7 +9,8 @@ namespace GameZone.Areas.Admin.ViewModels
 
         public string? GameCover { get; set; }
 
-        [AllowedExtensions(FileSettings.AllowedExtensions), MaxFileSize(FileSettings.MaxFileSizeInBytes)]
+        [AllowedExtensions(FileSettings.AllowedExtensions)]
+        [MaxFileSize(FileSettings.MaxFileSizeInBytes)]
         public IFormFile? Cover { get; set; } = null!;
 
     }

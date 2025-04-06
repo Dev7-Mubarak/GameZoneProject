@@ -1,5 +1,5 @@
-﻿using GameZone.Constants;
-using GameZone.Custom_Validations;
+﻿using GameZone.Custom_Validations;
+using GameZone.Settings;
 using System.ComponentModel.DataAnnotations;
 
 namespace GameZone.Areas.Admin.ViewModels
@@ -9,8 +9,8 @@ namespace GameZone.Areas.Admin.ViewModels
         [Display(Name = "Image")]
         [Required(ErrorMessage = "Please, Insert an Image!.")]
         //validate extensions and cover
-        [AllowedExtensions(CoverSettings.allowedExtensions)]
-        [MaxFileSize(CoverSettings.maxFileSizeInBytes)]
+        [AllowedExtensions(FileSettings.AllowedExtensions)]
+        [MaxFileSize(FileSettings.MaxFileSizeInBytes)]
         public IFormFile Cover { get; set; } = default!;
     }
 }

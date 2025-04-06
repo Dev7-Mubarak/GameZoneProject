@@ -1,0 +1,42 @@
+﻿@model GamesCategoriesVM
+
+@{
+    ViewData["Title"] = "Edit Category Page";
+}
+
+<div class="container mt-5 d-flex justify-content-center">
+
+    <!-- Content Row -->
+
+    <div class="col-lg-6 col-12">
+
+        <div class="text-success">
+            <h2 class="mb-0">Editing New Category</h2>
+        </div>
+        <hr />
+
+        <form asp-controller="Categories" asp-action="EditCategory" method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group mt-3">
+                <label for="loan_full_name" class="form-label" asp-for="Name"></label>
+                <input type="text" asp-for="Name" class="form-control shadow-none" id="loan_full_name">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="text-white btn btn-success" style="margin-left: 5px; margin-top: 1vw; width: 70px;">
+                save
+            </button>
+
+            <a href="/Admin/Categories/AllGameCategories" class="text-white btn btn-outline-secondary" style="margin-left: 5px; margin-top: 1vw; width: 70px;">
+                Cancel
+            </a>
+        </form>
+    </div>
+    <!-- End of Main Content -->
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

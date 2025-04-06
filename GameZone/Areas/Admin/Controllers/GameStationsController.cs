@@ -214,5 +214,29 @@ namespace GameZone.Areas.Admin.Controllers
 
             return Ok();
         }
+
+        public async Task<IActionResult> GamesInStation(int stationId)
+        {
+            var station = await _context.GameStations
+                                           .Include(gs => gs.GameStationGames)
+                                           .ThenInclude(gsg => gsg.Game)
+                                           .ThenInclude(g => g.Category)
+                                           .FirstOrDefaultAsync(gs => gs.Id == stationId);
+
+            if (station is null)
+            {
+                return NotFound();
+            }
+
+            var gamesInStation = new GamesInStationVM
+            {
+                StationName = station.Name,
+                Games = station.GameStationGames
+                               .Select(gsg => gsg.Game)
+                               .ToList()
+            };
+
+            return View(gamesInStation);
+        }
     }
 }
