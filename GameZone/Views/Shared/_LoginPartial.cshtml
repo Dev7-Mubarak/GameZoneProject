@@ -6,24 +6,173 @@
 @inject UserManager<AppUser> UserManager
 
 <ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-        <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)</a>
-    </li>
-    <li class="nav-item">
-        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
-    </li>
-}
-else
-{
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)</a>
+        </li>
+
+        @if (User.IsInRole(Role.Admin))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin Panel</a>
+            </li>
+        }
+        else if (User.IsInRole(Role.Owner))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Owner" asp-controller="Home" asp-action="Index">My Station</a>
+            </li>
+        }
+        else if (User.IsInRole(Role.User))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-action="UserReservationLog">Reservation Log</a>
+            </li>
+        }
+
+
+        <li class="nav-item">
+            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+            </form>
+        </li>
+    }
+    else
+    {
         <li class="nav-item">
             <a class="btn btn-outline-primary rounded-pill" asp-area="Identity" asp-page="/Account/Login">تسجيل الدخول</a>
         </li>
         <li class="nav-item">
             <a class="btn btn-primary ms-2 ms-lg-2 rounded-pill" asp-area="Identity" asp-page="/Account/Register">انشاء حساب</a>
         </li>
-}
+    }
 </ul>
+
+
+@* <a style="margin-right: 1vw;" class="fw-bold text-white" asp-action="UserReservationLog">Reservation Log</a>
+<a style="margin-right:1vw ;" asp-action="AccountDetails"><img width="40vw" src="~/Assets/Images/user.png"></a>
+@{
+    ViewData["Title"] = "User Reservation Log";
+    Layout = "_layout2";
+}
+
+<section style="margin-top: 15vw">
+    <div class="container">
+        <!-- Page Title -->
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="col-lg-10 mx-auto text-center">
+                    <h2 class="section-title mb-0">Reservation Log</h2>
+
+                    <div class="section-border mt-4 w-25"></div>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Title -->
+        <!-- Reservation Table -->
+        <div class="row justify-content-center" style="margin: 5vw 0vw">
+            <div class="col-10">
+                <table class="table text-white">
+                    <thead class="text-center">
+                        <tr>
+                            <th>ID</th>
+                            <th>Station Name</th>
+                            <th>Type Of Rooms</th>
+                            <th>Date Of Reservation</th>
+                            <th>Time Of Reservation</th>
+                            <th>Number Of Hours</th>
+                            <th>Total Cost</th>
+                            <th>Payment Method</th>
+                            <th>Status Of Reservation</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        <tr style="height: 4vw">
+                            <th>1</th>
+                            <td>Game Over</td>
+                            <td>BIG</td>
+                            <td>2024-05-02</td>
+                            <td>10:00 AM</td>
+                            <td>2 Hours</td>
+                            <td>8000 RY</td>
+                            <td>Cash</td>
+                            <td>Confirmed</td>
+                        </tr>
+                        <tr style="height: 4vw">
+                            <th>2</th>
+                            <td>Village</td>
+                            <td>VIP</td>
+                            <td>2024-05-03</td>
+                            <td>11:30 AM</td>
+                            <td>1 Hour</td>
+                            <td>4000 RY</td>
+                            <td>Cash</td>
+                            <td>Pending</td>
+                        </tr>
+                        <tr style="height: 4vw">
+                            <th>3</th>
+                            <td>Game Ya Eiaal</td>
+                            <td>BIG</td>
+                            <td>2024-04-04</td>
+                            <td>2:00 PM</td>
+                            <td>4 Hours</td>
+                            <td>8000 RY</td>
+                            <td>Omgy</td>
+                            <td>Confirmed</td>
+                        </tr>
+                        <tr style="height: 4vw">
+                            <th>4</th>
+                            <td>Black Spider</td>
+                            <td>Regular</td>
+                            <td>2024-03-05</td>
+                            <td>4:30 PM</td>
+                            <td>3 Hours</td>
+                            <td>5000 RY</td>
+                            <td>Kuraimi</td>
+                            <td>Cancelled</td>
+                        </tr>
+                        <tr style="height: 4vw">
+                            <th>5</th>
+                            <td>Black Spider</td>
+                            <td>Regular</td>
+                            <td>2024-04-06</td>
+                            <td>9:00 AM</td>
+                            <td>6 Hours</td>
+                            <td>5000 RY</td>
+                            <td>Omgy</td>
+                            <td>Confirmed</td>
+                        </tr>
+                        <tr style="height: 4vw">
+                            <th>6</th>
+                            <td>Rank One</td>
+                            <td>BIG</td>
+                            <td>2024-02-07</td>
+                            <td>1:30 PM</td>
+                            <td>1:30 Hour</td>
+                            <td>8000 RY</td>
+                            <td>Kuraimi</td>
+                            <td>Pending</td>
+                        </tr>
+                        <tr style="height: 4vw">
+                            <th>7</th>
+                            <td>Premier League</td>
+                            <td>SMALL</td>
+                            <td>2024-02-08</td>
+                            <td>3:00 PM</td>
+                            <td>3:30 Hours</td>
+                            <td>3000 RY</td>
+                            <td>Cash</td>
+                            <td>Confirmed</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /Reservation Table -->
+    </div>
+
+    <!-- Footer -->
+</section>
+
+ *@

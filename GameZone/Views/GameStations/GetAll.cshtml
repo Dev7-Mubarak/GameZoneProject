@@ -1,4 +1,6 @@
-﻿@{
+﻿@using GameZone.Settings
+@model IEnumerable<GameZone.Models.GameStation>
+@{
     ViewData["Title"] = "Game Stations Page";
 }
 
@@ -11,202 +13,74 @@
                     <div class="section-border mt-4"></div>
                 </div>
             </div>
-            <div class="row align-items-center mb-5 mt-5">
-                <div class="col-lg-5">
-                    <div class="section-title">
-                        <h1>Lucille Game Station</h1>
-                        <p class="lead mb-0 mt-4">
-                            <p>Location: Hadramout/Al-Mukalla/Al-Dis </p>
-                            <p>Phone Numbers: FirstNumber&emsp;SecondNumber</p>
-                            <p>opening times: 8am-2pm/4pm-1am </p>
-                            <p>Average Room Price: 3000RY per hour </p>
-                        </p> 
-                        <a class="btn btn-primary mt-4" asp-controller="GameStations" asp-action="StationDetails">Show Details</a>
+            
+            @foreach (var station in Model)
+            {
+                <div class="row align-items-center mb-5 mt-5">
+                    <div class="col-lg-5">
+                        <div class="section-title">
+                            <h1>@station.Name</h1>
+                            <p class="lead mb-0 mt-4">
+                                <p>Location: @station.Location</p>
+                                <p>Phone Numbers: @station.PhoneNumber1 
+                                @if (!string.IsNullOrEmpty(station.PhoneNumber2))
+                                {
+                                    <text>&emsp;@station.PhoneNumber2</text>
+                                }
+                                </p>
+                                <p>
+                                    Opening times: 
+                                    @station.MorningOpenTime.ToString(@"hh\:mm")-@station.MorningCloseTime.ToString(@"hh\:mm")
+                                    @if (station.EveningOpenTime != TimeSpan.Zero && station.EveningCloseTime != TimeSpan.Zero)
+                                    {
+                                        <text>/ @station.EveningOpenTime.ToString(@"hh\:mm")-@station.EveningCloseTime.ToString(@"hh\:mm")</text>
+                                    }
+                                </p>
+                            </p> 
+                            <a class="btn btn-primary mt-4" asp-controller="GameStations" asp-action="StationDetails" asp-route-id="@station.Id">Show Details</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 text-center text-lg-end">
+                        <img src="@($"{FileSettings.StationFilePath}/{station.Image}")" alt="@station.Name" class="img-fluid w-50 rounded">
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-12" style="direction: rtl; margin-left: -14px;">
+                            <h6 class="pt-x-1">
+                                Rating: 
+                                @if (station.Rating.HasValue)
+                                {
+                                    var rating = station.Rating.Value;
+                                    var starImage = "";
+                                    if (rating >= 4.5) starImage = "star4,5.png";
+                                    else if (rating >= 4) starImage = "star4.png";
+                                    else if (rating >= 2.5) starImage = "star2,5.png";
+                                    else starImage = "star1.png";
+                                    
+                                    <span>
+                                        <img src="~/Assets/Ratings/@starImage" style="width: 150px;" alt="">
+                                    </span> 
+                                    @station.Ratings?.Count 
+                                }
+                                else
+                                {
+                                    <span>No ratings yet</span>
+                                }
+                            </h6>
+                            <a style="margin-right: 8%; font-weight: bold;"
+                               asp-controller="GameStations"
+                               asp-action="StationDetails"
+                               asp-route-id="@station.Id"> 
+                               &#60;&#60; More Details 
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-7 text-center text-lg-end">
-                    <img src="~/Assets/Images/station1.jpg" alt="About Ourselves"
-                         class="img-fluid w-50 rounded">
-                </div>
+            }
 
-                <div class="row mt-3">
-                    <div class="col-12" style="direction: rtl; margin-left: -14px;">
-                        <h6 class="pt-x-1">
-                            Rating :<span>
-                                <img src="~/Assets/Ratings/star4,5.png" style="width: 150px;" alt="">
-                            </span> 34 ratings
-                        </h6>
-                        <a style="margin-right: 8%; font-weight: bold;" asp-controller="GameStations" asp-action="StationReview"> &#60;&#60; More Details </a>
-                    </div>
-                </div>
-
-            </div>
-            <div class="row align-items-center mb-5 mt-5 ">
-                <div class="col-lg-5">
-                    <div class="section-title">
-                        <h1>Black Spider Game Station</h1>
-                        <p class="lead mb-0 mt-4">
-                        <p>Location: Hadramout/Al-Mukalla/Al-Msaken </p>
-                        <p>opening times: 3pm-3am </p>
-                        <p>Average Room Price: 2500RY per hour </p>
-                        </p> <a class="btn btn-primary mt-4" asp-controller="GameStations" asp-action="StationDetails">Show Details</a>
-                    </div>
-                </div>
-                <div class="col-lg-7 text-center text-lg-end">
-                    <img src="~/Assets/Images/station2.jpg" alt="About Ourselves"
-                         class="img-fluid w-50 rounded">
-                </div>
-
-
-                <div class="row mt-3">
-                    <div class="col-12" style="direction: rtl; margin-left: -14px;">
-                        <h6 class="pt-x-1">
-                            Rating :<span>
-                                <img src="~/Assets/Ratings/star2,5.png" style="width: 150px;" alt="">
-                            </span> 23 ratings</h3>
-                            <a style="margin-right: 8%; font-weight: bold;" asp-controller="GameStations" asp-action="StationReview"> &#60;&#60; More Details </a>
-                    </div>
-                </div>
-            </div>
-            <div class="row align-items-center mb-5 mt-5">
-                <div class="col-lg-5">
-                    <div class="section-title">
-                        <h1>Game Ya Eiaal Game Station</h1>
-                        <p class="lead mb-0 mt-4">
-                        <p>Location: Hadramout/Al-Mukalla/Ibn-Sena </p>
-                        <p>opening times:Hadramout/Al-Mukalla/Ibn-Sena </p>
-                        <p>Average Room Price: 3500YR per hour </p>
-                        </p> <a class="btn btn-primary mt-4" asp-controller="GameStations" asp-action="StationDetails">Show Details</a>
-                    </div>
-                </div>
-                <div class="col-lg-7 text-center text-lg-end">
-                    <img src="~/Assets/Images/station3.jpg" alt="About Ourselves"
-                         class="img-fluid w-50 rounded">
-                </div>
-
-
-                <div class="row mt-3">
-                    <div class="col-12" style="direction: rtl; margin-left: -14px;">
-                        <h6 class="pt-x-1">
-                            Rating :<span>
-                                <img src="~/Assets/Ratings/star1.png" style="width: 150px;" alt="">
-                            </span> 15 ratings</h3>
-                            <a style="margin-right: 8%; font-weight: bold;" asp-controller="GameStations" asp-action="StationReview"> &#60;&#60; More Details </a>
-
-                    </div>
-                </div>
-            </div>
-            <div class="row align-items-center mb-5 mt-5">
-                <div class="col-lg-5">
-                    <div class="section-title">
-                        <h1>Village Game Station</h1>
-                        <p class="lead mb-0 mt-4">
-                        <p>Location: Sann'a/Old Sanna'a/Village Center </p>
-                        <p>opening times: Open All Day </p>
-                        <p>Average Room Price: 1500YR per hour </p>
-                        </p> <a class="btn btn-primary mt-4" asp-controller="GameStations" asp-action="StationDetails">Show Details</a>
-                    </div>
-                </div>
-                <div class="col-lg-7 text-center text-lg-end">
-                    <img src="~/Assets/Images/station4.jpg" alt="About Ourselves"
-                         class="img-fluid w-50 rounded">
-                </div>
-
-
-                <div class="row mt-3">
-                    <div class="col-12" style="direction: rtl; margin-left: -14px;">
-                        <h6 class="pt-x-1">
-                            Rating :<span>
-                                <img src="~/Assets/Ratings/star4.png" style="width: 150px;" alt="">
-                            </span> 39 ratings</h3>
-                            <a style="margin-right: 8%; font-weight: bold;" asp-controller="GameStations" asp-action="StationReview"> &#60;&#60; More Details </a>
-                    </div>
-                </div>
-            </div>
-            <div class="row align-items-center mb-5 mt-5">
-                <div class="col-lg-5">
-                    <div class="section-title">
-                        <h1>Game Over Game Station</h1>
-                        <p class="lead mb-0 mt-4">
-                        <p>Location: Sanna'a/Al-Sabaeen/Hadah Road </p>
-                        <p>opening times: 7am-2-pm/5pm-12am </p>
-                        <p>Average Room Price: 1800YR per hour </p>
-                        </p> <a class="btn btn-primary mt-4" asp-controller="GameStations" asp-action="StationDetails">Show Details</a>
-                    </div>
-                </div>
-                <div class="col-lg-7 text-center text-lg-end">
-                    <img src="~/Assets/Images/station5.jpg" alt="About Ourselves"
-                         class="img-fluid w-50 rounded">
-                </div>
-
-
-                <div class="row mt-3">
-                    <div class="col-12" style="direction: rtl; margin-left: -14px;">
-                        <h6 class="pt-x-1">
-                            Rating :<span>
-                                <img src="~/Assets/Ratings/star2,5.png" style="width: 150px;" alt="">
-                            </span> 21 ratings</h3>
-                            <a style="margin-right: 8%; font-weight: bold;" asp-controller="GameStations" asp-action="StationReview"> &#60;&#60; More Details </a>
-                    </div>
-                </div>
-            </div>
-            <div class="row align-items-center mb-5 mt-5">
-                <div class="col-lg-5">
-                    <div class="section-title">
-                        <h1>Rank One Game Station</h1>
-                        <p class="lead mb-0 mt-4">
-                        <p>Location: Aden/Al-Mansoora/Al-Tesaen Road </p>
-                        <p>opening times Open All Day: </p>
-                        <p>Average Room Price5500Yr per hour: </p>
-                        </p> <a class="btn btn-primary mt-4" asp-controller="GameStations" asp-action="StationDetails">Show Details</a>
-                    </div>
-                </div>
-                <div class="col-lg-7 text-center text-lg-end">
-                    <img src="~/Assets/Images/station6.jpg" alt="About Ourselves"
-                         class="img-fluid w-50 rounded">
-                </div>
-
-
-                <div class="row mt-3">
-                    <div class="col-12" style="direction: rtl; margin-left: -14px;">
-                        <h6 class="pt-x-1">
-                            Rating :<span>
-                                <img src="~/Assets/Ratings/star1.png" style="width: 150px;" alt="">
-                            </span> 16 ratings</h3>
-                            <a style="margin-right: 8%; font-weight: bold;" asp-controller="GameStations" asp-action="StationReview"> &#60;&#60; More Details </a>
-                    </div>
-                </div>
-            </div>
-            <div class="row align-items-center mb-5 mt-5">
-                <div class="col-lg-5">
-                    <div class="section-title">
-                        <h1>Premier league Game Station</h1>
-                        <p class="lead mb-0 mt-4">
-                        <p>Location: Aden/Khor-Maksar/Al-Corneesh Road </p>
-                        <p>opening times: 6am-1pm/3pm-4am </p>
-                        <p>Average Room Price 400YR per hour: </p>
-                        </p> <a class="btn btn-primary mt-4" asp-controller="GameStations" asp-action="StationDetails">Show Details</a>
-                    </div>
-                </div>
-                <div class="col-lg-7 text-center text-lg-end">
-                    <img src="~/Assets/Images/station7.jpg" alt="About Ourselves"
-                         class="img-fluid w-50 rounded">
-                </div>
-
-
-                <div class="row mt-3">
-                    <div class="col-12" style="direction: rtl; margin-left: -14px;">
-                        <h6 class="pt-x-1">
-                            Rating :<span>
-                                <img src="~/Assets/Ratings/star4,5.png" style="width: 150px;" alt="">
-                            </span> 45 ratings</h3>
-                            <a style="margin-right: 8%; font-weight: bold;" asp-controller="GameStations" asp-action="StationReview"> &#60;&#60; More Details </a>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="has-shapes">
-            <svg class="shape shape-left text-light" width="381" height="443" viewBox="0 0 381 443" fill="none"
+   <svg class="shape shape-left text-light" width="381" height="443" viewBox="0 0 381 443" fill="none"
                  xmlns="http://www.w3.org/2000/svg">
                 <path d="M334.266 499.007C330.108 469.108 304.151 446.496 276.261 435.921C248.372 425.346 218.077 424.035 188.666 419.32C159.254 414.589 128.795 405.375 108.664 383.129C72.8533 343.535 83.3445 282.01 77.7634 228.587C69.3017 147.754 15.4873 73.3967 -58.0001 40.9907"
                       stroke="currentColor" stroke-miterlimit="10" />
@@ -227,7 +101,6 @@
                       stroke="currentColor" stroke-miterlimit="10" />
                 <path d="M151.879 -121.989C178.867 -110.118 193.373 -78.4638 196.081 -48.0047C198.789 -17.5457 192.179 12.9074 188.992 43.3627C185.821 73.8223 186.586 106.483 202.256 132.251C230.153 178.095 290.618 183.591 339.318 202.965C413.001 232.297 468.867 305.034 480.265 386.468"
                       stroke="currentColor" stroke-miterlimit="10" />
-            </svg>
-        </div>
+            </svg>        </div>
     </div>
 </section>

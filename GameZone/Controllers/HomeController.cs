@@ -1,12 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+﻿using GameZone.Data;
+using GameZone.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameZone.Controllers
 {
     public class HomeController : Controller
     {
-        public HomeController(ILogger<HomeController> logger)
-        {  
+        private readonly UserManager<AppUser> _userManager;
+        private readonly AppDBContext _context;
+        public HomeController(UserManager<AppUser> userManager, AppDBContext context)
+        {
+            _userManager = userManager;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -18,9 +26,24 @@ namespace GameZone.Controllers
             return View();
         }
 
-        public IActionResult UserReservationLog()
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> UserReservationLog()
         {
-            return View();
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Challenge();
+            }
+
+            var reservations = await _context.Reservations
+                .Where(r => r.UserId == user.Id)
+                .Include(r => r.GameStation)
+                .Include(r => r.Room)
+                .Include(r => r.PaymentMethod)
+                .OrderByDescending(r => r.Date)
+                .ToListAsync();
+
+            return View(reservations);
         }
 
         public IActionResult AccountDetails()

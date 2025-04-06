@@ -1,14 +1,13 @@
 ﻿using GameZone.Areas.Admin.ViewModels;
-using GameZone.Constants;
 using GameZone.Data;
 using GameZone.Helpers;
 using GameZone.Models;
+using GameZone.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
-using System.Xml.Linq;
 
 namespace GameZone.Areas.Admin.Controllers
 {
@@ -25,7 +24,7 @@ namespace GameZone.Areas.Admin.Controllers
             _context = context;
             _userManager = userManager;
             _webHostEnvironment = webHostEnvironment;
-            _imagePath = $"{_webHostEnvironment.WebRootPath}{CoverSettings.stationFilePath}";
+            _imagePath = $"{_webHostEnvironment.WebRootPath}{FileSettings.StationFilePath}";
         }
 
         public IActionResult Index()
@@ -83,8 +82,7 @@ namespace GameZone.Areas.Admin.Controllers
                 return View(model);
             }
 
-            var cover = (await Utilities.SaveFileAsync(model.Cover, _imagePath));
-            var coverName = cover.FileName;
+            var cover = await Utilities.SaveFileAsync(model.Cover, _imagePath);
 
             var gameStation = new GameStation()
             {
@@ -98,7 +96,7 @@ namespace GameZone.Areas.Admin.Controllers
                 EveningCloseTime = model.EveningCloseTime,
                 Descraption = model.Description,
                 UserId = model.UserId,
-                Image = coverName,
+                Image = cover.FileName,
             };
 
             _context.GameStations.Add(gameStation);

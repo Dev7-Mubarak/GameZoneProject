@@ -1,123 +1,89 @@
-﻿@{
-        ViewData["Title"] = "User Reservation Log";
-        Layout = "_layout2";
+﻿@using GameZone.Settings
+@model IEnumerable<GameZone.Models.Reservation>
+@{
+    ViewData["Title"] = "User Reservation Log";
 }
 
-<section style="margin-top: 15vw">
-      <div class="container">
-        <!-- Page Title -->
-        <div class="row justify-content-center">
-          <div class="col-12">
-            <div class="col-lg-10 mx-auto text-center">
-              <h2 class="section-title mb-0">Reservation Log</h2>
-
-              <div class="section-border mt-4 w-25"></div>
+<section class="py-5 mt-5">
+    <div class="container">
+        <!-- Page Header -->
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="display-5 fw-bold mb-3">Reservation Log</h2>
             </div>
-          </div>
         </div>
-        <!-- /Page Title -->
 
         <!-- Reservation Table -->
-        <div class="row justify-content-center" style="margin: 5vw 0vw">
-          <div class="col-10">
-            <table class="table text-white">
-              <thead class="text-center">
-                <tr>
-                  <th>ID</th>
-                  <th>Station Name</th>
-                  <th>Type Of Rooms</th>
-                  <th>Date Of Reservation</th>
-                  <th>Time Of Reservation</th>
-                  <th>Number Of Hours</th>
-                  <th>Total Cost</th>
-                  <th>Payment Method</th>
-                  <th>Status Of Reservation</th>
-                </tr>
-              </thead>
-              <tbody class="text-center">
-                <tr style="height: 4vw">
-                  <th>1</th>
-                  <td>Game Over</td>
-                  <td>BIG</td>
-                  <td>2024-05-02</td>
-                  <td>10:00 AM</td>
-                  <td>2 Hours</td>
-                  <td>8000 RY</td>
-                  <td>Cash</td>
-                  <td>Confirmed</td>
-                </tr>
-                <tr style="height: 4vw">
-                  <th>2</th>
-                  <td>Village</td>
-                  <td>VIP</td>
-                  <td>2024-05-03</td>
-                  <td>11:30 AM</td>
-                  <td>1 Hour</td>
-                  <td>4000 RY</td>
-                  <td>Cash</td>
-                  <td>Pending</td>
-                </tr>
-                <tr style="height: 4vw">
-                  <th>3</th>
-                  <td>Game Ya Eiaal</td>
-                  <td>BIG</td>
-                  <td>2024-04-04</td>
-                  <td>2:00 PM</td>
-                  <td>4 Hours</td>
-                  <td>8000 RY</td>
-                  <td>Omgy</td>
-                  <td>Confirmed</td>
-                </tr>
-                <tr style="height: 4vw">
-                  <th>4</th>
-                  <td>Black Spider</td>
-                  <td>Regular</td>
-                  <td>2024-03-05</td>
-                  <td>4:30 PM</td>
-                  <td>3 Hours</td>
-                  <td>5000 RY</td>
-                  <td>Kuraimi</td>
-                  <td>Cancelled</td>
-                </tr>
-                <tr style="height: 4vw">
-                  <th>5</th>
-                  <td>Black Spider</td>
-                  <td>Regular</td>
-                  <td>2024-04-06</td>
-                  <td>9:00 AM</td>
-                  <td>6 Hours</td>
-                  <td>5000 RY</td>
-                  <td>Omgy</td>
-                  <td>Confirmed</td>
-                </tr>
-                <tr style="height: 4vw">
-                  <th>6</th>
-                  <td>Rank One</td>
-                  <td>BIG</td>
-                  <td>2024-02-07</td>
-                  <td>1:30 PM</td>
-                  <td>1:30 Hour</td>
-                  <td>8000 RY</td>
-                  <td>Kuraimi</td>
-                  <td>Pending</td>
-                </tr>
-                <tr style="height: 4vw">
-                  <th>7</th>
-                  <td>Premier League</td>
-                  <td>SMALL</td>
-                  <td>2024-02-08</td>
-                  <td>3:00 PM</td>
-                  <td>3:30 Hours</td>
-                  <td>3000 RY</td>
-                  <td>Cash</td>
-                  <td>Confirmed</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                @if (!Model.Any())
+                {
+                    <div class="alert alert-info text-center py-4">
+                        <i class="bi bi-info-circle-fill me-2"></i>You don't have any reservations yet.
+                    </div>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered align-middle">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Reservation Name</th>
+                                    <th>Station</th>
+                                    <th>Room Name</th>
+                                    <th>Date</th>
+                                    <th>Time Slot</th>
+                                    <th class="text-center">Hours</th>
+                                    <th class="text-end">Total Price</th>
+                                    <th>Payment Type</th>
+                                    <th>Deposit Resive</th>
+                                    <th class="text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var reservation in Model)
+                                {
+                                    <tr>
+                                        <td>@reservation.ReservationName</td>
+                                        <td>@reservation.GameStation?.Name</td>
+                                        <td>@reservation.Room?.Name</td>
+                                        <td>@reservation.Date.ToString("yyyy-MM-dd")</td>
+                                        <td>
+                                            @reservation.StartHour.ToString("hh:mm tt") -
+                                            @reservation.EndHour.ToString("hh:mm tt")
+                                        </td>
+                                        <td class="text-center">@reservation.NumberOfHours</td>
+                                        <td class="text-end">@reservation.TotalPrice.ToString("N0") RY</td>
+                                        <td>@reservation.PaymentType</td>
+                                        <td>
+                                            <img src="@($"{FileSettings.DepositsFilePath}/{reservation.DepositImage}")" alt="Name" class="rounded-circle"
+                                                 style="max-width: 60px; max-height: 80px" />
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge @GetStatusBadgeClass(reservation.Satuts) rounded-pill py-2 px-3">
+                                                @reservation.Satuts
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
         </div>
-        <!-- /Reservation Table -->
-      </div>
+    </div>
+</section>
 
-      <!-- Footer -->
-    </section>
+@functions {
+    string GetStatusBadgeClass(ReservationStatus status)
+    {
+        return status switch
+        {
+            ReservationStatus.Confirmed => "bg-success",
+            ReservationStatus.Pending => "bg-warning text-dark",
+            ReservationStatus.Denied => "bg-danger",
+            _ => "bg-secondary"
+        };
+    }
+}

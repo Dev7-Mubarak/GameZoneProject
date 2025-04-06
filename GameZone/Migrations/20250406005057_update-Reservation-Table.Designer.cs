@@ -4,6 +4,7 @@ using GameZone.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameZone.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250406005057_update-Reservation-Table")]
+    partial class updateReservationTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -172,9 +174,9 @@ namespace GameZone.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "933d82bd-a243-4efb-b05c-41d975c7cbed",
+                            Id = "f0f3ab5c-ce7f-4c17-bbb5-630a408dc08a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fa4f47e3-cd2b-4c53-bb70-fc2f4114f296",
+                            ConcurrencyStamp = "b887d697-3930-4d20-b07e-a750f820a40a",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             FisrtName = "Mubarak",
@@ -182,17 +184,17 @@ namespace GameZone.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKxoS/12cqDXF3+Pph2MsjdhJ/rN1OxfjKgQT8sFvlshu1hCoXiQdSTCoggszELhLQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMCLitliDOXNv8LDZfgGpCbcFo6HEDpPecmfutCyWlgk2JOVZzTK5NGG7xnmZwuUWA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a4c36689-d078-4d1b-a1f0-ad7753fe002c",
+                            SecurityStamp = "40a6b810-31c8-412e-92d8-5a07c990eb83",
                             TwoFactorEnabled = false,
                             UserName = "admin@example.com"
                         },
                         new
                         {
-                            Id = "50e09828-2151-4a7e-94a7-4619c53f75c3",
+                            Id = "c73a5608-9704-45d5-8b37-9120851af79b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "34f957cf-8f43-4496-aefe-176e88b97cae",
+                            ConcurrencyStamp = "3098c6b5-edaa-4b63-b46d-fd48b4ab5c27",
                             Email = "owner@example.com",
                             EmailConfirmed = true,
                             FisrtName = "Mubarak",
@@ -200,17 +202,17 @@ namespace GameZone.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "OWNER@EXAMPLE.COM",
                             NormalizedUserName = "OWNER@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPMDGWnY1AzeDqFVV0gINylXzQ124YqjjqqNcteEaebaEbU4nB3rrnbnsX2+6kRuaw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELa9mHNCYHtEzViu0+TL7aEXPnVGQWECE7J9fqAwqHBoumnLPZcl94QFvm7wlprz8g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "70215e6c-2b66-4acf-b05b-adac38a59115",
+                            SecurityStamp = "8b67addc-dfcb-4f9e-a632-abffe751ea67",
                             TwoFactorEnabled = false,
                             UserName = "owner@example.com"
                         },
                         new
                         {
-                            Id = "222ba56e-7ee3-4eac-93d0-3de3104079cb",
+                            Id = "d4b475fd-10ee-46be-9c98-ddd6c4ef6730",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2846c0a4-bb32-43d6-99e6-b795d4c4cc88",
+                            ConcurrencyStamp = "80ac6b6d-e0e3-4d51-9142-e5939f8ea33d",
                             Email = "User@example.com",
                             EmailConfirmed = true,
                             FisrtName = "Mubarak",
@@ -218,9 +220,9 @@ namespace GameZone.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@EXAMPLE.COM",
                             NormalizedUserName = "USER@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAECqhXAPeySSxmpKEqpPKGbwKpOUbMyTJOpZRIEYTISJbNv4TyRttVuyoMGyZbkWVSQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPLnFJMxog807cTHbnbcMmWV8SHn+E7gDjtMZWDo/eFOA3eLZ+0cUBi+OMH0w1o4UQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4bf1949a-2c30-42d3-93cd-ab8e338fce4a",
+                            SecurityStamp = "96f6c2dc-6cad-42cf-9dfe-79f6dc16706d",
                             TwoFactorEnabled = false,
                             UserName = "User@example.com"
                         });
@@ -526,9 +528,6 @@ namespace GameZone.Migrations
                     b.Property<int?>("PaymentType")
                         .HasColumnType("int");
 
-                    b.Property<string>("ReservationName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("RoomId")
                         .HasColumnType("int");
 
@@ -561,7 +560,7 @@ namespace GameZone.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2025, 4, 6, 5, 51, 12, 735, DateTimeKind.Local).AddTicks(1598),
+                            Date = new DateTime(2025, 4, 6, 3, 50, 55, 986, DateTimeKind.Local).AddTicks(5556),
                             DepositImage = "deposit_image_1.jpg",
                             EndHour = new DateTime(2025, 3, 26, 14, 0, 0, 0, DateTimeKind.Unspecified),
                             GameStationId = 1,
@@ -576,7 +575,7 @@ namespace GameZone.Migrations
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2025, 4, 6, 5, 51, 12, 735, DateTimeKind.Local).AddTicks(1620),
+                            Date = new DateTime(2025, 4, 6, 3, 50, 55, 986, DateTimeKind.Local).AddTicks(5573),
                             DepositImage = "deposit_image_2.jpg",
                             EndHour = new DateTime(2025, 3, 27, 18, 0, 0, 0, DateTimeKind.Unspecified),
                             GameStationId = 1,
@@ -591,7 +590,7 @@ namespace GameZone.Migrations
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2025, 4, 6, 5, 51, 12, 735, DateTimeKind.Local).AddTicks(1625),
+                            Date = new DateTime(2025, 4, 6, 3, 50, 55, 986, DateTimeKind.Local).AddTicks(5577),
                             DepositImage = "deposit_image_3.jpg",
                             EndHour = new DateTime(2025, 3, 28, 17, 0, 0, 0, DateTimeKind.Unspecified),
                             GameStationId = 1,
@@ -606,7 +605,7 @@ namespace GameZone.Migrations
                         new
                         {
                             Id = 4,
-                            Date = new DateTime(2025, 4, 6, 5, 51, 12, 735, DateTimeKind.Local).AddTicks(1629),
+                            Date = new DateTime(2025, 4, 6, 3, 50, 55, 986, DateTimeKind.Local).AddTicks(5581),
                             EndHour = new DateTime(2025, 3, 29, 15, 0, 0, 0, DateTimeKind.Unspecified),
                             GameStationId = 1,
                             NumberOfHours = (short)4,
@@ -620,7 +619,7 @@ namespace GameZone.Migrations
                         new
                         {
                             Id = 5,
-                            Date = new DateTime(2025, 4, 6, 5, 51, 12, 735, DateTimeKind.Local).AddTicks(1632),
+                            Date = new DateTime(2025, 4, 6, 3, 50, 55, 986, DateTimeKind.Local).AddTicks(5585),
                             EndHour = new DateTime(2025, 3, 29, 15, 0, 0, 0, DateTimeKind.Unspecified),
                             GameStationId = 1,
                             NumberOfHours = (short)4,
@@ -760,22 +759,22 @@ namespace GameZone.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4b73826f-7857-4e51-96c6-cb8a06213623",
-                            ConcurrencyStamp = "e5c899b4-ad88-4245-946d-ca328df48769",
+                            Id = "a2dbeb15-a47a-4daf-bee8-1b881e66ba61",
+                            ConcurrencyStamp = "4b7edb32-7e0d-4b13-810d-77f63b3aeccc",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "f6d824f3-3e25-4e66-b0bc-61acdc7cec83",
-                            ConcurrencyStamp = "325e22fe-cdef-436d-8190-9788cde339b3",
+                            Id = "acbc3d07-9e57-4ae5-93fa-44e8cbefc46e",
+                            ConcurrencyStamp = "c1e20236-454b-421f-b374-2fd55468e23b",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
-                            Id = "81ed233a-2fe7-4c83-abac-8f34aa440a1a",
-                            ConcurrencyStamp = "6ba52a72-be9b-49d5-9002-d52c57bb1cfc",
+                            Id = "66309c03-fd41-41d6-bb2f-c8599ec9a28c",
+                            ConcurrencyStamp = "5a828053-cf06-4968-a5eb-2d3259fa9611",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -870,18 +869,18 @@ namespace GameZone.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "933d82bd-a243-4efb-b05c-41d975c7cbed",
-                            RoleId = "4b73826f-7857-4e51-96c6-cb8a06213623"
+                            UserId = "f0f3ab5c-ce7f-4c17-bbb5-630a408dc08a",
+                            RoleId = "a2dbeb15-a47a-4daf-bee8-1b881e66ba61"
                         },
                         new
                         {
-                            UserId = "50e09828-2151-4a7e-94a7-4619c53f75c3",
-                            RoleId = "f6d824f3-3e25-4e66-b0bc-61acdc7cec83"
+                            UserId = "c73a5608-9704-45d5-8b37-9120851af79b",
+                            RoleId = "acbc3d07-9e57-4ae5-93fa-44e8cbefc46e"
                         },
                         new
                         {
-                            UserId = "222ba56e-7ee3-4eac-93d0-3de3104079cb",
-                            RoleId = "81ed233a-2fe7-4c83-abac-8f34aa440a1a"
+                            UserId = "d4b475fd-10ee-46be-9c98-ddd6c4ef6730",
+                            RoleId = "66309c03-fd41-41d6-bb2f-c8599ec9a28c"
                         });
                 });
 

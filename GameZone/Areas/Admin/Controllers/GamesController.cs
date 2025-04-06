@@ -1,9 +1,8 @@
 using GameZone.Areas.Admin.Services;
 using GameZone.Areas.Admin.ViewModels;
 using GameZone.Data;
+using GameZone.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Threading.Tasks;
 
 
 namespace GameZone.Areas.Admin.Controllers
@@ -14,44 +13,21 @@ namespace GameZone.Areas.Admin.Controllers
         private readonly ICategoriesService _categoriesService;
         private readonly IDevicesService _devicesService;
         private readonly IGamesService _gamesService;
+        private readonly AppDBContext _context;
 
 
-        public GamesController(ICategoriesService categoriesService, IDevicesService devicesService, IGamesService gamesService)
+        public GamesController(ICategoriesService categoriesService, IDevicesService devicesService, IGamesService gamesService, AppDBContext context)
         {
             _categoriesService = categoriesService;
             _devicesService = devicesService;
             _gamesService = gamesService;
-
+            _context = context;
+        }
         public IActionResult Index()
         {
             var games = _gamesService.GetAllGames();
             return View(games);
         }
-
-        public async Task<IActionResult> GamesInStation(int stationId)
-        {
-            var station = await _context.GameStations
-                                           .Include(gs => gs.GameStationGames)
-                                           .ThenInclude(gsg => gsg.Game)
-                                           .ThenInclude(g => g.Category)
-                                           .FirstOrDefaultAsync(gs => gs.Id == stationId);
-
-            if (station is null)
-            {
-                return NotFound();
-            }
-
-            var gamesInStation = new GamesInStationVM
-            {
-                StationName = station.Name,
-                Games = station.GameStationGames
-                               .Select(gsg => gsg.Game)
-                               .ToList()
-            };
-
-            return View(gamesInStation);
-        }
-        
         [HttpGet]
         public IActionResult Create()
         {

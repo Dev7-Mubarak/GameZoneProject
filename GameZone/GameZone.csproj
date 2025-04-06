@@ -15,6 +15,7 @@
     <Content Remove="Areas\Admin\Models\**" />
     <EmbeddedResource Remove="Areas\Admin\Data\**" />
     <EmbeddedResource Remove="Areas\Admin\Models\**" />
+    <Folder Include="wwwroot\Assets\Images\DepositsImages\" />
     <None Remove="Areas\Admin\Data\**" />
     <None Remove="Areas\Admin\Models\**" />
   </ItemGroup>
