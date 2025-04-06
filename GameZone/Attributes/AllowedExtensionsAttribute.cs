@@ -2,6 +2,7 @@
 
 namespace GameZone.Attributes
 {
+    // Custom Validation for Cover
     public class AllowedExtensionsAttribute : ValidationAttribute
     {
         private readonly string _allowedExtensions;

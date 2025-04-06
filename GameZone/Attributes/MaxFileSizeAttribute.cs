@@ -2,6 +2,7 @@
 
 namespace GameZone.Attributes
 {
+    // Custom Validation for Cover
     public class MaxFileSizeAttribute : ValidationAttribute
     {
         private readonly int _maxFileSize;

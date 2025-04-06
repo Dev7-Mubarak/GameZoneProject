@@ -12,7 +12,7 @@
     <div class="col-8">
         <h1 class="text-center text-success mb-5">All Games Categories</h1>
 
-        <a class="btn btn-success my-3" href="/Admin/Games/CreateCategory">Create New Category</a>
+        <a class="btn btn-success my-3" href="/Admin/Categories/CreateCategory">Create New Category</a>
 
         <table class="table table-striped text-center text-white">
             <thead>
@@ -28,7 +28,7 @@
                     <tr>
                         <td>@category.Name</td>
                         <td>
-                            <a asp-area="Admin" asp-controller="Games" asp-action="EditCategory" asp-route-categoryId="@category.Id" class="btn btn-warning rounded rounded-3 mr-2 font-weight-bold" style="width: 70px;">Edit</a>
+                            <a asp-area="Admin" asp-controller="Categories" asp-action="EditCategory" asp-route-categoryId="@category.Id" class="btn btn-warning rounded rounded-3 mr-2 font-weight-bold" style="width: 70px;">Edit</a>
                             <a href="javascript:;" class="btn btn-danger rounded rounded-3 mr-2 font-weight-bold js-delete" style="width: 70px;" data-id="@category.Id">
                                 Delete
                             </a>
@@ -58,10 +58,15 @@
                             className: 'btn-success'
                         }
                     },
+                    centerVertical: true,
+                    onShown: function (e) {
+                        e.preventDefault();
+                        document.activeElement.blur();
+                    },
                     callback: function (result) {
                         if (result) {
                             $.ajax({
-                                url: '/Admin/Games/DeleteCategory/' + Btn.data('id'),
+                                url: '/Admin/Categories/DeleteCategory/' + Btn.data('id'),
                                 type: 'POST',
                                 data: {
                                     '__RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()

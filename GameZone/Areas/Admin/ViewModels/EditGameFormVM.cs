@@ -1,5 +1,5 @@
 ﻿using GameZone.Attributes;
-using GameZone.Settings;
+using GameZone.Helpers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 

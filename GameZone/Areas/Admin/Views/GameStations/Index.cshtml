@@ -39,7 +39,7 @@
                                  style="max-width: 60px; max-height: 80px" />
                         </td>
                         <td>
-                            <a asp-area="Admin" asp-controller="Games" asp-action="GamesInStation" asp-route-stationId="@station.Id">Available Games</a>
+                            <a asp-area="Admin" asp-controller="GameStations" asp-action="GamesInStation" asp-route-stationId="@station.Id">Available Games</a>
                         </td>
                         <td>
                             @station.Location
@@ -88,6 +88,11 @@
                             label: 'No',
                             className: 'btn-success'
                         }
+                    },
+                    centerVertical: true,
+                    onShown: function (e) {
+                        e.preventDefault();
+                        document.activeElement.blur();
                     },
                     callback: function (result) {
                         if (result) {

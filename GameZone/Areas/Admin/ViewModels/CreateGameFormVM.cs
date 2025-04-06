@@ -1,6 +1,6 @@
 ﻿using GameZone.Attributes;
+using GameZone.Helpers;
 using GameZone.Models;
-using GameZone.Settings;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 

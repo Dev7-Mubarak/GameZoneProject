@@ -1,5 +1,4 @@
 ﻿using GameZone.Areas.Admin.ViewModels;
-using GameZone.Constants;
 using GameZone.Data;
 using GameZone.Helpers;
 using GameZone.Models;
@@ -25,7 +24,7 @@ namespace GameZone.Areas.Admin.Controllers
             _context = context;
             _userManager = userManager;
             _webHostEnvironment = webHostEnvironment;
-            _imagePath = $"{_webHostEnvironment.WebRootPath}{CoverSettings.stationFilePath}";
+            _imagePath = $"{_webHostEnvironment.WebRootPath}{FileSettings.stationFilePath}";
         }
 
         public IActionResult Index()
@@ -215,6 +214,30 @@ namespace GameZone.Areas.Admin.Controllers
             _context.SaveChanges();
 
             return Ok();
+        }
+
+        public async Task<IActionResult> GamesInStation(int stationId)
+        {
+            var station = await _context.GameStations
+                                           .Include(gs => gs.GameStationGames)
+                                           .ThenInclude(gsg => gsg.Game)
+                                           .ThenInclude(g => g.Category)
+                                           .FirstOrDefaultAsync(gs => gs.Id == stationId);
+
+            if (station is null)
+            {
+                return NotFound();
+            }
+
+            var gamesInStation = new GamesInStationVM
+            {
+                StationName = station.Name,
+                Games = station.GameStationGames
+                               .Select(gsg => gsg.Game)
+                               .ToList()
+            };
+
+            return View(gamesInStation);
         }
     }
 }

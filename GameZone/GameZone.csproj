@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-
-    <Folder Include="wwwroot\Assets\Images\GamesImages\" />
     <Compile Remove="Areas\Admin\Data\**" />
     <Compile Remove="Areas\Admin\Models\**" />
     <Content Remove="Areas\Admin\Data\**" />

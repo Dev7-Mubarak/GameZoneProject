@@ -15,7 +15,7 @@
         </div>
         <hr />
 
-        <form asp-controller="Games" asp-action="EditCategory" method="post">
+        <form asp-controller="Categories" asp-action="EditCategory" method="post">
             <input type="hidden" asp-for="Id" />
 
             <div class="form-group mt-3">
@@ -28,7 +28,7 @@
                 save
             </button>
 
-            <a href="/Admin/Games/AllGameCategories" class="text-white btn btn-outline-secondary" style="margin-left: 5px; margin-top: 1vw; width: 70px;">
+            <a href="/Admin/Categories/AllGameCategories" class="text-white btn btn-outline-secondary" style="margin-left: 5px; margin-top: 1vw; width: 70px;">
                 Cancel
             </a>
         </form>
