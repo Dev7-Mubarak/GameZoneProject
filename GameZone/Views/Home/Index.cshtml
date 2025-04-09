@@ -1,4 +1,7 @@
-﻿@{
+﻿@using GameZone.Helpers
+@model HomePageVM
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -11,7 +14,7 @@
                     <p class="mb-4">
                         Where all your gaming fantasies  can come true
                         <br>
-                    </p> <a type="button" href="/Accounts/Register"
+                    </p> <a type="button" asp-area="Identity" asp-page="/Account/Register"
                             class="btn btn-primary">
                         SIGN UP!
                         <span style="font-size: 14px;" class="ms-2 fas fa-arrow-right"></span>
@@ -27,7 +30,7 @@
         </div>
     </div>
     <div class="has-shapes ">
-        <svg class="shape shape-left text-light" viewBox="0 0 192 752" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="shape shape-left text-success" viewBox="0 0 192 752" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M-30.883 0C-41.3436 36.4248 -22.7145 75.8085 4.29154 102.398C31.2976 128.987 65.8677 146.199 97.6457 166.87C129.424 187.542 160.139 213.902 172.162 249.847C193.542 313.799 149.886 378.897 129.069 443.036C97.5623 540.079 122.109 653.229 191 728.495"
                   stroke="currentColor" stroke-miterlimit="10" />
             <path d="M-55.5959 7.52271C-66.0565 43.9475 -47.4274 83.3312 -20.4214 109.92C6.58466 136.51 41.1549 153.722 72.9328 174.393C104.711 195.064 135.426 221.425 147.449 257.37C168.829 321.322 125.174 386.42 104.356 450.559C72.8494 547.601 97.3965 660.752 166.287 736.018"
@@ -37,7 +40,7 @@
             <path d="M-105.045 22.5676C-115.506 58.9924 -96.8766 98.3762 -69.8706 124.965C-42.8646 151.555 -8.29436 168.767 23.4835 189.438C55.2615 210.109 85.9766 236.469 98.0001 272.415C119.38 336.367 75.7243 401.464 54.9072 465.604C23.4002 562.646 47.9473 675.796 116.838 751.063"
                   stroke="currentColor" stroke-miterlimit="10" />
         </svg>
-        <svg class="shape shape-right text-light" viewBox="0 0 731 746" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="shape shape-right text-success" viewBox="0 0 731 746" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12.1794 745.14C1.80036 707.275 -5.75764 666.015 8.73984 629.537C27.748 581.745 80.4729 554.968 131.538 548.843C182.604 542.703 234.032 552.841 285.323 556.748C336.615 560.64 391.543 557.276 433.828 527.964C492.452 487.323 511.701 408.123 564.607 360.255C608.718 320.353 675.307 307.183 731.29 327.323"
                   stroke="currentColor" stroke-miterlimit="10" />
             <path d="M51.0253 745.14C41.2045 709.326 34.0538 670.284 47.7668 635.783C65.7491 590.571 115.623 565.242 163.928 559.449C212.248 553.641 260.884 563.235 309.4 566.931C357.916 570.627 409.887 567.429 449.879 539.701C505.35 501.247 523.543 426.331 573.598 381.059C615.326 343.314 678.324 330.853 731.275 349.906"
@@ -132,64 +135,58 @@
 
         <div class="row position-relative">
 
-            <div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+            @foreach (var station in Model.PopularGameStations)
+            {
+                <div class="col-xl-3 col-lg-4 col-md-6 mt-4">
 
-                <div class="card bg-transparent border-0 text-center">
+                    <div class="card bg-transparent border-0 text-center">
 
-                    <div class="card-img">
-                        <img src="~/Assets/Images/station1.jpg" alt="Lucille Game Station" class="rounded w-100 gray-image" width="300" height="332">
-                        <a class="hidden-button bg-primary rounded-2" asp-controller="GameStations" asp-action="StationDetails">Learn More</a>
+                        <div class="card-img">
+                            <img src="@($"{FileSettings.StationFilePath}/{station.Image}")" alt="@station.Name" class="rounded w-100 gray-image" width="300" height="332">
+                            <a class="hidden-button bg-primary rounded-2" asp-controller="GameStations" asp-action="StationDetails" asp-route-id="@station.Id"> >Learn More</a>
+                        </div>
+
+                        <div class="card-body">
+                            <h3>@station.Name</h3>
+                            @switch (station.Rating)
+                            {
+                                case 5:
+                                    <p><span><img src="~/Assets/Ratings/star5.png" style="width: 150px;" alt="5 Stars"></span></p>
+                                    break;
+                                case 4.5f:
+                                    <p><span><img src="~/Assets/Ratings/star4,5.png" style="width: 150px;" alt="4.5 Stars"></span></p>
+                                    break;
+                                case 4:
+                                    <p><span><img src="~/Assets/Ratings/star4.png" style="width: 150px;" alt="">4 Stars</span></p>
+                                    break;
+                                case 3.5f:
+                                    <p><span><img src="~/Assets/Ratings/star3,5.png" style="width: 150px;" alt="">3.5 Stars</span></p>
+                                    break;
+                                case 3:
+                                    <p><span><img src="~/Assets/Ratings/star3.png" style="width: 150px;" alt="">3 Stars</span></p>
+                                    break;
+                                case 2.5f:
+                                    <p><span><img src="~/Assets/Ratings/star2,5.png" style="width: 150px;" alt="">2.5 Stars</span></p>
+                                    break;
+                                case 2:
+                                    <p><span><img src="~/Assets/Ratings/star2.png" style="width: 150px;" alt="">2 Stars</span></p>
+                                    break;
+                                case 1.5f:
+                                    <p><span><img src="~/Assets/Ratings/star1,5.png" style="width: 150px;" alt="">1.5 Stars</span></p>
+                                    break;
+                                case 1:
+                                    <p><span><img src="~/Assets/Ratings/star1.png" style="width: 150px;" alt="">1 Stars</span></p>
+                                    break;
+                                default:
+                                    <p class="text-danger fw-bold">No one Rate it yet</p>
+                                    break;
+
+                            }
+                        </div>
                     </div>
 
-                    <div class="card-body">
-                        <h3>Lucille</h3>
-                        <p><span><img src="~/Assets/Ratings/star4,5.png" style="width: 150px;" alt=""></span></p>
-                    </div>
                 </div>
-
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mt-4">
-                <div class="card bg-transparent border-0 text-center">
-
-                    <div class="card-img">
-                        <img src="~/Assets/Images/station4.jpg" alt="Village Game Station" class="rounded w-100 gray-image" width="300" height="332">
-                        <a class="hidden-button bg-primary rounded-2" asp-controller="GameStations" asp-action="StationDetails">Learn More</a>
-                    </div>
-
-                    <div class="card-body">
-                        <h3>Village</h3>
-                        <p><span><img src="~/Assets/Ratings/star4.png" style="width: 150px;" alt=""></span></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mt-4">
-                <div class="card bg-transparent border-0 text-center">
-
-                    <div class="card-img">
-                        <img src="~/Assets/Images/station7.jpg" alt="Premier league Game Station" class="rounded w-100 gray-image" width="300" height="332">
-                        <a class="hidden-button bg-primary rounded-2" asp-controller="GameStations" asp-action="StationDetails">Learn More</a>
-                    </div>
-
-                    <div class="card-body">
-                        <h3>Premier league</h3>
-                        <p><span><img src="~/Assets/Ratings/star4,5.png" style="width: 150px;" alt=""></span></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mt-4">
-                <div class="card bg-transparent border-0 text-center">
-
-                    <div class="card-img">
-                        <img src="~/Assets/Images/station2.jpg" alt="Black Spider Game Station" class="rounded w-100 gray-image" width="300" height="332">
-                        <a class="hidden-button bg-primary rounded-2" asp-controller="GameStations" asp-action="StationDetails">Learn More</a>
-                    </div>
-
-                    <div class="card-body">
-                        <h3>Black Spider</h3>
-                        <p><span><img src="~/Assets/Ratings/star2,5.png" style="width: 150px;" alt=""></span></p>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </section>
@@ -230,108 +227,51 @@
 
         <div class="row position-relative">
 
-            <div class="col-xl-3 col-lg-4 col-md-6 mt-4">
+            @foreach (var game in Model.PopularGames)
+            {
+                <div class="col-xl-3 col-lg-4 col-md-6 mt-4">
 
-                <div class="card bg-transparent border-0 text-center">
+                    <div class="card bg-transparent border-0 text-center">
 
-                    <div class="card-img">
-                        <img src="~/Assets/Images/COD MW III.jpg" alt="" class="rounded w-100 gray-image" width="300" height="332">
-                        <a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
+                        <div class="card-img">
+                            <img src="@($"{FileSettings.GamesImagesPath}/{game.Cover}")" alt="Game Cover" class="rounded w-100 gray-image" width="300" height="332">
+                            <a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails" asp-route-gameId="@game.Id">Learn More</a>
+                        </div>
+
+                        <div class="card-body">
+                            <h3>@game.Name</h3>
+                            @switch (game.CategoryName)
+                            {
+                                case "Action":
+                                    <h4><span class="badge bg-danger">@game.CategoryName</span></h4>
+                                    break;
+                                case "Adventure":
+                                    <h4><span class="badge bg-primary">@game.CategoryName</span></h4>
+                                    break;
+                                case "RPG":
+                                    <h4><span class="badge bg-dark">@game.CategoryName</span></h4>
+                                    break;
+                                case "Sports":
+                                    <h4><span class="badge bg-success">@game.CategoryName</span></h4>
+                                    break;
+                                case "Strategy":
+                                    <h4><span class="badge bg-secondary">@game.CategoryName</span></h4>
+                                    break;
+                                case "Shooter":
+                                    <h4><span class="badge bg-warning">@game.CategoryName</span></h4>
+                                    break;
+                                case "Racing":
+                                    <h4><span class="badge bg-info">@game.CategoryName</span></h4>
+                                    break;
+                                            
+                            }
+                        </div>
                     </div>
 
-                    <div class="card-body">
-                        <h3>COD MW III</h3>
-                        <p>Action</p>
-                    </div>
                 </div>
+            }
 
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mt-4">
-                <div class="card bg-transparent border-0 text-center">
-
-                    <div class="card-img">
-                        <img src="~/Assets/Images/Hogwarts Legacy.jpg" alt="" class="rounded w-100 gray-image" width="300" height="332">
-                        <a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
-                    </div>
-
-                    <div class="card-body">
-                        <h3>Hogwarts Legacy</h3>
-                        <p>Adventure</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mt-4">
-                <div class="card bg-transparent border-0 text-center">
-
-                    <div class="card-img">
-                        <img src="~/Assets/Images/Battlefield 2042.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
-                        <a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
-                    </div>
-
-                    <div class="card-body">
-                        <h3>Battlefield 2042</h3>
-                        <p>Action</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 mt-4">
-                <div class="card bg-transparent border-0 text-center">
-
-                    <div class="card-img">
-                        <img src="~/Assets/Images/Horizon.jpg" alt="Scarlet Pena" class="rounded w-100 gray-image" width="300" height="332">
-                        <a class="hidden-button bg-primary rounded-2" asp-controller="Games" asp-action="GameDetails">Learn More</a>
-                    </div>
-
-                    <div class="card-body">
-                        <h3>HorizonForbiddenWest</h3>
-                        <p>Arcade</p>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </section>
 
-<section id="contact" class="section">
-    <div class="container">
-        <div class="row justify-content-center align-items-center bg-card">
-            <div class="col-lg-6">
-                <div class="section-title text-center">
-                    <p class="text-primary text-uppercase fw-bold mb-3">Contact With us</p>
-                    <h1>Let&rsquo;s get connected</h1>
-                </div>
-            </div>
-            <div class="col-lg-10">
-                <div class="shadow rounded p-5">
-                    <div class="row">
-                        <div class="col-12 mb-4">
-                            <h4>Leave Us A Message</h4>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="contact-form">
-                                <form action="#!">
-                                    <div class="form-group mb-4 pb-2">
-                                        <label for="exampleFormControlInput1" class="form-label">Full Name</label>
-                                        <input type="text" class="form-control shadow-none" id="contact_name">
-                                    </div>
-                                    <div class="form-group mb-4 pb-2">
-                                        <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                                        <input type="email" class="form-control shadow-none" id="contact_email">
-                                    </div>
-                                    <div class="form-group mb-4 pb-2">
-                                        <label for="exampleFormControlTextarea1" class="form-label">Write Message</label>
-                                        <textarea class="form-control shadow-none" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                    </div>
-                                    <button class="btn btn-primary w-100" onclick="alert('Your Message Has Been Sent Successfully.')" type="submit">Send Message</button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 mt-5 mt-lg-0" style="flex-wrap: nowrap;">
-                            <img style="margin-left: 4vw;" src="~/Assets/Images/contact.png" alt="About Ourselves" class="img-fluid w-75 rounded pl-3">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>

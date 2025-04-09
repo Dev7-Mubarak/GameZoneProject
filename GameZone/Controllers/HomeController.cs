@@ -1,5 +1,7 @@
 ﻿using GameZone.Data;
 using GameZone.Models;
+using GameZone.Services;
+using GameZone.ViewModels.Home;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,16 +12,25 @@ namespace GameZone.Controllers
     public class HomeController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly IGamesService _gamesService;
+        private readonly IGameStationsService _gameStationsService;
         private readonly AppDBContext _context;
-        public HomeController(UserManager<AppUser> userManager, AppDBContext context)
+        public HomeController(UserManager<AppUser> userManager, AppDBContext context, IGamesService gamesService, IGameStationsService gameStationsService)
         {
             _userManager = userManager;
             _context = context;
+            _gamesService = gamesService;
+            _gameStationsService = gameStationsService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var viewModel = new HomePageVM
+            {
+                PopularGames = _gamesService.GetPopularGames(),
+                PopularGameStations = _gameStationsService.GetPopularGameStations()
+            };
+            return View(viewModel);
         }
         public IActionResult UserIndex()
         {
