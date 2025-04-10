@@ -2,11 +2,12 @@ using GameZone.Areas.Admin.Services;
 using GameZone.Data;
 using GameZone.Helpers;
 using GameZone.Models;
+using GameZone.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("RemoteConnection") ?? throw new InvalidOperationException("Connection string 'AppDBContextConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("LocalConnection") ?? throw new InvalidOperationException("Connection string 'AppDBContextConnection' not found.");
 
 builder.Services.AddDbContext<AppDBContext>(options =>
     options.UseSqlServer(connectionString)
@@ -45,7 +46,10 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddScoped<ICategoriesService, CategoriesService>();
 builder.Services.AddScoped<IDevicesService, DevicesService>();
-builder.Services.AddScoped<IGamesService, GamesService>();
+builder.Services.AddScoped<GameZone.Areas.Admin.Services.IGamesService, GameZone.Areas.Admin.Services.GamesService>();
+builder.Services.AddScoped<IGameStationsService, GameStationsService>();
+builder.Services.AddScoped<GameZone.Services.IGamesService, GameZone.Services.GamesService>();
+
 
 
 
