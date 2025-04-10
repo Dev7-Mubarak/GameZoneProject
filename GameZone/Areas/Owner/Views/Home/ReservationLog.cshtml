@@ -68,32 +68,112 @@
 
     <script>
         $(document).ready(function () {
-            // Initialize DataTable with all features
-            const dataTable = $('#reservationTable').DataTable({
+            var dataTable = $('#reservationTable').DataTable({
                 "paging": true,
                 "pageLength": 10,
                 "ordering": true,
                 "searching": true,
                 "columnDefs": [
-                    // Make sure date/time columns are sorted properly
-                    { "type": "date", "targets": 2 }, // Date column
-                    { "type": "date", "targets": 3 }, // Time column
-                    { "orderable": false, "targets": [8] } // Disable sorting for Actions column
-                ]
+                    { "type": "date", "targets": 2 },
+                    { "type": "date", "targets": 3 },
+                    { "orderable": false, "targets": [8] }
+                ],
+                "initComplete": function(settings, json) {
+                    this.api().column(7).search('^Pending$', true, false).draw();
+                }
             });
 
-            // Rest of your AJAX handling code remains the same...
-            function updateRowStatus(row, status) {
-                dataTable.cell(row, 7).data(status).draw();
-                dataTable.cell(row, 8).data('').draw();
-            }
+            // Status filter
+            $("#reservationTable_filter").prepend(
+                '<label class="mr-2">Status Filter: ' +
+                '<select id="statusFilter" class="form-control form-control-sm d-inline-block w-auto ml-1">' +
+                '<option value="Pending" selected>Pending</option>' +
+                '<option value="Completed">Completed</option>' +
+                '<option value="Denied">Denied</option>' +
+                '</select></label>'
+            );
 
-            function handleAction(reservationId, statusText) {
-                const row = dataTable.row(`[data-id="${reservationId}"]`);
-                updateRowStatus(row.index(), statusText);
-            }
+            $('#statusFilter').on('change', function () {
+                dataTable.column(7)
+                    .search(this.value ? '^' + this.value + '$' : '', true, false)
+                    .draw();
+            });
 
-            // Accept/Reject button handlers remain unchanged...
+            // Accept button handler
+            $('#reservationTable').on('click', '.btnAccept', function () {
+                const $row = $(this).closest('tr');
+                const reservationId = $(this).data('id');
+                const row = dataTable.row($row);
+
+                Swal.fire({
+                    title: 'Confirm Acceptance',
+                    text: 'Are you sure you want to accept this reservation?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Confirm'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/Owner/Reservations/UpdateReservationStatus',
+                            method: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                Id: reservationId,
+                                Status: 3 // Integer value for Completed
+                            }),
+                            success: () => {
+                                const rowData = row.data();
+                                rowData[7] = 'Completed'; // Display text
+                                rowData[8] = ''; // Clear actions
+                                row.data(rowData).draw();
+                                Swal.fire('Success!', 'Reservation completed!', 'success');
+                            },
+                            error: (xhr) => {
+                                const errorMsg = xhr.responseJSON?.value || 'Update failed';
+                                Swal.fire('Error!', errorMsg, 'error');
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Reject button handler
+            $('#reservationTable').on('click', '.btnReject', function () {
+                const $row = $(this).closest('tr');
+                const reservationId = $(this).data('id');
+                const row = dataTable.row($row);
+
+                Swal.fire({
+                    title: 'Confirm Rejection',
+                    text: 'Are you sure you want to reject this reservation?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Confirm'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/Owner/Reservations/UpdateReservationStatus',
+                            method: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                Id: reservationId,
+                                Status: 2 // Integer value for Denied
+                            }),
+                            success: () => {
+                                const rowData = row.data();
+                                rowData[7] = 'Denied'; // Display text
+                                rowData[8] = '';
+                                row.data(rowData).draw();
+                                Swal.fire('Success!', 'Reservation denied!', 'success');
+                            },
+                            error: (xhr) => {
+                                const errorMsg = xhr.responseJSON?.value || 'Update failed';
+                                Swal.fire('Error!', errorMsg, 'error');
+                            }
+                        });
+                    }
+                });
+            });
         });
     </script>
 }
