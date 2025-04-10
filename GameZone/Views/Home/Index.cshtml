@@ -1,4 +1,5 @@
 ﻿@using GameZone.Helpers
+@using GameZone.ViewModels.Home
 @model HomePageVM
 
 @{
@@ -148,40 +149,32 @@
 
                         <div class="card-body">
                             <h3>@station.Name</h3>
-                            @switch (station.Rating)
-                            {
-                                case 5:
-                                    <p><span><img src="~/Assets/Ratings/star5.png" style="width: 150px;" alt="5 Stars"></span></p>
-                                    break;
-                                case 4.5f:
-                                    <p><span><img src="~/Assets/Ratings/star4,5.png" style="width: 150px;" alt="4.5 Stars"></span></p>
-                                    break;
-                                case 4:
-                                    <p><span><img src="~/Assets/Ratings/star4.png" style="width: 150px;" alt="">4 Stars</span></p>
-                                    break;
-                                case 3.5f:
-                                    <p><span><img src="~/Assets/Ratings/star3,5.png" style="width: 150px;" alt="">3.5 Stars</span></p>
-                                    break;
-                                case 3:
-                                    <p><span><img src="~/Assets/Ratings/star3.png" style="width: 150px;" alt="">3 Stars</span></p>
-                                    break;
-                                case 2.5f:
-                                    <p><span><img src="~/Assets/Ratings/star2,5.png" style="width: 150px;" alt="">2.5 Stars</span></p>
-                                    break;
-                                case 2:
-                                    <p><span><img src="~/Assets/Ratings/star2.png" style="width: 150px;" alt="">2 Stars</span></p>
-                                    break;
-                                case 1.5f:
-                                    <p><span><img src="~/Assets/Ratings/star1,5.png" style="width: 150px;" alt="">1.5 Stars</span></p>
-                                    break;
-                                case 1:
-                                    <p><span><img src="~/Assets/Ratings/star1.png" style="width: 150px;" alt="">1 Stars</span></p>
-                                    break;
-                                default:
-                                    <p class="text-danger fw-bold">No one Rate it yet</p>
-                                    break;
-
+                            @* rfactor *@
+                            @{
+                                double rating = station.Rating ?? 0;
+                                int fullStars = (int)Math.Floor(rating);
+                                bool hasHalfStar = (rating - fullStars) >= 0.25 && (rating - fullStars) < 0.75;
+                                int emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
                             }
+
+                            <h6 >
+                                <span style="margin-right: 4px">Rating:</span>
+
+                                @for (int i = 0; i < fullStars; i++)
+                                {
+                                    <i class="bi bi-star-fill text-warning" style="margin-right: 4px"></i>
+                                }
+                                @if (hasHalfStar)
+                                {
+                                    <i class="bi bi-star-half text-warning" style="margin-right: 4px"></i>
+                                }
+
+                                @for (int i = 0; i < emptyStars; i++)
+                                {
+                                    <i class="bi bi-star text-muted" style="margin-right: 4px"></i>
+                                }
+                            </h6>
+
                         </div>
                     </div>
 
