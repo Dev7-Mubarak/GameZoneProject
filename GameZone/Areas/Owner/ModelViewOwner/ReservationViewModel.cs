@@ -10,5 +10,7 @@
         public float TotalPrice { get; set; }
         public string PaymentMethod { get; set; }
         public string Status { get; set; }
+        public string? Image { get; set; }
+        public int GameStationId { get; set; }
     }
 }

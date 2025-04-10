@@ -1,4 +1,5 @@
-﻿@model List<ReservationViewModel>
+﻿@using GameZone.Helpers
+@model List<ReservationViewModel>
 
 @{
     ViewData["Title"] = "Reservation Log Page";
@@ -37,9 +38,8 @@
                         <td>
                             @if (reservation.PaymentMethod == "Transfer")
                             {
-                                <a href="~/Assets/0ae5f028-c65d-43de-8872-6340db81e1f2.jpeg" target="_blank" class="text-primary">
-                                    Transfer Receipt
-                                </a>
+                                <img src="@($"{FileSettings.DepositsFilePath}/{reservation.Image}")" alt="Name" class="rounded-circle"
+                                     style="max-width: 60px; max-height: 80px" />
                             }
                             else
                             {

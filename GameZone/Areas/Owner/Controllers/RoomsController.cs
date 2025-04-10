@@ -1,12 +1,9 @@
-﻿using GameZone.Areas.Admin.ViewModels;
-using GameZone.Areas.Owner.ModelViewOwner;
+﻿using GameZone.Areas.Owner.ModelViewOwner;
 using GameZone.Data;
 using GameZone.Helpers;
 using GameZone.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.IO;
 using System.Security.Claims;
 
 namespace GameZone.Areas.Owner.Controllers
@@ -22,7 +19,7 @@ namespace GameZone.Areas.Owner.Controllers
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
-            _imagePath = Path.Combine(_webHostEnvironment.WebRootPath, FileSettings.StationFilePath);
+            _imagePath = $"{_webHostEnvironment.WebRootPath}{FileSettings.RoomsFilePath}";
         }
 
         private string GetUserId() => User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -105,17 +102,17 @@ namespace GameZone.Areas.Owner.Controllers
                 return View(model);
             }
 
-            
+
             var room = new Room
             {
                 Name = model.RoomName,
                 Price = model.Price,
                 NumberOfAllowedPeople = model.NumberOfAllowedPeople,
-                GameStationId = model.GameStationId, 
+                GameStationId = model.GameStationId,
                 Unit = model.Unit,
             };
 
-      
+
             if (model.PrimaryImageFile != null)
             {
                 var result = await Utilities.SaveFileAsync(model.PrimaryImageFile, _imagePath);
@@ -125,7 +122,7 @@ namespace GameZone.Areas.Owner.Controllers
                 }
             }
 
-            
+
             _context.Rooms.Add(room);
             await _context.SaveChangesAsync();
 
@@ -141,7 +138,7 @@ namespace GameZone.Areas.Owner.Controllers
             var currentUserId = GetUserId();
             var room = await _context.Rooms
                 .Include(r => r.RoomsPictures)
-                .Include(r => r.GameStation) 
+                .Include(r => r.GameStation)
                 .FirstOrDefaultAsync(r => r.Id == id && r.GameStation.UserId == currentUserId);
 
             if (room == null)
@@ -155,7 +152,7 @@ namespace GameZone.Areas.Owner.Controllers
                 RoomName = room.Name,
                 Price = room.Price,
                 NumberOfAllowedPeople = room.NumberOfAllowedPeople,
-                GameStationId = (int)room.GameStationId,
+                GameStationId = room.GameStationId,
                 Unit = room.Unit,
                 PrimaryImage = room.PrimaryImage,
                 ExistingAdditionalImages = room.RoomsPictures.Select(p => p.Image).ToList()
@@ -280,14 +277,14 @@ namespace GameZone.Areas.Owner.Controllers
 
                 await _context.SaveChangesAsync();
 
-                
+
                 return RedirectToAction(nameof(GetAll));
             }
             return View(model);
         }
 
-        
-    
+
+
 
 
         [HttpDelete]
@@ -304,11 +301,11 @@ namespace GameZone.Areas.Owner.Controllers
                 return NotFound(new { message = "Room not found" });
             }
 
-          
+
             var reservations = await _context.Reservations.Where(r => r.RoomId == id).ToListAsync();
             _context.Reservations.RemoveRange(reservations);
 
-            
+
             if (!string.IsNullOrEmpty(room.PrimaryImage))
             {
                 DeleteImage(room.PrimaryImage);
@@ -324,7 +321,7 @@ namespace GameZone.Areas.Owner.Controllers
             return Ok(new { message = "Room deleted successfully" });
         }
 
-        
+
 
         private void DeleteImage(string imagePath)
         {

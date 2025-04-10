@@ -1,4 +1,5 @@
-﻿@model IEnumerable<RoomViewModel>
+﻿@using GameZone.Helpers
+@model IEnumerable<RoomViewModel>
 @{
     ViewData["Title"] = "Rooms in Station Page";
 }
@@ -24,7 +25,7 @@
                 <tr id="roomRow_@room.Id">
                     <td>@room.RoomName</td>
                     <td>
-                        <img src="@room.PrimaryImage" alt="@room.RoomName" class="imgroom" style="max-width:60px; max-height:80px" />
+                        <img src="@($"{FileSettings.RoomsFilePath}/{room.PrimaryImage}")" alt="@room.RoomName" class="imgroom" style="max-width:60px; max-height:80px" />
                     </td>
                     <td><p>@room.Price</p></td>
                     <td>@room.NumberOfAllowedPeople</td>

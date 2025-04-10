@@ -21,10 +21,10 @@ namespace GameZone.Areas.Owner.Controllers
         public IActionResult Index()
         {
             return View(_GetOwnerStation());
-            
-              
 
-           
+
+
+
         }
         public IActionResult ReservationLog()
         {
@@ -40,8 +40,11 @@ namespace GameZone.Areas.Owner.Controllers
                     NumberOfHours = r.NumberOfHours,
                     TotalPrice = r.TotalPrice,
                     PaymentMethod = r.PaymentMethod.Name,
-                    Status = r.Satuts.ToString()
+                    Status = r.Satuts.ToString(),
+                    Image = r.DepositImage,
+                    GameStationId = r.GameStationId,
                 })
+                .Where(x => x.GameStationId == _GetOwnerStation().Id)
                 .ToList();
 
             return View(reservations);
@@ -62,7 +65,7 @@ namespace GameZone.Areas.Owner.Controllers
 
             try
             {
-               
+
                 if (Enum.IsDefined(typeof(ReservationStatus), model.Status))
                 {
                     reservation.Satuts = model.Status;
