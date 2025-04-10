@@ -1,4 +1,4 @@
-﻿@model GameZone.Models.GameStation
+﻿@model EditGameStation
 
 @{
     ViewData["Title"] = "Edit Owner Station Page";
@@ -10,6 +10,7 @@
     <div class="container-fluid">
         <form asp-action="Edit" asp-controller="OwnersStations" method="post" enctype="multipart/form-data" id="editForm">
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Image" />
 
             <div class="row">
                 <div class="col-lg-6 col-12">
@@ -17,6 +18,18 @@
                         <h2 class="mb-0">Edit Station Details</h2>
                     </div>
                     <hr />
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                {
+                                    <li>@error.ErrorMessage</li>
+                                }
+                            </ul>
+                        </div>
+                    }
 
                     <div class="form-group mt-3">
                         <label class="form-label">Name</label>
@@ -44,32 +57,15 @@
 
                     <div class="form-group">
                         <label class="form-label">Description</label>
-                        <input type="text" class="form-control shadow-none" asp-for="Descraption">
-                        <span asp-validation-for="Descraption" class="text-danger"></span>
+                        <input type="text" class="form-control shadow-none" asp-for="Description">
+                        <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">Image</label>
-                        <input type="file" class="form-control shadow-none" name="imageFile" id="imageInput" accept=".jpg,.jpeg,.png">
+                        <input type="file" class="form-control shadow-none" asp-for="Cover" id="imageInput">
                         <small class="form-text text-muted">Only jpg, jpeg, png files are allowed with a max size of 1MB</small>
-                        <span id="imageError" class="text-danger"></span>
-                    </div>
-
-                    <label class="form-label">Available Consoles:</label>
-
-                    <div class="form-check d-flex pb-2">
-                        <input class="form-check-input" type="checkbox" value="Playstation 5" id="ps5">
-                        <label class="form-check-label" for="ps5">Playstation 5</label>
-
-                        <div style="margin-left: 60px;">
-                            <input class="form-check-input" type="checkbox" value="XBox" id="xbox">
-                            <label class="form-check-label" for="xbox">XBox</label>
-                        </div>
-
-                        <div style="margin-left: 60px;">
-                            <input class="form-check-input" type="checkbox" value="VR" id="vr">
-                            <label class="form-check-label" for="vr">VR</label>
-                        </div>
+                        <span asp-validation-for="Cover" class="text-danger"></span>
                     </div>
                 </div>
 
@@ -89,32 +85,12 @@
 </div>
 
 @section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // Image Preview with validation
         document.getElementById('imageInput').addEventListener('change', function (event) {
             const file = event.target.files[0];
-            const imageError = document.getElementById('imageError');
             const imagePreview = document.getElementById('imagePreview');
 
-            // Reset error message
-            imageError.textContent = '';
-
             if (file) {
-                // Validate file type
-                const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-                if (!validTypes.includes(file.type)) {
-                    imageError.textContent = 'Invalid file type. Only JPG, JPEG, PNG are allowed.';
-                    return;
-                }
-
-                // Validate file size (1MB)
-                if (file.size > 1024 * 1024) {
-                    imageError.textContent = 'File size too large. Maximum 1MB allowed.';
-                    return;
-                }
-
-                // Preview image
                 const reader = new FileReader();
                 reader.onload = function (e) {
                     imagePreview.src = e.target.result;
@@ -122,40 +98,5 @@
                 reader.readAsDataURL(file);
             }
         });
-
-        
-        document.getElementById('editForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-         
-            if (!this.checkValidity()) {
-               
-                this.reportValidity();
-                return;
-            }
-
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'You are about to update this station.',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#28a745',
-                cancelButtonColor: '#6c757d',
-                confirmButtonText: 'Yes, update it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    
-                    Swal.fire({
-                        title: 'Updated!',
-                        text: 'The station has been updated successfully.',
-                        icon: 'success'
-                    }).then(() => {
-                        this.submit(); // Submit the form
-                    });
-                }
-            });
-        });
-
-       
     </script>
 }

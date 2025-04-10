@@ -1,0 +1,61 @@
+﻿@* _DynamicImageScript.cshtml *@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<<script>
+script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    $(document).ready(function () {
+        var isProcessing = false;
+        // When a file is selected in any dynamic image field, disable add/remove buttons.
+        $("#additionalImagesContainer").on("change", "input[type='file']", function () {
+            if ($(this).val()) {
+                isProcessing = true;
+                $("#addImage").prop("disabled", true);
+                $(".removeImage").prop("disabled", true);
+                // Simulate asynchronous processing (replace with your actual logic)
+                setTimeout(function () {
+                    isProcessing = false;
+                    $("#addImage").prop("disabled", false);
+                    $(".removeImage").prop("disabled", false);
+                }, 2000);
+            }
+        });
+        // Add a new additional image field dynamically.
+        $("#addImage").click(function () {
+            if (isProcessing) {
+                Swal.fire("Processing", "Please wait until the current image is processed.", "warning");
+                return;
+            }
+            var newField = `
+                <div class="form-group additional-image">
+                    <label class="form-label">Additional Image</label>
+                    <input type="file" class="form-control" name="AdditionalImages" />
+                    <button type="button" class="btn btn-danger removeImage">Remove</button>
+                </div>`;
+            $("#additionalImagesContainer").append(newField);
+        });
+        // Remove a dynamic image field.
+        $("#additionalImagesContainer").on("click", ".removeImage", function () {
+            if (isProcessing) {
+                Swal.fire("Processing", "Please wait until the current image is processed.", "warning");
+                return;
+            }
+            $(this).closest(".additional-image").remove();
+        });
+        // SweetAlert2 confirmation on form submission.
+        $("#submitRoom").click(function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Click OK to complete the process.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#roomForm").submit();
+                }
+            });
+        });
+    });
+</script>
+
