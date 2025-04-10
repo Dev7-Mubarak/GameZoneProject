@@ -17,7 +17,6 @@
                 {
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         You need to login to make a reservation.<a asp-area="Identity" asp-page="/Account/Login" class="alert-link">Click here!!</a>
-                        <button type="button" class="btn-close btn-close-sm" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 }
                 else
@@ -168,7 +167,7 @@
                 <a style="width:15vw" class="btn btn-primary mt-4"
                    asp-controller="GameStations"
                    asp-action="StationReview"
-                   asp-route-stationId="@Model.GameStation.Id">Station Review</a>
+                   asp-route-id="@Model.GameStation.Id">Station Review</a>
             </div>
         </div>
     </div>

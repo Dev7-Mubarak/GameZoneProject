@@ -1,11 +1,13 @@
 ﻿using GameZone.Data;
 using GameZone.Helpers;
 using GameZone.Models;
+using GameZone.ViewModels;
 using GameZone.ViewModels.GameStations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace GameZone.Controllers
 {
@@ -121,6 +123,56 @@ namespace GameZone.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction("UserReservationLog", "Home");
+        }
+
+        public IActionResult StationReview(int id)
+        {
+            var station = new ShowRatingVM
+            {
+                GameStation = _context.GameStations.Include(x => x.Ratings)
+                .ThenInclude(x => x.User)
+                .FirstOrDefault(x => x.Id == id)
+            };
+
+            return View(station);
+        }
+
+        [HttpPost]
+        public IActionResult AddReview(ShowRatingVM model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("StationReview", new { id = model.RatingVM.GameStationId });
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var rating = new Rating
+            {
+                GameStationId = model.RatingVM.GameStationId,
+                UserRating = model.RatingVM.UserRating,
+                UserComment = model.RatingVM.UserComment,
+                RatingDate = DateTime.Now,
+                UserId = userId!
+            };
+
+            _context.Ratings.Add(rating);
+            _context.SaveChanges();
+
+            var station = _context.GameStations
+                .Include(s => s.Ratings)
+                .FirstOrDefault(x => x.Id == model.RatingVM.GameStationId);
+
+            if (station != null)
+            {
+                var totalRatingValue = station.Ratings.Sum(r => r.UserRating);
+
+                station.Rating = (float)totalRatingValue / station.Ratings.Count();
+
+                _context.GameStations.Update(station);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("StationReview", new { id = model.RatingVM.GameStationId });
         }
     }
 }

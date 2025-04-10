@@ -46,32 +46,38 @@
 
                     <div class="row mt-3">
                         <div class="col-12" style="direction: rtl; margin-left: -14px;">
-                            <h6 class="pt-x-1">
-                                Rating: 
-                                @if (station.Rating.HasValue)
+                            @* rfactor *@
+                            @{
+                                double rating = station.Rating ?? 0;
+                                int fullStars = (int)Math.Floor(rating);
+                                bool hasHalfStar = (rating - fullStars) >= 0.25 && (rating - fullStars) < 0.75;
+                                int emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+                            }
+
+                            <h6 style="margin-right: 6%">
+                                @for (int i = 0; i < emptyStars; i++)
                                 {
-                                    var rating = station.Rating.Value;
-                                    var starImage = "";
-                                    if (rating >= 4.5) starImage = "star4,5.png";
-                                    else if (rating >= 4) starImage = "star4.png";
-                                    else if (rating >= 2.5) starImage = "star2,5.png";
-                                    else starImage = "star1.png";
-                                    
-                                    <span>
-                                        <img src="~/Assets/Ratings/@starImage" style="width: 150px;" alt="">
-                                    </span> 
-                                    @station.Ratings?.Count 
+                                    <i class="bi bi-star text-muted" style="margin-right: 4px"></i>
                                 }
-                                else
+
+                                @if (hasHalfStar)
                                 {
-                                    <span>No ratings yet</span>
+                                    <i class="bi bi-star-half text-warning" style="margin-right: 4px"></i>
                                 }
+
+                                @for (int i = 0; i < fullStars; i++)
+                                {
+                                    <i class="bi bi-star-fill text-warning" style="margin-right: 4px"></i>
+                                }
+                                <span style="margin-right: 4px">:Rating</span>
                             </h6>
+
+
                             <a style="margin-right: 8%; font-weight: bold;"
                                asp-controller="GameStations"
-                               asp-action="StationDetails"
+                               asp-action="StationReview"
                                asp-route-id="@station.Id"> 
-                               &#60;&#60; More Details 
+                               More Details 
                             </a>
                         </div>
                     </div>
