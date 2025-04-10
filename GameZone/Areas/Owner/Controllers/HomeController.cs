@@ -18,14 +18,53 @@ namespace GameZone.Areas.Owner.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_GetOwnerStation());
+            var station = _GetOwnerStation();
+            if (station == null)
+            {
+                return NotFound("Game station not found.");
+            }
 
+            var viewModel = new StationDashboardViewModel
+            {
+                Station = station,
+                PendingCount = await GetReservationCount(station.Id, ReservationStatus.Pending),
+                CompletedCount = await GetReservationCount(station.Id, ReservationStatus.Completed),
+                DeniedCount = await GetReservationCount(station.Id, ReservationStatus.Denied)
+            };
 
-
-
+            return View(viewModel);
         }
+        public async Task<IActionResult> Details(int id)
+        {
+            var station = await _context.GameStations
+                .Include(gs => gs.Reservations)
+                .FirstOrDefaultAsync(gs => gs.Id == id);
+
+            if (station == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = new StationDashboardViewModel
+            {
+                Station = station,
+                PendingCount = await GetReservationCount(id, ReservationStatus.Pending),
+                CompletedCount = await GetReservationCount(id, ReservationStatus.Completed),
+                DeniedCount = await GetReservationCount(id, ReservationStatus.Denied)
+            };
+
+            return View(viewModel);
+        }
+
+        private async Task<int> GetReservationCount(int stationId, ReservationStatus status)
+        {
+            return await _context.Reservations
+                .AsNoTracking()
+                .CountAsync(r => r.GameStationId == stationId && r.Satuts == status);
+        }
+
         public IActionResult ReservationLog()
         {
             var reservations = _context.Reservations
