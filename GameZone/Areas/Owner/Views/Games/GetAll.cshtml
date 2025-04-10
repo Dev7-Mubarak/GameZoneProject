@@ -1,108 +1,138 @@
-﻿@{
+﻿@using GameZone.Models
+@model IEnumerable<Game>
+@{
     ViewData["Title"] = "Games in Station Page";
 }
 
 <div class="container-fluid">
-
     <h1 class="text-center text-success mb-5">Station Games</h1>
-
-
-    <!-- Content Row -->
 
     <div class="mt-5">
         <p>
             <a href="/Owner/Games/Add" class="btn btn-success">Add New</a>
         </p>
 
-        <table class="table table-striped text-white">
+        <table class="table table-striped text-white" id="gamesTable">
+            <thead>
+                <tr>
+                    <th>Game Info</th>
+                    <th>Category</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
             <tbody>
-                <tr >
-                    <td>
-                        <div class="d-flex">
-                            <div class="pr-4">
-                                <img src="~/Assets/Images/overcooked.jpg" alt="Name" style="max-width: 70px" />
+                @foreach (var game in Model)
+                {
+                    <tr id="game-@game.Id">
+                        <td>
+                            <div class="d-flex">
+                                <div class="pr-4">
+                                    <img src="~/Assets/Images/@game.Cover" alt="@game.Name" style="max-width: 70px" />
+                                </div>
+                                <div class="d-flex flex-column justify-content-center">
+                                    <h4 class="text-white">
+                                        <strong>@game.Descraption</strong>
+                                    </h4>
+                                    <h5>@game.Name</h5>
+                                </div>
                             </div>
-                            <div class="d-flex flex-column justify-content-center">
-                                <h4 class="text-white">
-                                    <strong>Overcooked</strong>
-                                </h4>
-                                <h5>CO-OP</h5>
+                        </td>
+                        <td class="align-middle">
+                            @game.Category?.Name <!-- Display category name -->
+                        </td>
+                        <td class="align-middle">
+                            <div class="d-flex justify-content-center">
+                                <button class="btn btn-danger rounded rounded-3 mr-2"
+                                        onclick="confirmDelete(@game.Id)">
+                                    Delete
+                                </button>
                             </div>
-                        </div>
-                    </td>
-
-                    <td class="align-middle">
-                        <div class="d-flex justify-content-center">
-                            <a asp-area="Owner" asp-controller="Games" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                        </div>
-                    </td>
-                </tr>
-                <tr >
-                    <td>
-                        <div class="d-flex">
-                            <div class="pr-4">
-                                <img src="~/Assets/Images/Battlefield 2042.jpg" alt="Name" style="max-width: 70px" />
-                            </div>
-                            <div class="d-flex flex-column justify-content-center">
-                                <h4 class="text-white">
-                                    <strong>Battlefield 2042</strong>
-                                </h4>
-                                <h5>Action</h5>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td class="align-middle">
-                        <div class="d-flex justify-content-center">
-                            <a asp-area="Owner" asp-controller="Games" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                        </div>
-                    </td>
-                </tr>
-                <tr >
-                    <td>
-                        <div class="d-flex">
-                            <div class="pr-4">
-                                <img src="~/Assets/Images/Final Fantasy.jpg" alt="Name" style="max-width: 70px" />
-                            </div>
-                            <div class="d-flex flex-column justify-content-center">
-                                <h4 class="text-white">
-                                    <strong>Madden NFL 24</strong>
-                                </h4>
-                                <h5>Sports</h5>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td class="align-middle">
-                        <div class="d-flex justify-content-center">
-                            <a asp-area="Owner" asp-controller="Games" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                        </div>
-                    </td>
-                </tr>
-                <tr >
-                    <td>
-                        <div class="d-flex">
-                            <div class="pr-4">
-                                <img src="~/Assets/Images/Kina.jpg" alt="Name" style="max-width: 70px" />
-                            </div>
-                            <div class="d-flex flex-column justify-content-center">
-                                <h4 class="text-white">
-                                    <strong>Kina Bridge Of Spirits</strong>
-                                </h4>
-                                <h5>Arcade</h5>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td class="align-middle">
-                        <div class="d-flex justify-content-center">
-                            <a asp-area="Owner" asp-controller="Games" asp-action="Delete" class="btn btn-danger rounded rounded-3 mr-2" onclick="return confirm('Are You Sure From Delete... ?')">Delete</a>
-                        </div>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
-
     </div>
-    <!-- End of Main Content -->
 </div>
+
+@section Scripts {
+    <!-- Anti-Forgery Token -->
+    @Html.AntiForgeryToken()
+
+    <!-- Required Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- DataTables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
+    <script>
+        // Initialize DataTable
+        $(document).ready(function () {
+            $('#gamesTable').DataTable({
+                "paging": true,
+                "pageLength": 10,
+                "ordering": true,
+                "searching": true,
+                "columns": [
+                    null, // Game Info column
+                    { "searchable": true }, // Category column
+                    { "searchable": false, "orderable": false } // Actions column
+                ],
+                "language": {
+                    "search": "Search by name or category:"
+                }
+            });
+        });
+
+        function confirmDelete(gameId) {
+            const row = $(`#game-${gameId}`);
+            const dataTable = $('#gamesTable').DataTable();
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This will remove the game from your station!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: `/Owner/Games/Delete/${gameId}`,
+                        type: 'DELETE',
+                        headers: {
+                            "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+                        },
+                        success: function (response) {
+                            Swal.fire({
+                                title: 'Deleted!',
+                                text: response.message,
+                                icon: 'success'
+                            });
+                            // Remove row from DataTable
+                            dataTable.row(row).remove().draw();
+
+                            // Show empty message if no records left
+                            if (dataTable.data().count() === 0) {
+                                $('#gamesTable').replaceWith(`
+                                    <div class="alert alert-info">
+                                        No games found in this station
+                                    </div>
+                                `);
+                            }
+                        },
+                        error: function (xhr) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: xhr.responseJSON?.message || 'Failed to delete game',
+                                icon: 'error'
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}

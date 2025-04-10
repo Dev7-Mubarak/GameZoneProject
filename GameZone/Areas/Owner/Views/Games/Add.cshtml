@@ -1,89 +1,109 @@
-﻿@{
-    ViewData["Title"] = "Add New Game Page";
-}
+﻿@model GameViewModel
 
-<div class="container-fluid">
-
-    <!-- Content Row -->
-
-    <div>
-        <!-- Content -->
-        <form asp-action="Create" method="post">
-            <div class="row">
-
-                <div class="col-lg-6 col-12">
-
-                    <div class="text-success">
-                        <h2 class="mb-0">Add New Game</h2>
-                    </div>
-                    <hr />
-
-                    <div class="form-group mt-3">
-                        <label for="loan_full_name" class="form-label">All Games</label>
-            
-                        <select class="form-control">
-                            <option>Select Game</option>
-                            <option>Overcooked</option>
-                            <option>Battlefield 2042</option>
-                            <option>Madden NFL 24</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group mt-3">
-                        <label for="loan_full_name" class="form-label">Category</label>
-
-                        <select class="form-control" readonly>
-                            <option></option>
-                            <option>Action</option>
-                            <option>Sport</option>
-                            <option>Adventures</option>
-                            <option>Arcade</option>
-                            <option>CO-OP</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="loan_full_name" class="form-label">Descraption</label>
-                        <input type="text" readonly class="form-control shadow-none" id="loan_full_name">
-                    </div>
-
-                    <label for="loan_full_name" class="form-label">Supported Consoles :</label>
-
-                    <div class="form-check d-flex pb-2">
-
-                        <input class="form-check-input" disabled type="checkbox" checked value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Playstation 5
-                        </label>
-
-                        <div style="margin-left: 60px;">
-                            <input class="form-check-input" disabled type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                XBox
-                            </label>
-                        </div>
-
-                        <div style="margin-left: 60px;">
-                            <input class="form-check-input" disabled type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                VR
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6  col-12 justify-content-center pt-5 overflow-hidden">
-                    <div style="border: 2px solid white;width: 300px;height: 400px; border-radius: 10px;position: relative;margin-left: 17%;">
-                        <img class="cover-previewrounded"
-                             style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"
-                             src="~/Assets/image-white.png" alt="Cover" width="60px" height="60px"/>
-                    </div>
-                </div>
-
-                <a onclick="alert('Added Successfully')" class="text-white btn btn-success" style="margin-left: 1vw; margin-top: 1vw; width: 70px;"
-                   href="#">Add</a>
+<form asp-area="Owner" asp-controller="Games" asp-action="Create" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-lg-6 col-12">
+            <div class="text-success">
+                <h2 class="mb-0">Add New Game</h2>
             </div>
-        </form>
+            <hr />
+
+            <div class="col-md-12 mb-4">
+                <label asp-for="Id" class="form-label">Game</label>
+                <select asp-for="Id" asp-items="Model.GameList"
+                        class="form-select"
+                        id="gameSelect">
+                    <option value="">Search game...</option>
+                </select>
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+
+            <!-- Visible Fields -->
+            <div class="form-group">
+                <label asp-for="Category" class="form-label">Category</label>
+                <input asp-for="Category" type="text" id="category" class="form-control" readonly />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="form-label">Description</label>
+                <textarea asp-for="Description" id="description" class="form-control" readonly rows="3"></textarea>
+            </div>
+
+            <!-- Hidden Fields -->
+            <input type="hidden" asp-for="CoverImagePath" id="coverImage" />
+            <input type="hidden" asp-for="GameStationId" id="gameStationId" value="@Model.GameStationId" />
+            <input type="hidden" asp-for="SelectedGame" id="selectedGame" />
+        </div>
+
+        <div class="col-lg-6 col-12 justify-content-center pt-5 overflow-hidden">
+            <div style="border: 2px solid white; width: 300px; height: 400px; border-radius: 10px; position: relative; margin-left: 17%;">
+                <img id="coverImagePreview" class="cover-preview rounded"
+                     style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); object-fit: cover; width: 100%; height: 100%;"
+                     src="@(Model.CoverImagePath ?? "/Assets/image-white.png")" alt="Cover" />
+            </div>
+        </div>
+
+        <button type="submit" class="text-white btn btn-success" style="margin-left: 1vw; margin-top: 1vw; width: 70px;">
+            Add
+        </button>
     </div>
-    <!-- End of Main Content -->
-</div>
+</form>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Initialize searchable dropdown
+            $('#gameSelect').select2({
+                placeholder: "Search game...",
+                minimumInputLength: 0,
+                width: '100%'
+            });
+
+            // Show all games when dropdown opens
+            $('#gameSelect').on('select2:open', function (e) {
+                if ($('.select2-search__field').val() === '') {
+                    $('.select2-search__field').trigger('input');
+                }
+            });
+
+            // Handle game selection change
+            $('#gameSelect').on('change', function() {
+                const gameId = $(this).val();
+
+                if (!gameId) {
+                    resetFields();
+                    return;
+                }
+
+                $.ajax({
+                    url: '@Url.Action("Details", "Games", new { area = "Owner" })',
+                    type: 'GET',
+                    data: { id: gameId },
+                    success: function(response) {
+                        if (response) {
+                            $('#category').val(response.category || '');
+                            $('#description').val(response.description || '');
+                            $('#coverImage').val(response.coverImagePath || '');
+                            $('#coverImagePreview').attr('src', response.coverImagePath || '/Assets/image-white.png');
+                        }
+                    },
+                    error: function(xhr) {
+                        console.error('Error:', xhr.responseText);
+                    }
+                });
+            });
+
+            function resetFields() {
+                $('#category').val('');
+                $('#description').val('');
+                $('#coverImage').val('');
+                $('#coverImagePreview').attr('src', '/Assets/image-white.png');
+            }
+        });
+    </script>
+}

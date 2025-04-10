@@ -1,45 +1,110 @@
 ﻿@model GameZone.Models.GameStation
 
-<div class="container-fluid px-4">
-    <h1 class="text-center text-success mb-5">Station Details</h1>
-
+<div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <a asp-area="Owner" asp-controller="OwnersStations" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">
             Edit Station
         </a>
     </div>
 
-    <div class="card shadow-sm mt-4 text-white" style="background-color:#01053c;">
-        <div class="card-body">
-            <div class="row g-4">
-                <div class="col-lg-8">
-                    <div class="mb-4">
-                        <h5 class="fw-bold text-success">Name</h5>
-                        <p class="m-0">@Model.Name</p>
-                    </div>
-
-                    <div class="mb-4">
-                        <h5 class="fw-bold text-success">Location</h5>
-                        <p class="m-0">@Model.Location</p>
-                    </div>
-
-                    <div class="mb-4">
-                        <h5 class="fw-bold text-success">Phone Numbers</h5>
-                        <p class="m-0">@Model.PhoneNumber1 &emsp;&emsp; @Model.PhoneNumber2</p>
-                    </div>
-
-                    <div class="mb-4">
-                        <h5 class="fw-bold text-success">Description</h5>
-                        <p class="m-0">@Model.Descraption</p>
+    <!-- Statistics Cards -->
+    <div class="d-flex justify-content-between gap-4" style="width: 70%;">
+        <!-- Pending Reservations -->
+        <div class="flex-fill">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Pending Reservations
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @* @Model.Reservations.Count(r => r.Status == "Pending") *@
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="col-lg-4 text-center">
-                    <img src="~/Assets/Images/@(Model.Image ?? "default.jpg")"
-                         class="img-fluid rounded"
-                         alt="Station Cover"
-                         style="max-height: 450px">
+        <!-- Completed Reservations -->
+        <div class="flex-fill">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Completed Reservations
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @* @Model.Reservations.Count(r => r.Status == "Completed") *@
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Rejected Reservations -->
+        <div class="flex-fill">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                Rejected Reservations
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @* @Model.Reservations.Count(r => r.Status == "Rejected") *@
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-times-circle fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Station Details Card -->
+<div class="card shadow-sm mt-4 text-white" style="background-color:#01053c;">
+    <div class="card-body">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="mb-4">
+                    <h5 class="fw-bold text-success">Name</h5>
+                    <p class="m-0">@Model.Name</p>
+                </div>
+
+                <div class="mb-4">
+                    <h5 class="fw-bold text-success">Location</h5>
+                    <p class="m-0">@Model.Location</p>
+                </div>
+
+                <div class="mb-4">
+                    <h5 class="fw-bold text-success">Phone Numbers</h5>
+                    <p class="m-0">@Model.PhoneNumber1 &emsp;&emsp; @Model.PhoneNumber2</p>
+                </div>
+
+                <div class="mb-4">
+                    <h5 class="fw-bold text-success">Description</h5>
+                    <p class="m-0">@Model.Descraption</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 text-center">
+                <img src="@Url.Content("~/Assets/Images/StationsImages/" + Model.Image)"
+                     class="img-fluid rounded"
+                     alt="Station Cover"
+                     style="max-height: 450px">
             </div>
         </div>
     </div>
