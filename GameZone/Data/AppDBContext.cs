@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace GameZone.Data
 {
@@ -234,6 +235,15 @@ namespace GameZone.Data
                     AccountNumber = "2345678901"
                 }
             );
+
+            builder.Entity<Device>()
+                        .HasData(new Device[]
+                        {
+                            new Device { Id = 1, Name = "PlayStation", Icon = "bi bi-playstation" },
+                            new Device { Id = 2, Name = "xbox", Icon = "bi bi-xbox" },
+                            new Device { Id = 3, Name = "Nintendo Switch", Icon = "bi bi-nintendo-switch" },
+                            new Device { Id = 4, Name = "PC", Icon = "bi bi-pc-display" }
+                        });
         }
 
         public DbSet<Game> Games { get; set; }
