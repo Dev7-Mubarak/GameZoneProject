@@ -3,77 +3,188 @@
 @{
     ViewData["Title"] = "User Reservation Log";
 }
+}
+}
 
-<section class="py-5 mt-5">
-    <div class="container">
-        <!-- Page Header -->
-        <div class="row mb-5">
-            <div class="col-12 text-center">
-                <h2 class="display-5 fw-bold mb-3">Reservation Log</h2>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+<div class="container-fluid">
+    <h1 class="text-center text-success mb-5">Reservation Log</h1>
+    <div class="pt-5">
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info text-center py-4">
+                <i class="bi bi-info-circle-fill me-2"></i>You don't have any reservations yet.
             </div>
-        </div>
-
-        <!-- Reservation Table -->
-        <div  class="row justify-content-center">
-            <div class="col-12">
-                @if (!Model.Any())
-                {
-                    <div class="alert alert-info text-center py-4">
-                        <i class="bi bi-info-circle-fill me-2"></i>You don't have any reservations yet.
-                    </div>
-                }
-                else
-                {
-                    <div class="table-responsive">
-                        <table id="reservationTable" class="table table-hover table-bordered align-middle">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>Reservation Name</th>
-                                    <th>Station</th>
-                                    <th>Room Name</th>
-                                    <th>Date</th>
-                                    <th>Time Slot</th>
-                                    <th class="text-center">Hours</th>
-                                    <th class="text-end">Total Price</th>
-                                    <th>Payment Type</th>
-                                    <th>Deposit Resive</th>
-                                    <th class="text-center">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var reservation in Model)
+        }
+        else
+        {
+            <table id="reservationTable" class="table table-striped text-center text-white">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Type Of Rooms</th>
+                        <th>Date Of Reservation</th>
+                        <th>Time Of Reservation</th>
+                        <th>Number Of Hours</th>
+                        <th>Total Cost</th>
+                        <th>Payment Method</th>
+                        <th>Status Of Reservation</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var reservation in Model)
+                    {
+                        <tr>
+                            <td>@reservation.Id</td>
+                            <td>@reservation.RoomName</td>
+                            <td>@reservation.Date.ToString("yyyy-MM-dd")</td>
+                            <td>@reservation.StartHour.ToString("hh:mm tt")</td>
+                            <td>@reservation.NumberOfHours Hours</td>
+                            <td>@reservation.TotalPrice RY</td>
+                            <td>
+                                @if (reservation.PaymentMethod == "Transfer")
                                 {
-                                    <tr>
-                                        <td>@reservation.ReservationName</td>
-                                        <td>@reservation.GameStation?.Name</td>
-                                        <td>@reservation.Room?.Name</td>
-                                        <td>@reservation.Date.ToString("yyyy-MM-dd")</td>
-                                        <td>
-                                            @reservation.StartHour.ToString("hh:mm tt") -
-                                            @reservation.EndHour.ToString("hh:mm tt")
-                                        </td>
-                                        <td class="text-center">@reservation.NumberOfHours</td>
-                                        <td class="text-end">@reservation.TotalPrice.ToString("N0") RY</td>
-                                        <td>@reservation.PaymentType</td>
-                                        <td>
-                                            <img src="@($"{FileSettings.DepositsFilePath}/{reservation.DepositImage}")" alt="Name" class="rounded-circle"
-                                                 style="max-width: 60px; max-height: 80px" />
-                                        </td>
-                                        <td class="text-center">
-                                            <span class="badge @GetStatusBadgeClass(reservation.Satuts) rounded-pill py-2 px-3">
-                                                @reservation.Satuts
-                                            </span>
-                                        </td>
-                                    </tr>
+                                    <img src="@($"{FileSettings.DepositsFilePath}/{reservation.Image}")" alt="Name" class="rounded-circle"
+                                         style="max-width: 60px; max-height: 80px" />
                                 }
-                            </tbody>
-                        </table>
-                    </div>
-                }
-            </div>
-        </div>
+                                else
+                                {
+                                    @reservation.PaymentMethod
+                                }
+                            </td>
+                            <td class="text-center">
+                                <span class="badge @GetStatusBadgeClass(reservation.Satuts) rounded-pill py-2 px-3">
+                                    @reservation.Satuts
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        
     </div>
-</section>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $(document).ready(function () {
+            var dataTable = $('#reservationTable').DataTable({
+                "paging": true,
+                "pageLength": 10,
+                "ordering": true,
+                "searching": true,
+                "columnDefs": [
+                    { "type": "date", "targets": 2 },
+                    { "type": "date", "targets": 3 },
+                    { "orderable": false, "targets": [8] }
+                ],
+                "initComplete": function(settings, json) {
+                    this.api().column(7).search('^Pending$', true, false).draw();
+                }
+            });
+
+            // Status filter
+            $("#reservationTable_filter").prepend(
+                '<label class="mr-2">Status Filter: ' +
+                '<select id="statusFilter" class="form-control form-control-sm d-inline-block w-auto ml-1">' +
+                '<option value="Pending" selected>Pending</option>' +
+                '<option value="Completed">Completed</option>' +
+                '<option value="Denied">Denied</option>' +
+                '</select></label>'
+            );
+
+            $('#statusFilter').on('change', function () {
+                dataTable.column(7)
+                    .search(this.value ? '^' + this.value + '$' : '', true, false)
+                    .draw();
+            });
+
+            // Accept button handler
+            $('#reservationTable').on('click', '.btnAccept', function () {
+                const $row = $(this).closest('tr');
+                const reservationId = $(this).data('id');
+                const row = dataTable.row($row);
+
+                Swal.fire({
+                    title: 'Confirm Acceptance',
+                    text: 'Are you sure you want to accept this reservation?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Confirm'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/Owner/Reservations/UpdateReservationStatus',
+                            method: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                Id: reservationId,
+                                Status: 3 // Integer value for Completed
+                            }),
+                            success: () => {
+                                const rowData = row.data();
+                                rowData[7] = 'Completed'; // Display text
+                                rowData[8] = ''; // Clear actions
+                                row.data(rowData).draw();
+                                Swal.fire('Success!', 'Reservation completed!', 'success');
+                            },
+                            error: (xhr) => {
+                                const errorMsg = xhr.responseJSON?.value || 'Update failed';
+                                Swal.fire('Error!', errorMsg, 'error');
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Reject button handler
+            $('#reservationTable').on('click', '.btnReject', function () {
+                const $row = $(this).closest('tr');
+                const reservationId = $(this).data('id');
+                const row = dataTable.row($row);
+
+                Swal.fire({
+                    title: 'Confirm Rejection',
+                    text: 'Are you sure you want to reject this reservation?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Confirm'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/Owner/Reservations/UpdateReservationStatus',
+                            method: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                Id: reservationId,
+                                Status: 2 // Integer value for Denied
+                            }),
+                            success: () => {
+                                const rowData = row.data();
+                                rowData[7] = 'Denied'; // Display text
+                                rowData[8] = '';
+                                row.data(rowData).draw();
+                                Swal.fire('Success!', 'Reservation denied!', 'success');
+                            },
+                            error: (xhr) => {
+                                const errorMsg = xhr.responseJSON?.value || 'Update failed';
+                                Swal.fire('Error!', errorMsg, 'error');
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}
 
 @functions {
     string GetStatusBadgeClass(ReservationStatus status)
@@ -87,16 +198,6 @@
         };
     }
 }
+       
+      
 
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            $('#reservationTable').DataTable({
-                "paging": true,
-                "searching": true,
-                "ordering": true,
-                "info": true
-            });
-        });
-        </script>
-}
