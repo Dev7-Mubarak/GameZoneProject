@@ -129,7 +129,7 @@ namespace GameZone.Areas.Identity.Pages.Account
                     if (await _userManager.IsInRoleAsync(user, Role.Admin))
                     {
                         _logger.LogInformation("Admin logged in.");
-                        return RedirectToAction("Index", "Home", new { Area = "Admin" });
+                        return RedirectToAction("Index", "GameStations", new { Area = "Admin" });
                     }
 
                     if (await _userManager.IsInRoleAsync(user, Role.Owner))
