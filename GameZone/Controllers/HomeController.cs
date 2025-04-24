@@ -1,4 +1,5 @@
 ﻿using GameZone.Data;
+using GameZone.Helpers;
 using GameZone.Models;
 using GameZone.Services;
 using GameZone.ViewModels.Home;
@@ -25,6 +26,17 @@ namespace GameZone.Controllers
 
         public IActionResult Index()
         {
+
+            if (User.Identity.IsAuthenticated)
+            {
+
+                if (User.IsInRole(Role.Admin))
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+
+                if (User.IsInRole(Role.Owner))
+                    return RedirectToAction("Index", "Home", new { area = "Owner" });
+            }
+
             var viewModel = new HomePageVM
             {
                 PopularGames = _gamesService.GetPopularGames(),
