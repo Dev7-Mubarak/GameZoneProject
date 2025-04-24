@@ -38,7 +38,9 @@ namespace GameZone.Areas.Owner.Controllers
                     PrimaryImage = r.PrimaryImage,
                     Unit = r.Unit,
                     GameStationId = (int)r.GameStationId,
-                    ExistingAdditionalImages = r.RoomsPictures.Select(p => p.Image).ToList()
+                    ExistingAdditionalImages = r.RoomsPictures.Select(p => p.Image).ToList(),
+                    RoomImages = r.RoomsPictures
+                    
                 })
                 .ToListAsync();
 

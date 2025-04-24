@@ -27,6 +27,7 @@ namespace GameZone.Areas.Owner.ModelViewOwner
 
     
         public string? PrimaryImage { get; set; }
+        public  IEnumerable<RoomsPicture>? RoomImages { get; set; }
 
         // List of uploaded additional images
         public List<IFormFile>? AdditionalImages { get; set; }
