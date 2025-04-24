@@ -16,14 +16,16 @@ namespace GameZone.Areas.Admin.Controllers
         private readonly AppDBContext _context;
         private readonly UserManager<AppUser> _userManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly string _imagePath;
+        private readonly string _stationImagePath;
+        private readonly string _roomImagePath;
 
         public GameStationsController(AppDBContext context, UserManager<AppUser> userManager, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _userManager = userManager;
             _webHostEnvironment = webHostEnvironment;
-            _imagePath = $"{_webHostEnvironment.WebRootPath}{FileSettings.StationFilePath}";
+            _stationImagePath = $"{_webHostEnvironment.WebRootPath}{FileSettings.StationFilePath}";
+            _roomImagePath = $"{_webHostEnvironment.WebRootPath}{FileSettings.RoomsFilePath}";
         }
 
         public IActionResult Index()
@@ -81,7 +83,7 @@ namespace GameZone.Areas.Admin.Controllers
                 return View(model);
             }
 
-            var cover = await Utilities.SaveFileAsync(model.Cover, _imagePath);
+            var cover = await Utilities.SaveFileAsync(model.Cover, _stationImagePath);
 
             var gameStation = new GameStation()
             {
@@ -174,7 +176,7 @@ namespace GameZone.Areas.Admin.Controllers
 
             if (hasNewCover)
             {
-                var cover = await Utilities.SaveFileAsync(model.Cover!, _imagePath);
+                var cover = await Utilities.SaveFileAsync(model.Cover!, _stationImagePath);
                 NewCoverName = cover.FileName;
                 station.Image = NewCoverName;
             }
@@ -186,12 +188,12 @@ namespace GameZone.Areas.Admin.Controllers
             {
                 if (hasNewCover)
                 {
-                    Utilities.DeleteFile(oldCover!, _imagePath);
+                    Utilities.DeleteFile(oldCover!, _stationImagePath);
                 }
             }
             else
             {
-                Utilities.DeleteFile(station.Image!, _imagePath);
+                Utilities.DeleteFile(station.Image!, _stationImagePath);
             }
 
             return RedirectToAction(nameof(Index), "GameStations");
@@ -206,8 +208,25 @@ namespace GameZone.Areas.Admin.Controllers
                 return NotFound();
 
             if (!string.IsNullOrEmpty(station.Image))
-                Utilities.DeleteFile(station.Image, _imagePath);
+                Utilities.DeleteFile(station.Image, _stationImagePath);
 
+            foreach (var room in station.Rooms)
+            {
+                if (room.PrimaryImage != null)
+                {
+                    Utilities.DeleteFile(room.PrimaryImage, _roomImagePath);
+                    foreach (var roomPicture in room.RoomsPictures)
+                    {
+                        Utilities.DeleteFile(roomPicture.Image, _roomImagePath);
+                    }
+                }
+            }
+
+            var reservations = _context.Reservations.Where(x => x.GameStationId == station.Id);
+            var Ratings = _context.Ratings.Where(x => x.GameStationId == station.Id);
+            _context.Reservations.RemoveRange(reservations);
+            _context.Ratings.RemoveRange(Ratings);
+            _context.SaveChanges();
             _context.GameStations.Remove(station);
             _context.SaveChanges();
 
