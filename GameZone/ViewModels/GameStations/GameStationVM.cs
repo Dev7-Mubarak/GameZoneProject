@@ -13,7 +13,7 @@ namespace GameZone.ViewModels.GameStations
         public TimeSpan EveningOpenTime { get; set; }
         public TimeSpan EveningCloseTime { get; set; }
         public string UserId { get; set; } = null!;
-        public string? Image { get; set; }
+        public string Image { get; set; }
         public string Name { get; set; } = null!;
         public string PhoneNumber1 { get; set; }
         public string PhoneNumber2 { get; set; } = null!;
