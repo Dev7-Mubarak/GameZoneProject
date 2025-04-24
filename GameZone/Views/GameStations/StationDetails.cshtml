@@ -234,35 +234,65 @@ else
                 </div>
             </div>
             <div class="row position-relative">
-                <div class="rooms-container">
-                    @foreach (var room in Model.GameStation.Rooms)
-                    {
-                        <div class="room-card">
-                            <div class="slider">
-                                <div class="slides">
-                                    @if (!string.IsNullOrEmpty(room.PrimaryImage))
-                                    {
-                                        <div class="slide"><img src="@($"{FileSettings.RoomsFilePath}/{room.PrimaryImage}")" alt="Room Image 1"></div>
-                                    }
+                <div class="row position-relative">
+    <div class="rooms-container">
+        @foreach (var room in Model.GameStation.Rooms)
+        {
+            <div class="room-card">
+                <div class="slider">
+                    <div class="slides">
+                        <!-- Primary Image -->
+                        @if (!string.IsNullOrEmpty(room.PrimaryImage))
+                        {
+                            <div class="slide">
+                                <img src="@($"{FileSettings.RoomsFilePath}/{room.PrimaryImage}")" 
+                                     alt="@room.Name Room Image" class="room-image">
+                            </div>
+                        }
+                        
+                        <!-- Additional Images -->
+                        @if (room.RoomsPictures != null && room.RoomsPictures.Any())
+                        {
+                            foreach (var image in room.RoomsPictures)
+                            {
+                                <div class="slide">
+                                    <img src="@($"{FileSettings.RoomsFilePath}/{image.Image}")" 
+                                         alt="@room.Name Room Image">
                                 </div>
-                                <button class="prev" onclick="scrollLeft()">&#10094;</button>
-                                <button class="next" onclick="scrollRight()">&#10095;</button>
-                            </div>
-                            <h3 class="room-name">@room.Name Room</h3>
-                            <div class="room-details">
-                                <span>👥 Allowed people: <strong>@room.NumberOfAllowedPeople</strong></span><hr>
-                                @if (room.Unit > 0)
-                                {
-                                    <span>🛏️ Number of Rooms: <strong>@room.Unit</strong></span>
-                                    <hr>
-                                }
-                                <span>📏 Room space: <strong>@room.NumberOfAllowedPeople</strong></span><hr>
-                            </div>
-                            <p class="price">💰 Price per Hour: <strong>@room.Price.ToString("N0")RY</strong></p>
-                        </div>
-                    }
+                            }
+                        }
+                    </div>
+  @*                  
+                               foreach (var image in room.RoomsPictures)
+                            {
+                                <div class="slide">
+                                    <img src="@($"{FileSettings.RoomsFilePath}/{image.Image}")" 
+                                         alt="@room.Name Room Image" class="room-image">
+                                </div>
+                            }*@
+                    <!-- Navigation Arrows -->
+                    <button class="slider-nav prev" aria-label="Previous image">&#10094;</button>
+                    <button class="slider-nav next" aria-label="Next image">&#10095;</button>
+                    
+                    <!-- Pagination Dots -->
+                    <div class="slider-dots"></div>
                 </div>
-
+                
+                <h3 class="room-name">@room.Name Room</h3>
+                <div class="room-details">
+                    <span>👥 Allowed people: <strong>@room.NumberOfAllowedPeople</strong></span><hr>
+                    @if (room.Unit > 0)
+                    {
+                        <span>🛏️ Number of Rooms: <strong>@room.Unit</strong></span>
+                        <hr>
+                    }
+                    <span>📏 Room space: <strong>@room.NumberOfAllowedPeople</strong></span><hr>
+                </div>
+                <p class="price">💰 Price per Hour: <strong>@room.Price.ToString("N0")RY</strong></p>
+            </div>
+        }
+    </div>
+</div>
                 <div class="text-center mt-5">
                     <a type="button col-10"
                        class="btn btn-sm btn-primary mb-3" href="#" data-bs-toggle="modal" data-bs-target="#reserve">
@@ -286,29 +316,82 @@ else
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $('#paymentTypeContainer select').change(function () {
-                var selected = $(this).val();
-
-                if (selected == '@((int)PaymentType.Deposit)') {
-                    $('#paymentReceiptContainer').slideDown();
-                } else {
-                    $('#paymentReceiptContainer').slideUp();
-                }
-            }).trigger('change');
-
-            function calculateTotal() {
-                var roomPrice = parseFloat($('#roomSelect option:selected').data('price')) || 0;
-                var duration = parseFloat($('#Reservation_DurationHours').val()) || 0;
-                var total = roomPrice * duration;
-
-                $('#totalPriceDisplay').val(total.toFixed(2) + ' $');
+        $(document).ready(function() {
+    // Initialize all sliders
+    $('.slider').each(function() {
+        const $slider = $(this);
+        const $slides = $slider.find('.slides');
+        const $slideItems = $slides.find('.slide');
+        const slideCount = $slideItems.length;
+        
+        // Create dots if more than one slide
+        if (slideCount > 1) {
+            const $dotsContainer = $slider.find('.slider-dots');
+            
+            // Create dots
+            for (let i = 0; i < slideCount; i++) {
+                $dotsContainer.append('<div class="slider-dot" data-index="' + i + '"></div>');
             }
-
-            $('#roomSelect, #Reservation_DurationHours').on('change keyup', calculateTotal);
-
-            calculateTotal();
+            
+            // Set first dot as active
+            $dotsContainer.find('.slider-dot').first().addClass('active');
+        } else {
+            // Hide navigation if only one slide
+            $slider.find('.slider-nav').hide();
+        }
+        
+        // Current slide index
+        let currentIndex = 0;
+        
+        // Next button click
+        $slider.find('.next').on('click', function() {
+            navigateTo((currentIndex + 1) % slideCount);
         });
+        
+        // Previous button click
+        $slider.find('.prev').on('click', function() {
+            navigateTo((currentIndex - 1 + slideCount) % slideCount);
+        });
+        
+        // Dot click
+        $slider.on('click', '.slider-dot', function() {
+            const targetIndex = $(this).data('index');
+            navigateTo(targetIndex);
+        });
+        
+        // Auto-advance slides (optional)
+        let slideInterval = setInterval(() => {
+            if (slideCount > 1) {
+                navigateTo((currentIndex + 1) % slideCount);
+            }
+        }, 5000);
+        
+        // Pause on hover
+        $slider.hover(
+            function() {
+                clearInterval(slideInterval);
+            },
+            function() {
+                slideInterval = setInterval(() => {
+                    if (slideCount > 1) {
+                        navigateTo((currentIndex + 1) % slideCount);
+                    }
+                }, 5000);
+            }
+        );
+        
+        // Navigation function
+        function navigateTo(index) {
+            currentIndex = index;
+            const translateX = -currentIndex * 100;
+            $slides.css('transform', `translateX(${translateX}%)`);
+            
+            // Update active dot
+            $slider.find('.slider-dot').removeClass('active')
+                .eq(currentIndex).addClass('active');
+        }
+    });
+});
  
     </script>
 }

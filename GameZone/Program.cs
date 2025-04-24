@@ -6,7 +6,7 @@ using GameZone.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("RemoteConnection") ?? throw new InvalidOperationException("Connection string 'AppDBContextConnection' not found.");
@@ -51,6 +51,7 @@ builder.Services.AddScoped<IDevicesService, DevicesService>();
 builder.Services.AddScoped<GameZone.Areas.Admin.Services.IGamesService, GameZone.Areas.Admin.Services.GamesService>();
 builder.Services.AddScoped<IGameStationsService, GameStationsService>();
 builder.Services.AddScoped<GameZone.Services.IGamesService, GameZone.Services.GamesService>();
+
 
 
 

@@ -39,7 +39,9 @@ namespace GameZone.Controllers
                 .Include(gs => gs.GameStationGames)
                     .ThenInclude(gsg => gsg.Game)
                 .Include(gs => gs.Rooms)
+                .ThenInclude(gs => gs.RoomsPictures)
                 .Include(gs => gs.Ratings)
+              
                 .FirstOrDefault(x => x.Id == id);
 
             if (station == null)
