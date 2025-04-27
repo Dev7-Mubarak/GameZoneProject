@@ -234,65 +234,74 @@ else
                 </div>
             </div>
             <div class="row position-relative">
-                <div class="row position-relative">
-    <div class="rooms-container">
-        @foreach (var room in Model.GameStation.Rooms)
-        {
-            <div class="room-card">
-                <div class="slider">
-                    <div class="slides">
-                        <!-- Primary Image -->
-                        @if (!string.IsNullOrEmpty(room.PrimaryImage))
+<div class="rooms-container">
+    @foreach (var room in Model.GameStation.Rooms)
+    {
+        <div class="room-card">
+            <div class="slider">
+                <div class="slides">
+                    <!-- Primary Image -->
+                    @if (!string.IsNullOrEmpty(room.PrimaryImage))
+                    {
+                        <div class="slide">
+                            <img src="@($"{FileSettings.RoomsFilePath}/{room.PrimaryImage}")" 
+                                 alt="@room.Name Room Image" class="room-image">
+                        </div>
+                    }
+                    
+                    <!-- Additional Images -->
+                    @if (room.RoomsPictures != null && room.RoomsPictures.Any())
+                    {
+                        foreach (var image in room.RoomsPictures)
                         {
                             <div class="slide">
-                                <img src="@($"{FileSettings.RoomsFilePath}/{room.PrimaryImage}")" 
-                                     alt="@room.Name Room Image" class="room-image">
+                                <img src="@($"{FileSettings.RoomsFilePath}/{image.Image}")" 
+                                     alt="@image.Image Room Image" class="room-image">
+                                     hi
                             </div>
                         }
-                        
-                        <!-- Additional Images -->
-                        @if (room.RoomsPictures != null && room.RoomsPictures.Any())
-                        {
-                            foreach (var image in room.RoomsPictures)
-                            {
-                                <div class="slide">
-                                    <img src="@($"{FileSettings.RoomsFilePath}/{image.Image}")" 
-                                         alt="@room.Name Room Image">
-                                </div>
-                            }
-                        }
-                    </div>
-  @*                  
-                               foreach (var image in room.RoomsPictures)
-                            {
-                                <div class="slide">
-                                    <img src="@($"{FileSettings.RoomsFilePath}/{image.Image}")" 
-                                         alt="@room.Name Room Image" class="room-image">
-                                </div>
-                            }*@
-                    <!-- Navigation Arrows -->
-                    <button class="slider-nav prev" aria-label="Previous image">&#10094;</button>
-                    <button class="slider-nav next" aria-label="Next image">&#10095;</button>
-                    
-                    <!-- Pagination Dots -->
-                    <div class="slider-dots"></div>
+                    }
                 </div>
                 
+                <!-- Navigation Controls (only show if multiple images) -->
+                @if ((!string.IsNullOrEmpty(room.PrimaryImage) && (room.RoomsPictures != null && room.RoomsPictures.Count > 0)))
+                {
+                    <button class="slider-nav prev" aria-label="Previous image">&#10094;</button>
+                    <button class="slider-nav next" aria-label="Next image">&#10095;</button>
+                    <div class="slider-dots"></div>
+                }
+            </div>
+            
+            <div class="room-info">
                 <h3 class="room-name">@room.Name Room</h3>
                 <div class="room-details">
-                    <span>👥 Allowed people: <strong>@room.NumberOfAllowedPeople</strong></span><hr>
+                    <div class="detail-item">
+                        <span class="detail-icon">👥</span>
+                        <span class="detail-text">Allowed people: <strong>@room.NumberOfAllowedPeople</strong></span>
+                    </div>
+                    
                     @if (room.Unit > 0)
                     {
-                        <span>🛏️ Number of Rooms: <strong>@room.Unit</strong></span>
-                        <hr>
+                        <div class="detail-item">
+                            <span class="detail-icon">🛏️</span>
+                            <span class="detail-text">Number of Rooms: <strong>@room.Unit</strong></span>
+                        </div>
                     }
-                    <span>📏 Room space: <strong>@room.NumberOfAllowedPeople</strong></span><hr>
+                    
+                    <div class="detail-item">
+                        <span class="detail-icon">📏</span>
+                        <span class="detail-text">Room space: <strong>@room.Price m²</strong></span>
+                    </div>
                 </div>
-                <p class="price">💰 Price per Hour: <strong>@room.Price.ToString("N0")RY</strong></p>
+                <div class="price-container">
+                    <span class="price-label">Price per Hour:</span>
+                    <span class="price-value">@room.Price.ToString("N0") RY</span>
+                </div>
             </div>
-        }
-    </div>
+        </div>
+    }
 </div>
+  
                 <div class="text-center mt-5">
                     <a type="button col-10"
                        class="btn btn-sm btn-primary mb-3" href="#" data-bs-toggle="modal" data-bs-target="#reserve">
@@ -314,9 +323,8 @@ else
     <script src="~/Main/js/bootstrap.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
+<script>
+$(document).ready(function() {
     // Initialize all sliders
     $('.slider').each(function() {
         const $slider = $(this);
@@ -324,47 +332,97 @@ else
         const $slideItems = $slides.find('.slide');
         const slideCount = $slideItems.length;
         
-        // Create dots if more than one slide
+        // Only initialize if there are slides
+        if (slideCount === 0) return;
+        
+        // Initialize dots if multiple slides
         if (slideCount > 1) {
             const $dotsContainer = $slider.find('.slider-dots');
             
             // Create dots
-            for (let i = 0; i < slideCount; i++) {
-                $dotsContainer.append('<div class="slider-dot" data-index="' + i + '"></div>');
-            }
+            $slideItems.each(function(index) {
+                $dotsContainer.append(`<div class="slider-dot" data-index="${index}"></div>`);
+            });
             
             // Set first dot as active
             $dotsContainer.find('.slider-dot').first().addClass('active');
+            
+            // Show navigation
+            $slider.find('.slider-nav').css({
+                'opacity': '1',
+                'visibility': 'visible'
+            });
         } else {
             // Hide navigation if only one slide
-            $slider.find('.slider-nav').hide();
+            $slider.find('.slider-nav, .slider-dots').hide();
         }
         
         // Current slide index
         let currentIndex = 0;
+        let slideInterval;
         
-        // Next button click
-        $slider.find('.next').on('click', function() {
-            navigateTo((currentIndex + 1) % slideCount);
-        });
+        // Auto-advance configuration
+        const autoSlideDelay = 5000;
+        const transitionSpeed = 600;
         
-        // Previous button click
-        $slider.find('.prev').on('click', function() {
-            navigateTo((currentIndex - 1 + slideCount) % slideCount);
-        });
+        // Next slide function
+        function nextSlide() {
+            const newIndex = (currentIndex + 1) % slideCount;
+            goToSlide(newIndex);
+        }
         
-        // Dot click
+        // Previous slide function
+        function prevSlide() {
+            const newIndex = (currentIndex - 1 + slideCount) % slideCount;
+            goToSlide(newIndex);
+        }
+        
+        // Go to specific slide
+        function goToSlide(index) {
+            // Don't animate if already on this slide
+            if (index === currentIndex) return;
+            
+            currentIndex = index;
+            const translateX = -currentIndex * 100;
+            
+            $slides.css('transition', `transform ${transitionSpeed}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`);
+            $slides.css('transform', `translateX(${translateX}%)`);
+            
+            // Update dots
+            $slider.find('.slider-dot').removeClass('active')
+                   .eq(currentIndex).addClass('active');
+            
+            // Reset auto-slide timer
+            resetAutoSlide();
+        }
+        
+        // Reset auto-slide timer
+        function resetAutoSlide() {
+            if (slideCount > 1) {
+                clearInterval(slideInterval);
+                slideInterval = setInterval(nextSlide, autoSlideDelay);
+            }
+        }
+        
+        // Event handlers
+        $slider.find('.next').on('click', nextSlide);
+        $slider.find('.prev').on('click', prevSlide);
+        
         $slider.on('click', '.slider-dot', function() {
             const targetIndex = $(this).data('index');
-            navigateTo(targetIndex);
+            goToSlide(targetIndex);
         });
         
-        // Auto-advance slides (optional)
-        let slideInterval = setInterval(() => {
-            if (slideCount > 1) {
-                navigateTo((currentIndex + 1) % slideCount);
+        // Keyboard navigation
+        $(document).on('keydown', function(e) {
+            if ($slider.is(':hover')) {
+                if (e.key === 'ArrowRight') {
+                    nextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    prevSlide();
+                }
             }
-        }, 5000);
+        });
         
         // Pause on hover
         $slider.hover(
@@ -372,26 +430,19 @@ else
                 clearInterval(slideInterval);
             },
             function() {
-                slideInterval = setInterval(() => {
-                    if (slideCount > 1) {
-                        navigateTo((currentIndex + 1) % slideCount);
-                    }
-                }, 5000);
+                resetAutoSlide();
             }
         );
         
-        // Navigation function
-        function navigateTo(index) {
-            currentIndex = index;
-            const translateX = -currentIndex * 100;
-            $slides.css('transform', `translateX(${translateX}%)`);
-            
-            // Update active dot
-            $slider.find('.slider-dot').removeClass('active')
-                .eq(currentIndex).addClass('active');
+        // Start auto-slide if multiple slides
+        if (slideCount > 1) {
+            resetAutoSlide();
         }
+        
+        // Handle transition end
+        $slides.on('transitionend', function() {
+            $slides.css('transition', 'none');
+        });
     });
 });
- 
-    </script>
-}
+</script>}
