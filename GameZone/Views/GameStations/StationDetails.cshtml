@@ -35,7 +35,7 @@
 
                             <div class="col-lg-6 mb-4 pb-2">
                                 <div class="form-group">
-                                    <label asp-for="@Model.Reservation.RoomId">Room Name</label>
+                                    <label asp-for="@Model.Reservation.RoomId">Choose Room</label>
                                     <select asp-for="@Model.Reservation.RoomId" class="form-control" id="roomSelect" required>
                                         @foreach (var room in Model.GameStation.Rooms)
                                         {
@@ -213,6 +213,7 @@
             </div>
         </div>
     </section>
+
 }
 else
 {
@@ -262,20 +263,11 @@ else
                             }
                         }
                     </div>
-  @*                  
-                               foreach (var image in room.RoomsPictures)
-                            {
-                                <div class="slide">
-                                    <img src="@($"{FileSettings.RoomsFilePath}/{image.Image}")" 
-                                         alt="@room.Name Room Image" class="room-image">
-                                </div>
-                            }*@
+
                     <!-- Navigation Arrows -->
                     <button class="slider-nav prev" aria-label="Previous image">&#10094;</button>
                     <button class="slider-nav next" aria-label="Next image">&#10095;</button>
                     
-                    <!-- Pagination Dots -->
-                    <div class="slider-dots"></div>
                 </div>
                 
                 <h3 class="room-name">@room.Name Room</h3>
@@ -292,8 +284,13 @@ else
             </div>
         }
     </div>
+                    <div id="image-popup" class="popup" style="display: none">
+                        <span id="close-popup" class="close-btn">&times;</span>
+                        <img id="popup-img" class="popup-img" src="">
+                    </div>
+
 </div>
-                <div class="text-center mt-5">
+                <div class="text-center mt-5" style="z-index: -1">
                     <a type="button col-10"
                        class="btn btn-sm btn-primary mb-3" href="#" data-bs-toggle="modal" data-bs-target="#reserve">
                         Reserve a Room
@@ -324,21 +321,9 @@ else
         const $slideItems = $slides.find('.slide');
         const slideCount = $slideItems.length;
         
-        // Create dots if more than one slide
-        if (slideCount > 1) {
-            const $dotsContainer = $slider.find('.slider-dots');
-            
-            // Create dots
-            for (let i = 0; i < slideCount; i++) {
-                $dotsContainer.append('<div class="slider-dot" data-index="' + i + '"></div>');
-            }
-            
-            // Set first dot as active
-            $dotsContainer.find('.slider-dot').first().addClass('active');
-        } else {
-            // Hide navigation if only one slide
-            $slider.find('.slider-nav').hide();
-        }
+        if (slideCount < 1) {
+             $slider.find('.slider-nav').hide();
+        } 
         
         // Current slide index
         let currentIndex = 0;
@@ -351,12 +336,6 @@ else
         // Previous button click
         $slider.find('.prev').on('click', function() {
             navigateTo((currentIndex - 1 + slideCount) % slideCount);
-        });
-        
-        // Dot click
-        $slider.on('click', '.slider-dot', function() {
-            const targetIndex = $(this).data('index');
-            navigateTo(targetIndex);
         });
         
         // Auto-advance slides (optional)
@@ -385,12 +364,45 @@ else
             currentIndex = index;
             const translateX = -currentIndex * 100;
             $slides.css('transform', `translateX(${translateX}%)`);
-            
-            // Update active dot
-            $slider.find('.slider-dot').removeClass('active')
-                .eq(currentIndex).addClass('active');
         }
+
+                $('#paymentTypeContainer select').change(function () {
+                    var selected = $(this).val();
+
+                    if (selected == '@((int)PaymentType.Deposit)') {
+                        $('#paymentReceiptContainer').slideDown();
+                    } else {
+                        $('#paymentReceiptContainer').slideUp();
+                    }
+                }).trigger('change');
+
+                function calculateTotal() {
+                    var roomPrice = parseFloat($('#roomSelect option:selected').data('price')) || 0;
+                    var duration = parseFloat($('#Reservation_DurationHours').val()) || 0;
+                    var total = roomPrice * duration;
+
+                    $('#totalPriceDisplay').val(total.toFixed(2) + ' $');
+                }
+
+                $('#roomSelect, #Reservation_DurationHours').on('change keyup', calculateTotal);
+
+                calculateTotal();
+
+        $('.slider .slide img').on('click', function () {
+            $('.navbar').fadeOut();
+            const imgSrc = $(this).attr('src'); // Get clicked image src
+            $('#popup-img').attr('src', imgSrc); // Set it in the popup
+            $('#image-popup').fadeIn(); // Show the popup
+        });
+
+        $('#close-popup, #image-popup').on('click', function (e) {
+            if (e.target.id === 'image-popup' || e.target.id === 'close-popup') {
+                        $('.navbar').fadeIn();
+                $('#image-popup').fadeOut(); // Hide the popup
+            }
+        });
     });
+
 });
  
     </script>

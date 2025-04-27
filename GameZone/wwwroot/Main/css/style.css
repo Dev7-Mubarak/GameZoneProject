@@ -10720,7 +10720,6 @@ footer {
 .slides {
     display: flex;
     gap: 10px;
-    overflow-x: auto;
     scroll-snap-type: x mandatory;
     /*scrollbar-width: none;*/ /* Hide scrollbar for Firefox */
     -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
@@ -10762,6 +10761,39 @@ footer {
 
 .next {
     right: 10px;
+}
+
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    display: flex; /* 👈 Add Flex */
+    align-items: center; /* 👈 Center Vertically */
+    justify-content: center; /* 👈 Center Horizontally */
+    z-index: 2147483647; /* Max safe value */
+}
+
+/* Popup Image */
+.popup-img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+    object-fit: contain; /* 👈 Keep image aspect ratio */
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    z-index: 2147483647;
 }
 
 /* footer social */

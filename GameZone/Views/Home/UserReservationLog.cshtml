@@ -1,7 +1,71 @@
-﻿﻿@using GameZone.Helpers
+﻿@using GameZone.Helpers
 @model IEnumerable<GameZone.Models.Reservation>
 @{
     ViewData["Title"] = "User Reservation Log";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+    <style>
+        /* Hide default DataTables elements */
+        .dataTables_filter, .dataTables_length {
+            display: none;
+        }
+
+        .filter-container {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .filter-group {
+            margin-right: 20px;
+            display: inline-block;
+        }
+
+        .filter-label {
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .filter-select {
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: 1px solid #ced4da;
+        }
+
+        .reset-btn {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            .reset-btn:hover {
+                background-color: #5a6268;
+            }
+
+        .prev, .next {
+            position: relative;
+            top: 50%;
+            transform: translateY(-16%);
+            background: rgba(0, 0, 0, 0);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .no-image-text {
+            font-style: italic;
+            color: #6c757d;
+        }
+    </style>
 }
 
 <section class="py-5 mt-5">
@@ -24,6 +88,38 @@
                 }
                 else
                 {
+                    <!-- Filter Controls -->
+                    <div class="filter-container mb-4">
+                        <div class="filter-group">
+                            <span class="filter-label">Station:</span>
+                            <select id="stationFilter" class="filter-select">
+                                <option value="">All Stations</option>
+                                @foreach (var station in Model.Select(r => r.GameStation?.Name).Distinct().OrderBy(s => s))
+                                {
+                                    if (!string.IsNullOrEmpty(station))
+                                    {
+                                        <option value="@station">@station</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <span class="filter-label">Payment Type:</span>
+                            <select id="paymentFilter" class="filter-select">
+                                <option value="">All Types</option>
+                                @foreach (var type in Model.Select(r => r.PaymentType).Distinct().OrderBy(t => t))
+                                {
+                                    <option value="@type">@type</option>
+                                }
+                            </select>
+                        </div>
+
+                        <button id="resetFilters" class="reset-btn">
+                            <i class="bi bi-arrow-counterclockwise me-1"></i>Reset Filters
+                        </button>
+                    </div>
+
                     <div class="table-responsive">
                         <table id="reservationTable" class="table table-hover table-bordered align-middle">
                             <thead class="table-dark">
@@ -36,7 +132,7 @@
                                     <th class="text-center">Hours</th>
                                     <th class="text-end">Total Price</th>
                                     <th>Payment Type</th>
-                                    <th>Deposit Resive</th>
+                                    <th>Deposit Receive</th>
                                     <th class="text-center">Status</th>
                                 </tr>
                             </thead>
@@ -47,19 +143,26 @@
                                         <td>@reservation.ReservationName</td>
                                         <td>@reservation.GameStation?.Name</td>
                                         <td>@reservation.Room?.Name</td>
-                                        <td>@reservation.Date.ToString("yyyy-MM-dd")</td>
-                                        <td>
+                                        <td data-order="@reservation.Date.ToString("yyyyMMdd")">@reservation.Date.ToString("yyyy-MM-dd")</td>
+                                        <td data-order="@reservation.StartHour.ToString("HHmm")">
                                             @reservation.StartHour.ToString("hh:mm tt") -
                                             @reservation.EndHour.ToString("hh:mm tt")
                                         </td>
                                         <td class="text-center">@reservation.NumberOfHours</td>
-                                        <td class="text-end">@reservation.TotalPrice.ToString("N0") RY</td>
+                                        <td class="text-end" data-order="@reservation.TotalPrice">@reservation.TotalPrice.ToString("N0") RY</td>
                                         <td>@reservation.PaymentType</td>
                                         <td>
-                                            <img src="@($"{FileSettings.DepositsFilePath}/{reservation.DepositImage}")" alt="Name" class="rounded-circle"
-                                                 style="max-width: 60px; max-height: 80px" />
+                                            @if (reservation.PaymentType == PaymentType.Cash)
+                                            {
+                                                <span class="no-image-text">No Image</span>
+                                            }
+                                            else
+                                            {
+                                                <img src="@($"{FileSettings.DepositsFilePath}/{reservation.DepositImage}")" alt="Deposit" class="rounded-circle"
+                                                     style="max-width: 60px; max-height: 80px" />
+                                            }
                                         </td>
-                                        <td class="text-center">
+                                        <td class="text-center" data-order="@reservation.Satuts">
                                             <span class="badge @GetStatusBadgeClass(reservation.Satuts) rounded-pill py-2 px-3">
                                                 @reservation.Satuts
                                             </span>
@@ -74,6 +177,42 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var table = $('#reservationTable').DataTable({
+                responsive: true,
+                dom: 'tlip', // Removes the default search and length menu
+                columnDefs: [
+                    { orderable: false, targets: [8] } // Disable sorting for the Deposit Image column
+                ]
+            });
+
+            // Station filter
+            $('#stationFilter').on('change', function () {
+                var station = $(this).val();
+                table.column(1).search(station).draw();
+            });
+
+            // Payment Type filter
+            $('#paymentFilter').on('change', function () {
+                var paymentType = $(this).val();
+                table.column(7).search(paymentType).draw();
+            });
+
+            // Reset filters
+            $('#resetFilters').on('click', function () {
+                $('#stationFilter').val('').trigger('change');
+                $('#paymentFilter').val('').trigger('change');
+                table.search('').columns().search('').draw();
+            });
+        });
+    </script>
+}
 
 @functions {
     string GetStatusBadgeClass(ReservationStatus status)

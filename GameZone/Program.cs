@@ -6,7 +6,6 @@ using GameZone.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("RemoteConnection") ?? throw new InvalidOperationException("Connection string 'AppDBContextConnection' not found.");
@@ -19,6 +18,9 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedEmail = false;
     options.SignIn.RequireConfirmedAccount = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireLowercase = false;
 })
     .AddEntityFrameworkStores<AppDBContext>()
     .AddDefaultTokenProviders();

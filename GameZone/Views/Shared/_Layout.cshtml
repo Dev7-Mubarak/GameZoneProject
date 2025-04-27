@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
     <link rel="shortcut icon" href="~/Assets/Images/title icon.png" type="image/x-icon">
     <link rel="stylesheet" href="~/main/css/style.css" asp-append-version="true" />
+    @RenderSection("Styles", required: false)
 </head>
 <body>
 
@@ -151,5 +152,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>
