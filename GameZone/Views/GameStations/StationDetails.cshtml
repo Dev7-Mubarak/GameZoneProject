@@ -318,108 +318,106 @@ else
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 <script>
-$(document).ready(function() {
-    // Initialize all sliders
-    $('.slider').each(function() {
-        const $slider = $(this);
-        const $slides = $slider.find('.slides');
-        const $slideItems = $slides.find('.slide');
-        const slideCount = $slideItems.length;
-        
-        if (slideCount < 1) {
-             $slider.find('.slider-nav').hide();
-        } 
-        
-        // Current slide index
-        let currentIndex = 0;
-        let slideInterval;
-        
-        // Auto-advance configuration
-        const autoSlideDelay = 5000;
-        const transitionSpeed = 600;
-        
-        // Next slide function
-        function nextSlide() {
-            const newIndex = (currentIndex + 1) % slideCount;
-            goToSlide(newIndex);
-        }
-        
-        // Previous slide function
-        function prevSlide() {
-            const newIndex = (currentIndex - 1 + slideCount) % slideCount;
-            goToSlide(newIndex);
-        }
-        
-        // Next button click
-        $slider.find('.next').on('click', function() {
-            navigateTo((currentIndex + 1) % slideCount);
-        });
-        
-        // Previous button click
-        $slider.find('.prev').on('click', function() {
-            navigateTo((currentIndex - 1 + slideCount) % slideCount);
-        });
-        
-        // Auto-advance slides (optional)
-        let slideInterval = setInterval(() => {
-            if (slideCount > 1) {
-                navigateTo((currentIndex + 1) % slideCount);
-            }
-        });
-        
-        // Pause on hover
-        $slider.hover(
-            function() {
-                clearInterval(slideInterval);
-            },
-            function() {
-                resetAutoSlide();
-            }
-        );
-        
-        // Navigation function
-        function navigateTo(index) {
-            currentIndex = index;
-            const translateX = -currentIndex * 100;
-            $slides.css('transform', `translateX(${translateX}%)`);
-        }
+        $(document).ready(function () {
+            // Initialize all sliders
+            $('.slider').each(function () {
+                const $slider = $(this);
+                const $slides = $slider.find('.slide');
+                const slideCount = $slides.length;
 
-                $('#paymentTypeContainer select').change(function () {
-                    var selected = $(this).val();
-
-                    if (selected == '@((int)PaymentType.Deposit)') {
-                        $('#paymentReceiptContainer').slideDown();
-                    } else {
-                        $('#paymentReceiptContainer').slideUp();
-                    }
-                }).trigger('change');
-
-                function calculateTotal() {
-                    var roomPrice = parseFloat($('#roomSelect option:selected').data('price')) || 0;
-                    var duration = parseFloat($('#Reservation_DurationHours').val()) || 0;
-                    var total = roomPrice * duration;
-
-                    $('#totalPriceDisplay').val(total.toFixed(2) + ' $');
+                // Hide navigation if no slides or only one slide
+                if (slideCount <= 1) {
+                    $slider.find('.slider-nav').hide();
+                    return; // Skip initialization for sliders with 0 or 1 slides
                 }
 
-                $('#roomSelect, #Reservation_DurationHours').on('change keyup', calculateTotal);
+                // Initialize slides
+                $slides.hide().first().show().addClass('active');
+                let currentIndex = 0;
+                let slideInterval;
 
-                calculateTotal();
+                // Navigation function with fade effects
+                function goToSlide(index) {
+                    // Handle wrap-around for infinite loop
+                    if (index >= slideCount) index = 0;
+                    if (index < 0) index = slideCount - 1;
 
-        $('.slider .slide img').on('click', function () {
-            $('.navbar').fadeOut();
-            const imgSrc = $(this).attr('src'); // Get clicked image src
-            $('#popup-img').attr('src', imgSrc); // Set it in the popup
-            $('#image-popup').fadeIn(); // Show the popup
-        });
+                    $slides.removeClass('active').fadeOut(400);
+                    $slides.eq(index).fadeIn(400).addClass('active');
+                    currentIndex = index;
+                }
 
-        $('#close-popup, #image-popup').on('click', function (e) {
-            if (e.target.id === 'image-popup' || e.target.id === 'close-popup') {
-                        $('.navbar').fadeIn();
-                $('#image-popup').fadeOut(); // Hide the popup
+                // Next button click
+                $slider.find('.next').on('click', function () {
+                    goToSlide(currentIndex + 1);
+                    resetAutoSlide();
+                });
+
+                // Previous button click
+                $slider.find('.prev').on('click', function () {
+                    goToSlide(currentIndex - 1);
+                    resetAutoSlide();
+                });
+
+                // Auto-advance configuration
+                function startAutoSlide() {
+                    slideInterval = setInterval(() => {
+                        goToSlide(currentIndex + 1);
+                    }, 5000);
+                }
+
+                function resetAutoSlide() {
+                    clearInterval(slideInterval);
+                    startAutoSlide();
+                }
+
+                // Start auto-sliding
+                startAutoSlide();
+
+                // Pause on hover
+                $slider.hover(
+                    function () {
+                        clearInterval(slideInterval);
+                    },
+                    function () {
+                        resetAutoSlide();
+                    }
+                );
+            });
+
+            // Rest of your existing code (payment type, image popup, etc.)
+            $('#paymentTypeContainer select').change(function () {
+                var selected = $(this).val();
+                if (selected == '@((int)PaymentType.Deposit)') {
+                    $('#paymentReceiptContainer').slideDown();
+                } else {
+                    $('#paymentReceiptContainer').slideUp();
+                }
+            }).trigger('change');
+
+            function calculateTotal() {
+                var roomPrice = parseFloat($('#roomSelect option:selected').data('price')) || 0;
+                var duration = parseFloat($('#Reservation_DurationHours').val()) || 0;
+                var total = roomPrice * duration;
+                $('#totalPriceDisplay').val(total.toFixed(2) + ' $');
             }
-        });
-    });
 
-});
-</script>}
+            $('#roomSelect, #Reservation_DurationHours').on('change keyup', calculateTotal);
+            calculateTotal();
+
+            $('.slider .slide img').on('click', function () {
+                $('.navbar').fadeOut();
+                const imgSrc = $(this).attr('src');
+                $('#popup-img').attr('src', imgSrc);
+                $('#image-popup').fadeIn();
+            });
+
+            $('#close-popup, #image-popup').on('click', function (e) {
+                if (e.target.id === 'image-popup' || e.target.id === 'close-popup') {
+                    $('.navbar').fadeIn();
+                    $('#image-popup').fadeOut();
+                }
+            });
+        });
+</script>
+}
