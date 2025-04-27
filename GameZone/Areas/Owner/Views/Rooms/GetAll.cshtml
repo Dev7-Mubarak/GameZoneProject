@@ -26,6 +26,11 @@
                     <td>@room.RoomName</td>
                     <td>
                         <img src="@($"{FileSettings.RoomsFilePath}/{room.PrimaryImage}")" alt="@room.RoomName" class="imgroom" style="max-width:60px; max-height:80px" />
+                        @foreach (var image in room.RoomImages)
+                        {
+                           <img src="@($"{FileSettings.RoomsFilePath}/{image.Image}")" alt="@image.Image" class="imgroom" style="max-width:60px; max-height:80px" />
+
+                        }
                     </td>
                     <td><p>@room.Price</p></td>
                     <td>@room.NumberOfAllowedPeople</td>

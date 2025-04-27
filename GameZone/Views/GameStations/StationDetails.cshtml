@@ -272,11 +272,17 @@ else
                 
                 <h3 class="room-name">@room.Name Room</h3>
                 <div class="room-details">
-                    <span>👥 Allowed people: <strong>@room.NumberOfAllowedPeople</strong></span><hr>
+                    <div class="detail-item">
+                        <span class="detail-icon">👥</span>
+                        <span class="detail-text">Allowed people: <strong>@room.NumberOfAllowedPeople</strong></span>
+                    </div>
+                    
                     @if (room.Unit > 0)
                     {
-                        <span>🛏️ Number of Rooms: <strong>@room.Unit</strong></span>
-                        <hr>
+                        <div class="detail-item">
+                            <span class="detail-icon">🛏️</span>
+                            <span class="detail-text">Number of Rooms: <strong>@room.Unit</strong></span>
+                        </div>
                     }
                     <span>📏 Room space: <strong>@room.NumberOfAllowedPeople</strong></span><hr>
                 </div>
@@ -311,9 +317,8 @@ else
     <script src="~/Main/js/bootstrap.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
+<script>
+$(document).ready(function() {
     // Initialize all sliders
     $('.slider').each(function() {
         const $slider = $(this);
@@ -327,6 +332,23 @@ else
         
         // Current slide index
         let currentIndex = 0;
+        let slideInterval;
+        
+        // Auto-advance configuration
+        const autoSlideDelay = 5000;
+        const transitionSpeed = 600;
+        
+        // Next slide function
+        function nextSlide() {
+            const newIndex = (currentIndex + 1) % slideCount;
+            goToSlide(newIndex);
+        }
+        
+        // Previous slide function
+        function prevSlide() {
+            const newIndex = (currentIndex - 1 + slideCount) % slideCount;
+            goToSlide(newIndex);
+        }
         
         // Next button click
         $slider.find('.next').on('click', function() {
@@ -343,7 +365,7 @@ else
             if (slideCount > 1) {
                 navigateTo((currentIndex + 1) % slideCount);
             }
-        }, 5000);
+        });
         
         // Pause on hover
         $slider.hover(
@@ -351,11 +373,7 @@ else
                 clearInterval(slideInterval);
             },
             function() {
-                slideInterval = setInterval(() => {
-                    if (slideCount > 1) {
-                        navigateTo((currentIndex + 1) % slideCount);
-                    }
-                }, 5000);
+                resetAutoSlide();
             }
         );
         
@@ -404,6 +422,4 @@ else
     });
 
 });
- 
-    </script>
-}
+</script>}
