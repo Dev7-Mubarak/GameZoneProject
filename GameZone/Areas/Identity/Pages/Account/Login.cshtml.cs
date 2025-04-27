@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
+using GameZone.Data;
 using GameZone.Helpers;
 using GameZone.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace GameZone.Areas.Identity.Pages.Account
 {
@@ -17,12 +19,14 @@ namespace GameZone.Areas.Identity.Pages.Account
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
         private readonly UserManager<AppUser> _userManager;
+        private readonly AppDBContext _context;
 
-        public LoginModel(SignInManager<AppUser> signInManager, ILogger<LoginModel> logger, UserManager<AppUser> userManager)
+        public LoginModel(SignInManager<AppUser> signInManager, ILogger<LoginModel> logger, UserManager<AppUser> userManager, AppDBContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
             _userManager = userManager;
+            _context = context;
         }
 
         /// <summary>
@@ -127,6 +131,14 @@ namespace GameZone.Areas.Identity.Pages.Account
 
                     if (await _userManager.IsInRoleAsync(user, Role.Owner))
                     {
+                        var stationExists = _context.GameStations.Any(x => x.UserId == user.Id);
+                        if (!stationExists)
+                        {
+                            ModelState.AddModelError(string.Empty, "This owner doesn't have a station yet.");
+                            // Optionally add more details
+                            ModelState.AddModelError(string.Empty, "Please contact support if you believe this is an error.");
+                            return Page();
+                        }
                         _logger.LogInformation("Owner logged in.");
                         return RedirectToAction("Index", "Home", new { Area = "Owner" });
                     }

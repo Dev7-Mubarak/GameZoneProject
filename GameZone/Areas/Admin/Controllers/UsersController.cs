@@ -1,5 +1,7 @@
 ﻿using GameZone.Areas.Admin.ViewModels;
+using GameZone.Helpers;
 using GameZone.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace GameZone.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = Role.Admin)]
     public class UsersController : Controller
     {
         private readonly UserManager<AppUser> _userManager;

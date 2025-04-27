@@ -1,13 +1,15 @@
 using GameZone.Areas.Admin.Services;
 using GameZone.Areas.Admin.ViewModels;
 using GameZone.Data;
-using GameZone.Models;
+using GameZone.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace GameZone.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = Role.Admin)]
     public class GamesController : Controller
     {
         private readonly ICategoriesService _categoriesService;

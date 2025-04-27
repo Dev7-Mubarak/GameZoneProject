@@ -1,6 +1,7 @@
 ﻿using GameZone.Areas.Owner.ModelViewOwner;
 using GameZone.Data;
 using GameZone.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -9,6 +10,7 @@ namespace GameZone.Areas.Owner.Controllers
 {
     [Area("Owner")]
     [Route("Owner/Reservations/[action]")]
+    [Authorize(Roles = "Admin,Owner")]
     public class HomeController : Controller
     {
         private readonly AppDBContext _context;
@@ -23,7 +25,7 @@ namespace GameZone.Areas.Owner.Controllers
             var station = _GetOwnerStation();
             if (station == null)
             {
-                return NotFound("Game station not found.");
+                return RedirectToAction("Login", "Account", new { area = "Identity" });
             }
 
             var viewModel = new StationDashboardViewModel
