@@ -6,5 +6,7 @@ namespace GameZone.ViewModels
     {
         public GameStation? GameStation { get; set; }
         public RatingVM RatingVM { get; set; }
+        public bool IsUserAlreadyRatingInCurrntStation { get; set; }
+
     }
 }

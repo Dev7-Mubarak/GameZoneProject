@@ -98,11 +98,15 @@
         <div class="row justify-content-center">
             <div class="col-6"><h2 class="section-title text-center text-uppercase mb-5">reviews</h2></div>
         </div>
-        <div class="row justify-content-center">
+        @if(!Model.IsUserAlreadyRatingInCurrntStation)
+        {
+          <div class="row justify-content-center">
             <a type="button" class="btn btn-primary col-2" href="#" data-bs-toggle="modal" data-bs-target="#review">
                 Add a Review
             </a>
-        </div>
+           </div>            
+        }
+
             <div class="row align-items-center mt-5 mb-5">
         @foreach (var rating in Model.GameStation.Ratings)
         {

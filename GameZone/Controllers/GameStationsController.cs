@@ -134,11 +134,17 @@ namespace GameZone.Controllers
 
         public IActionResult StationReview(int id)
         {
+            var gameSation = _context.GameStations.Include(x => x.Ratings)
+                .ThenInclude(x => x.User)
+                .FirstOrDefault(x => x.Id == id);
+
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var station = new ShowRatingVM
             {
-                GameStation = _context.GameStations.Include(x => x.Ratings)
-                .ThenInclude(x => x.User)
-                .FirstOrDefault(x => x.Id == id)
+                GameStation = gameSation,
+                IsUserAlreadyRatingInCurrntStation = _context.Ratings
+                .Any(x => x.GameStationId == gameSation.Id && x.UserId == currentUserId)
             };
 
             return View(station);
