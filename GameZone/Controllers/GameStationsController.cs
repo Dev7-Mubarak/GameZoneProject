@@ -33,6 +33,7 @@ namespace GameZone.Controllers
 
             return View(stations);
         }
+
         public IActionResult StationDetails(int id)
         {
             var station = _context.GameStations

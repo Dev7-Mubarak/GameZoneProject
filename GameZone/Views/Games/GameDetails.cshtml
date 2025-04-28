@@ -81,18 +81,10 @@
                     return;
                 }
 
-                $.ajax({
-                    url: "/GameStations/StationDetails",
-                    type: "GET",
-                    data: { stationId: selectedStationId },
-                    success: function (response) {
-                        $("#stationDetails").html(response);
-                    },
-                    error: function () {
-                        alert("❌ Error occurred!.");
-                    }
-                });
+                // Redirect to the StationDetails page with the selected id
+                window.location.href = "/GameStations/StationDetails/" + selectedStationId;
             });
         });
+
     </script>
 }

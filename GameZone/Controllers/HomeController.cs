@@ -31,7 +31,7 @@ namespace GameZone.Controllers
             {
 
                 if (User.IsInRole(Role.Admin))
-                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                    return RedirectToAction("Index", "GameStations", new { area = "Admin" });
 
                 if (User.IsInRole(Role.Owner))
                     return RedirectToAction("Index", "Home", new { area = "Owner" });
