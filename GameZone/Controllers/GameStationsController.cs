@@ -41,7 +41,7 @@ namespace GameZone.Controllers
                 .Include(gs => gs.Rooms)
                 .ThenInclude(gs => gs.RoomsPictures)
                 .Include(gs => gs.Ratings)
-              
+
                 .FirstOrDefault(x => x.Id == id);
 
             if (station == null)
@@ -98,13 +98,17 @@ namespace GameZone.Controllers
                 return RedirectToAction("StationDetails", new { id = model.Reservation.GameStationId });
             }
 
+            var startDate = model.Reservation.ReservationDate.Date.Add(model.Reservation.StartHour.TimeOfDay);
+            var endDate = startDate.AddHours(model.Reservation.DurationHours);
             var reservation = new Reservation
             {
                 UserId = user.Id,
                 ReservationName = model.Reservation.ReservationName,
                 GameStationId = model.Reservation.GameStationId,
                 RoomId = room.Id,
-                Date = model.Reservation.ReservationDate,
+                Date = startDate,
+                // Convert name To EndDate
+                EndHour = endDate,
                 StartHour = model.Reservation.StartHour,
                 NumberOfHours = (short)model.Reservation.DurationHours,
                 PaymentType = model.Reservation.PaymentType,
