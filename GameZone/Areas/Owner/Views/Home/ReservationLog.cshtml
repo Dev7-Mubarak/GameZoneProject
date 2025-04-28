@@ -1,4 +1,5 @@
 ﻿@using GameZone.Helpers
+@using GameZone.Models
 @model List<ReservationViewModel>
 
 @{
@@ -36,14 +37,14 @@
                         <td>@reservation.NumberOfHours Hours</td>
                         <td>@reservation.TotalPrice RY</td>
                         <td>
-                            @if (reservation.PaymentMethod == "Transfer")
+                            @if (reservation.PaymentType == PaymentType.Deposit)
                             {
                                 <img src="@($"{FileSettings.DepositsFilePath}/{reservation.Image}")" alt="Name" class="rounded-circle"
                                      style="max-width: 60px; max-height: 80px" />
                             }
                             else
                             {
-                                @reservation.PaymentMethod
+                                @reservation.PaymentType
                             }
                         </td>
                         <td>@reservation.Status</td>

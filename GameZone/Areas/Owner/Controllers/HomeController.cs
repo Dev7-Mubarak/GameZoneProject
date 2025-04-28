@@ -71,7 +71,6 @@ namespace GameZone.Areas.Owner.Controllers
         {
             var reservations = _context.Reservations
                 .Include(r => r.Room)
-                .Include(r => r.PaymentMethod)
                 .Select(r => new ReservationViewModel
                 {
                     Id = r.Id,
@@ -80,7 +79,7 @@ namespace GameZone.Areas.Owner.Controllers
                     StartHour = r.StartHour,
                     NumberOfHours = r.NumberOfHours,
                     TotalPrice = r.TotalPrice,
-                    PaymentMethod = r.PaymentMethod.Name,
+                    PaymentType = r.PaymentType,
                     Status = r.Satuts.ToString(),
                     Image = r.DepositImage,
                     GameStationId = r.GameStationId,
