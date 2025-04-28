@@ -85,6 +85,21 @@ namespace GameZone.Areas.Admin.Controllers
                 return View(model);
             }
 
+            var isOwnerAlredyHasStation = _context.GameStations.Any(x => x.UserId == model.UserId);
+
+            if (isOwnerAlredyHasStation)
+            {
+                var ownersUsers = await _userManager.GetUsersInRoleAsync(Role.Owner.ToString());
+                model.Users = ownersUsers.Select(u => new SelectListItem()
+                {
+                    Value = u.Id,
+                    Text = $"{u.FisrtName} {u.LastName}"
+                }).ToList();
+
+                ModelState.AddModelError("UserId", "The selected Owner Alraedy Has a Sation");
+                return View(model);
+            }
+
             var cover = await Utilities.SaveFileAsync(model.Cover, _stationImagePath);
 
             var gameStation = new GameStation()
