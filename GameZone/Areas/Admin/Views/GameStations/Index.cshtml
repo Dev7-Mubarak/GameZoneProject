@@ -64,45 +64,42 @@
 
 @section Scripts {
     <script>
-
-        // Using Jquery DataTable in Station Table
-        $('table').DataTable();
-
-        // Using BootBox For Deleting Station
         $(document).ready(function () {
-            $('.js-delete').on('click', function () {
-                var Btn = $(this);
 
-                bootbox.confirm({
-                    message: "Are you sure that you need to delete this Station?",
-                    buttons: {
-                        confirm: {
-                            label: 'Yes',
-                            className: 'btn-danger'
-                        },
-                        cancel: {
-                            label: 'No',
-                            className: 'btn-success'
-                        }
-                    },
-                    callback: function (result) {
-                        if (result) {
-                            $.ajax({
-                                url: '/Admin/GameStations/Delete/' + Btn.data('id'),
-                                type: 'POST',
-                                data: {
-                                    '__RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
-                                },
-                                success: function () {
-                                    Btn.closest('tr').fadeOut(500, function () {
-                                        $(this).remove();
-                                    });
-                                },
-                                error: function () {
-                                    alert('An error occurred while deleting the station.');
-                                }
-                            });
-                        }
+            var table = $('table').DataTable();
+
+            $(document).on('click', '.js-delete', function () {
+                var button = $(this);
+                var stationId = button.data("id");
+                var row = button.closest('tr');
+
+                Swal.fire({
+                    title: "Are you sure that you want to delete this station?",
+                    text: "This action cannot be undone!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, delete it!",
+                    cancelButtonText: "Cancel",
+
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/Admin/GameStations/Delete/' + stationId,
+                            type: "DELETE",
+                            headers: {
+                                "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+                            },
+                            success: function () {
+                                Swal.fire("Deleted!", "The station has been deleted.", "success");
+                                table.row(row).remove().draw();
+                            },
+                            error: function (xhr) {
+                                console.error(xhr);
+                                Swal.fire("Error!", "Failed to delete the station.", "error");
+                            }
+                        });
                     }
                 });
             });

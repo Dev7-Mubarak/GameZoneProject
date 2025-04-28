@@ -216,7 +216,7 @@ namespace GameZone.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index), "GameStations");
         }
 
-        [HttpPost]
+        [HttpDelete]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {

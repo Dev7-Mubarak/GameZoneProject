@@ -62,7 +62,10 @@
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "Cancel"
+                cancelButtonText: "Cancel",
+
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d'
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
