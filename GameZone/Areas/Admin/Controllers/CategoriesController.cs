@@ -75,7 +75,7 @@ namespace GameZone.Areas.Admin.Controllers
             return RedirectToAction(nameof(AllGameCategories));
         }
 
-        [HttpPost]
+        [HttpDelete]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteCategory(int id)
         {

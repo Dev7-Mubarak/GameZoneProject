@@ -177,7 +177,7 @@ namespace GameZone.Areas.Admin.Controllers
         }
 
 
-        [HttpPost]
+        [HttpDelete]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(string id)
         {

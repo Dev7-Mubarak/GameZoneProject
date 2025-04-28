@@ -43,44 +43,39 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            $('.js-delete').on('click', function () {
-                var Btn = $(this);
 
-                bootbox.confirm({
-                    message: "Are you sure that you need to delete this category?",
-                    buttons: {
-                        confirm: {
-                            label: 'Yes',
-                            className: 'btn-danger'
-                        },
-                        cancel: {
-                            label: 'No',
-                            className: 'btn-success'
-                        }
-                    },
-                    centerVertical: true,
-                    onShown: function (e) {
-                        e.preventDefault();
-                        document.activeElement.blur();
-                    },
-                    callback: function (result) {
-                        if (result) {
-                            $.ajax({
-                                url: '/Admin/Categories/DeleteCategory/' + Btn.data('id'),
-                                type: 'POST',
-                                data: {
-                                    '__RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
-                                },
-                                success: function () {
-                                    Btn.closest('tr').fadeOut(500, function () {
-                                        $(this).remove();
-                                    });
-                                },
-                                error: function () {
-                                    alert('An error occurred while deleting the category.');
-                                }
-                            });
-                        }
+            $(document).on('click', '.js-delete', function () {
+                var button = $(this);
+                var CategoryId = button.data("id");
+                var row = button.closest('tr');
+
+                Swal.fire({
+                    title: "Are you sure that you want to delete this Category?",
+                    text: "This action cannot be undone!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, delete it!",
+                    cancelButtonText: "Cancel",
+
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/Admin/Categories/DeleteCategory/' + CategoryId,
+                            type: "DELETE",
+                            headers: {
+                                "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+                            },
+                            success: function () {
+                                Swal.fire("Deleted!", "The Category has been deleted.", "success");
+                                row.remove();
+                            },
+                            error: function (xhr) {
+                                console.error(xhr);
+                                Swal.fire("Error!", "Failed to delete the Category.", "error");
+                            }
+                        });
                     }
                 });
             });
