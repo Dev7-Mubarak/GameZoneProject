@@ -137,7 +137,7 @@ namespace GameZone.Areas.Owner.Controllers
             if (existingAssignment != null)
             {
                 ModelState.AddModelError("", "This game is already assigned to your station");
-                return View(model);
+                return RedirectToAction(nameof(Add), model);
             }
 
 
