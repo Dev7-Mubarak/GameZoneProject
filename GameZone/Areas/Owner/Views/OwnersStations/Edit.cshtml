@@ -73,7 +73,7 @@
                     <div style="width: 300px; height: 400px; position: relative; margin-left: 17%;">
                         <img id="imagePreview" class="cover-preview rounded"
                              style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); object-fit: cover;"
-                             src="~/Assets/Images/@(Model.Image ?? "default.jpg")"
+                             src="@($"{FileSettings.StationFilePath}/{Model.CurrentCover}")"
                              alt="Cover" width="300px" height="400px" />
                     </div>
                 </div>

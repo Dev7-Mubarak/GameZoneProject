@@ -2,11 +2,13 @@
 using GameZone.Helpers;
 using GameZone.Models;
 using GameZone.Services;
+using GameZone.ViewModels;
 using GameZone.ViewModels.Home;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace GameZone.Controllers
 {
@@ -16,12 +18,14 @@ namespace GameZone.Controllers
         private readonly IGamesService _gamesService;
         private readonly IGameStationsService _gameStationsService;
         private readonly AppDBContext _context;
-        public HomeController(UserManager<AppUser> userManager, AppDBContext context, IGamesService gamesService, IGameStationsService gameStationsService)
+        private readonly IPasswordHasher<AppUser> _passwordHasher;
+        public HomeController(UserManager<AppUser> userManager, AppDBContext context, IGamesService gamesService, IGameStationsService gameStationsService, IPasswordHasher<AppUser> passwordHasher)
         {
             _userManager = userManager;
             _context = context;
             _gamesService = gamesService;
             _gameStationsService = gameStationsService;
+            _passwordHasher = passwordHasher;
         }
 
         public IActionResult Index()
@@ -69,14 +73,57 @@ namespace GameZone.Controllers
             return View(reservations);
         }
 
-        public IActionResult AccountDetails()
+        [HttpGet]
+        public async Task<IActionResult> AccountDetails()
         {
-            return View();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var CurrentUser = await _userManager.FindByIdAsync(userId);
+
+            if (CurrentUser == null)
+            {
+                return NotFound();
+            }
+
+            var user = new EditCurentUserVM
+            {
+                Id = CurrentUser.Id,
+                Email = CurrentUser.Email,
+                FirstName = CurrentUser.FisrtName,
+                LastName = CurrentUser.LastName,
+            };
+            return View(user);
         }
 
-        public IActionResult EditAccountDetails()
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> AccountDetails(EditCurentUserVM model)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+
+            user.Email = model.Email;
+            user.FisrtName = model.FirstName;
+            user.LastName = model.LastName;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Team()

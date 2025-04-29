@@ -1,7 +1,6 @@
-﻿using GameZone.Areas.Owner.ModelViewOwner;
-using GameZone.Data;
+﻿using GameZone.Data;
+using GameZone.Helpers;
 using GameZone.Models;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -44,10 +43,10 @@ namespace GameZone.Areas.Owner.Controllers
                 {
                     Text = g.Name,
                     Value = g.Id.ToString()
-                    
+
                 }),
-               
-                
+
+
             };
 
 
@@ -97,7 +96,7 @@ namespace GameZone.Areas.Owner.Controllers
                 SelectedGame = game.Name,
                 Category = game.Category?.Name ?? "Unknown",
                 Description = game.Descraption,
-                CoverImagePath = game.Cover
+                CoverImagePath = $"{FileSettings.GamesImagesPath}/{game.Cover}"
             };
 
             return Json(model);
@@ -108,7 +107,7 @@ namespace GameZone.Areas.Owner.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(GameViewModel model)
         {
-            
+
             var gameStationId = _GetOwnerStation()?.Id;
             if (gameStationId == null)
             {
@@ -116,14 +115,14 @@ namespace GameZone.Areas.Owner.Controllers
                 return View(model);
             }
 
-           
-            if (model.Id <= 0) 
+
+            if (model.Id <= 0)
             {
                 ModelState.AddModelError("Id", "Please select a valid game");
                 return View(model);
             }
 
-           
+
             var game = _context.Games.Find(model.Id);
             if (game == null)
             {
@@ -131,7 +130,7 @@ namespace GameZone.Areas.Owner.Controllers
                 return View(model);
             }
 
-            
+
             var existingAssignment = _context.GameStationGames
                 .FirstOrDefault(g => g.GameId == model.Id && g.GameStationId == gameStationId);
 
@@ -141,12 +140,12 @@ namespace GameZone.Areas.Owner.Controllers
                 return View(model);
             }
 
-           
+
             var gameStationGame = new GameStationGame
             {
                 GameId = model.Id,
                 GameStationId = gameStationId.Value,
-               
+
             };
 
             _context.GameStationGames.Add(gameStationGame);
@@ -162,7 +161,7 @@ namespace GameZone.Areas.Owner.Controllers
             {
                 var gameStationId = await _context.Users
                 .Where(u => u.Id == _GetOwnerId())
-              
+
                  .FirstOrDefaultAsync();
 
                 if (gameStationId is null)
@@ -171,9 +170,9 @@ namespace GameZone.Areas.Owner.Controllers
                 // 2. Find the junction table entry
                 var gameStationGame = await _context.GameStationGames
                     .FirstOrDefaultAsync(gsg => gsg.GameId == id);
-                      
-                      
-                   
+
+
+
 
                 if (gameStationGame == null)
                     return NotFound(new { message = "Game not found in this station" });

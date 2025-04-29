@@ -1,7 +1,5 @@
-﻿@{
-    ViewData["Title"] = "User Reservation Log";
-    Layout = "_layout2";
-}
+﻿@using GameZone.ViewModels
+@model EditCurentUserVM
 
 
 <section class="container text-center" style="margin-top: 15vw; margin-bottom: 15vw;">
@@ -19,38 +17,39 @@
         </div>
 
         <div class="modal-body">
-            <form action="#!" method="get">
+            <form method="post">
+                <div asp-validation-summary="All"></div>
                 <div class="row justify-content-around">
 
+                   <input type="hidden" asp-for="Id" value="Id"/>
                     <div class="col-lg-7 mb-4 pb-2">
                         <div class="form-group">
-                            <label for="loan_full_name" class="form-label">FirstName</label>
-                            <input type="text" class="form-control shadow-none" id="loan_full_name">
+                            <label asp-for="FirstName" class="form-label">First Name</label>
+                            <input asp-for="FirstName" type="text" class="form-control form-control-user"
+                                   placeholder="First Name">
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-lg-7 mb-4 pb-2">
                         <div class="form-group">
-                            <label for="loan_full_name" class="form-label">LastName</label>
-                            <input type="text" class="form-control shadow-none" id="loan_full_name">
+                            <label asp-for="LastName" class="form-label">Last Name</label>
+                            <input asp-for="LastName" type="text" class="form-control form-control-user" 
+                                   placeholder="Last Name">
+                            <span asp-validation-for="LastName" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-lg-7 mb-4 pb-2">
                         <div class="form-group">
-                            <label for="loan_email_address" class="form-label">Email address</label>
-                            <input type="email" class="form-control shadow-none" id="loan_email_address" placeholder="hsgfkjfs@gamil.com">
-                        </div>
-                    </div>
-
-                    <div class="col-lg-7 mb-4 pb-2">
-                        <div class="form-group">
-                            <label for="loan_full_name" class="form-label">Password</label>
-                            <input type="password" class="form-control shadow-none" id="loan_full_name">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" type="text" class="form-control form-control-user"
+                                   placeholder="Email">
+                            <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="col-lg-6">
                         <button asp-action="UserIndex" class="btn btn-primary col-4">Back to Home</button>
-                        <button asp-action="EditAccountDetails" class="btn btn-warning col-4 text-white">Edit Details</button>
+                        <button type="submit" class="btn btn-warning col-4 text-white">Edit Details</button>
 
                     </div>
 
